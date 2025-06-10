@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   ],
   tailwindcss: {
 		viewer: false,
-		cssPath: ['~/assets/tailwind.css', { injectPosition: 'first' }],
+    exposeConfig: true
 	},
   nitro: {
     preset: 'vercel',

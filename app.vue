@@ -16,5 +16,8 @@ useSeoMeta({
 </script>
 
 <template lang="pug">
-NuxtPage
+.body-outlet(class="flex flex-col min-h-screen")
+	AppHeader
+	main(class="lg:grow")
+		NuxtPage
 </template>

@@ -1,3 +1,3 @@
 <template lang="pug">  
-div hello grugbox
+div hello world
 </template>

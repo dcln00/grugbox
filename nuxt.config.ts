@@ -1,17 +1,23 @@
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
-  devtools: { enabled: false },
-  modules: [
-    '@nuxt/fonts',
-    '@nuxt/content',
-    '@nuxt/image',
-    '@nuxtjs/tailwindcss'
-  ],
-  tailwindcss: {
+	compatibilityDate: '2025-05-15',
+	devtools: { enabled: false },
+	modules: [
+		'@nuxt/fonts',
+		'@nuxt/content',
+		'@nuxt/image',
+		'@nuxtjs/tailwindcss',
+		'nuxt-svgo',
+		'@vueuse/nuxt',
+	],
+	tailwindcss: {
 		viewer: false,
-    exposeConfig: true
 	},
-  nitro: {
-    preset: 'vercel',
-  }
+	fonts: {
+		defaults: {
+			weights: [100, 200, 300, 400, 500, 600, 700, 8800, 900],
+		},
+	},
+	nitro: {
+		preset: 'vercel',
+	},
 })

@@ -1,9 +1,10 @@
 @import "tailwindcss";
-/* @config "@/tailwind.config.js"; */
 
 @theme {
   --font-display: "Source Code Pro", serif;
-  --color-brand-yellow: #fbbf24;
+  --font-menu: "Bebas Neue", sans-serif;
+  --font-brand: "Badeen Display", system-ui;
+  --color-brand-accent: #e31b3d;
 }
 
 @utility container {
@@ -16,7 +17,11 @@
 	scroll-behavior: smooth;
 }
 
+::selection {
+	background-color: black;
+	color: white;
+}
+
 body {
 	font-family: "Outfit", serif;
-	overflow-x: hidden;
 }

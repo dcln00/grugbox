@@ -1,0 +1,18 @@
+@tailwind utilities;
+
+* {
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: "Source Code Pro", serif;
+    background-color: red;
+	overflow-x: hidden;
+}
+
+@layer utilities {
+	.title {
+		@apply font-spartan tracking-tight !text-xl font-medium mb-4;
+	}
+}

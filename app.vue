@@ -14,14 +14,14 @@ useSeoMeta({
 	ogImage: '',
 	ogUrl: '',
 	twitterDescription: '',
-})
+}) 
 </script>
 
 <template lang="pug">
 .body-outlet(class="flex flex-col min-h-screen")
 	Transition(name="top")
-		.top(v-if="y > 300" class="fixed bottom-6 right-6 z-10 aspect-square bg-black size-10 flex items-center justify-center cursor-pointer" @click="() => y = 0")
-			svgo-caret(class="text-white text-sm")
+		.top(v-if="y > 200" class="fixed bottom-6 right-6 z-10 aspect-square bg-black group duration-200 hover:bg-white hover:border size-10 flex items-center justify-center cursor-pointer" @click="() => y = 0")
+			svgo-caret(class="text-white group-hover:text-black text-sm")
 	app-header
 	main(class="lg:grow")
 		NuxtPage

@@ -1,9 +1,9 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 @theme {
-  --font-display: "Source Code Pro", serif;
   --font-menu: "Bebas Neue", sans-serif;
-  --font-brand: "Badeen Display", system-ui;
+  --font-logo: "Oswald", sans-serif;
   --color-brand-accent: #e31b3d;
 }
 

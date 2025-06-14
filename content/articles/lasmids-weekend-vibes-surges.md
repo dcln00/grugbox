@@ -1,8 +1,8 @@
 ---
 title: Lasmid’s “Weekend Vibes” surges
 description: Lasmid’s “Weekend Vibes” surges
-date: 2025-06-10 19:28:00 -0700
-image: /articles/amaarae-coachella.jpeg
+date: 2025-06-11 19:28:00 -0700
+image: /articles/lasmid.jpg
 ---
 
 Proin faucibus nec mauris a sodales, sed elementum mi tincidunt. Sed eget viverra egestas nisi in consequat. Fusce sodales augue a accumsan. Cras sollicitudin, ipsum eget blandit pulvinar.

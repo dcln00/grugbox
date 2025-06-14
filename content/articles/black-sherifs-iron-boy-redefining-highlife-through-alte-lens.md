@@ -1,9 +1,9 @@
 ---
-title: Black Sherif’s Iron Boy: Redefining Highlife Through Alte Lens
-description: Black Sherif’s Iron Boy: Redefining Highlife Through Alte Lens
-date: 2025-06-10 19:28:00 -0700
-image: /articles/amaarae-coachella.jpeg
-tags: [featured]
+title: Black Sherif’s Iron Boy; Redefining Highlife Through Alte Lens
+description: Black Sherif’s Iron Boy; Redefining Highlife Through Alte Lens
+date: 2025-04-03 19:28:00 -0700
+image: /articles/iron-boy.png
+tags: [trending]
 ---
 
 Proin faucibus nec mauris a sodales, sed elementum mi tincidunt. Sed eget viverra egestas nisi in consequat. Fusce sodales augue a accumsan. Cras sollicitudin, ipsum eget blandit pulvinar.

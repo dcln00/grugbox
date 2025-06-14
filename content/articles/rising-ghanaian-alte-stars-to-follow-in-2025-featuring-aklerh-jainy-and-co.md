@@ -1,7 +1,7 @@
 ---
 title: Rising Ghanaian Alte Stars to Follow in 2025 (Featuring Aklerh, Jainy & Co.
 description: Rising Ghanaian Alte Stars to Follow in 2025 (Featuring Aklerh, Jainy & Co.
-date: 2025-06-10 18:28:00 -0700
+date: 2025-06-08 18:28:00 -0700
 image: /articles/rising-alte-stars.jpg
 ---
 

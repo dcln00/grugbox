@@ -1,8 +1,8 @@
 ---
 title: Samini & King Paluta Headline European Tour
 description: Samini & King Paluta Headline European Tour
-date: 2025-06-10 19:28:00 -0700
-image: /articles/amaarae-coachella.jpeg
+date: 2025-06-09 19:28:00 -0700
+image: /articles/paluta.jpg
 ---
 
 Proin faucibus nec mauris a sodales, sed elementum mi tincidunt. Sed eget viverra egestas nisi in consequat. Fusce sodales augue a accumsan. Cras sollicitudin, ipsum eget blandit pulvinar.

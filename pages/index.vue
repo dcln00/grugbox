@@ -30,7 +30,7 @@ section(class="py-12")
 				//- FULL
 				article.featured(v-for="(post, idx) in posts.slice(0, 1)" :key="idx")
 					div(v-if="!post.tags?.includes('trending')")
-						div(class="space-y-8 group tracking-tight")
+						div(class="space-y-6 group tracking-tight")
 							.photo(class="aspect-video bg-gray-200 overflow-hidden")
 								NuxtLink(:to="post.path")
 									NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center group-hover:scale-110 duration-700 group-hover:rotate-3")

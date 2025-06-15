@@ -34,7 +34,7 @@ div
 				//- NuxtLink(to="/")
 					h1(class="text-2xl tracking-tight font-light cursor-pointer") grugbox
 				nav(class="ms-auto hidden lg:block")
-					ul(class="flex space-x-4 *:cursor-pointer")
+					ul(class="flex gap-4 *:cursor-pointer")
 						li(v-for="(link, idx) in nav" :key="idx" class="hover:text-brand-accent uppercase font-menu text-2xl") #[NuxtLink(:to="link.href" activeClass='active-link') {{ link.name }}]
 				.hamburger(class="ms-auto cursor-pointer hover:text-brand-accent" @click="$emit('toggleShow')")
 					svgo-hamburger(class="text-2xl")
@@ -46,7 +46,7 @@ div
 				//- NuxtLink(to="/")
 					h1(class="text-2xl tracking-tight font-light cursor-pointer") grugbox
 				nav(class="ms-auto hidden lg:block")
-					ul(class="flex space-x-4 *:cursor-pointer")
+					ul(class="flex gap-4 *:cursor-pointer")
 						li(v-for="(link, idx) in nav" :key="idx" class="hover:text-brand-accent uppercase font-menu text-2xl") #[NuxtLink(:to="link.href" activeClass='active-link') {{ link.name }}]
 				.hamburger(class="ms-auto cursor-pointer hover:text-brand-accent" @click="$emit('toggleShow')")
 					svgo-hamburger(class="text-2xl")

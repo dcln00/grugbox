@@ -5,8 +5,8 @@ const nav = [
 		name: 'About',
 	},
 	{
-		href: '/contact',
-		name: 'Contact',
+		href: '/submissions',
+		name: 'Submissions',
 	},
 ]
 </script>

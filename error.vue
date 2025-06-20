@@ -10,7 +10,7 @@ const props = defineProps({
 })
 
 const handleError = () => clearError({ redirect: '/' })
-</script>
+</script>?
 
 <template lang="pug">
 .body-outlet(class="flex h-screen flex-col")

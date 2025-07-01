@@ -6,12 +6,20 @@ const formatSlug = computed(() => {
   return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
 })
 
+const { data: post } = await useAsyncData(`${route.params.slug}`, () => {
+  return queryCollection('articles').path(`/articles/${route.params.slug}`).first()
+})
+
 useHead({
 	title: () => `${formatSlug.value} - Grugbox`,
 })
 
-const { data: post } = await useAsyncData(`${route.params.slug}`, () => {
-  return queryCollection('articles').path(`/articles/${route.params.slug}`).first()
+useSeoMeta({
+	description: `Read the latest article on Grugbox about ${formatSlug.value}.`,
+	ogDescription: `Read the latest article on Grugbox about ${formatSlug.value}.`,
+	twitterDescription: `Read the latest article on Grugbox about ${formatSlug.value}.`,
+	ogImage: post.value?.image || 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
+	twitterImage: post.value?.image || 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
 })
 </script>
 

@@ -9,17 +9,24 @@ const toggleShow = () => {
 
 useHead({
 	title: 'Grugbox',
+	htmlAttrs: {
+    lang: 'en'
+  },
 })
 
 useSeoMeta({
 	title: 'Grugbox',
 	ogTitle: 'Grugbox',
-	description: ``,
-	ogDescription: ``,
+	description: `Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld`,
+	ogDescription: `Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld`,
 	ogType: 'website',
-	ogImage: '',
-	ogUrl: '',
-	twitterDescription: '',
+	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
+	ogSiteName: 'Grugbox ®',
+	ogUrl: 'https://grugbox.world',
+	twitterCard: 'summary',
+	twitterTitle: 'Grugbox',
+	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
+	twitterDescription: 'Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld',
 }) 
 </script>
 

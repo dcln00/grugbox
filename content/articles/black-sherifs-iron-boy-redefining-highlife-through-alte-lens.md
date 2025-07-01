@@ -3,9 +3,9 @@ title: Black Sherif’s Iron Boy Delivers a Bold Statement of Resilience and Art
 description: Black Sherif’s Iron Boy; Redefining Highlife Through Alte Lens
 date: 2025-04-03 19:28:00 -0700
 image: /articles/iron-boy.png
-tags: [trending]
+tags:
+  - trending
 ---
-
 Yo! Let’s talk Black Sherif’s “Iron Boy”; this album is straight fire.
 
 What is up, you guys? You know I had to drop everything and talk about the absolute masterpiece that just dropped in our playlists: Blacko’s Iron Boy album. If you haven't heard it yet, what are you even doing? Honestly, go check it out; I'll wait…
@@ -16,9 +16,9 @@ Black Sherif, our very own Kwaku Killa, has truly outdone himself with this one.
 
 What's the vibe, you say? Real, gritty and straight-up inspirational. One thing about Blacko: he's gonna keep it a 100. “Iron Boy” is packed with that signature street-smart lyricism we all love. He's talking about the struggles, the come-up, the hustle, and the grind, all while making you want to bounce to every single track. It's like he's narrating our lives, but with a soundtrack you wanna jam to and that makes you feel like you can overcome anything. And honestly, that's the kinda thing that gets the streets going.
 
-What's the vibe, you say? Real, gritty and straight-up inspirational. One thing about Blacko: he's gonna keep it a 100. “Iron Boy” is packed with that signature street-smart lyricism we all love. He's talking about the struggles, the come-up, the hustle, and the grind, all while making you want to bounce to every single track. It's like he's narrating our lives, but with a soundtrack you wanna jam to and that makes you feel like you can overcome anything. And honestly, that's the kinda thing that gets the streets going.
+And the production on the album? Yo! shouts to everyone that worked on the beats for this one. They hit different. Whether it's a banger that makes you wanna moshpit or a more reflective tune that gets you in your feels, the soundscapes are just perfectly crafted. You can tell he and the team poured their hearts into every element of this project.
 
-Standout tracks? For me, that's like picking your favourite child; you just can’t. But gun to my head, if i had to pick a few that lived rent-free in my head, it would be these right here; “ONE” the hook on this is an absolute earworm! Also, the storytelling on “SACRIFICE” is next level; you feel every word. And then there's ‘WHERE THEM BOYS”. This one has that energy that makes you wanna run through a wall. Although some say this is a diss track directed at Kwesi Arthur, and honestly, we’re feeding into that narrative as well. But honestly do yourself a favour and listen to the whole project from start to finish, and I guarantee you'll find your own favourites.
+Standout tracks? For me, that's like picking your favourite child; you just can’t. But gun to my head, if i had to pick a few that lived rent-free in my head, it would be these right here; “ONE” the hook on this is an absolute earworm! Also, the storytelling on “SACRIFICE” is next level; you feel every word. And then there's ‘WHERE THEM BOYS”. This one has that energy that makes you wanna run through a wall. Although some say this is a diss track directed at Kwesi Arthur, and honestly, we’re feeding into that narrative as well. But do yourself a favour and listen to the whole project from start to finish, and I guarantee you'll find your own favourites.
 
 ## Why we think Iron Boy is more than just music
 

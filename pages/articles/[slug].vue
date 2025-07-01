@@ -16,18 +16,18 @@ const { data: post } = await useAsyncData(`${route.params.slug}`, () => {
 </script>
 
 <template lang="pug">
-section#hero(class="pt-20")
+section#hero(class="pt-12 lg:pt-20")
 	.container
-		div(class="flex flex-col gap-16")
-			.title(class="flex flex-col gap-8")
+		div(class="flex flex-col gap-12 lg:gap-16")
+			.title(class="flex flex-col gap-4 lg:gap-8")
 				h1(class="text-2xl lg:text-7xl tracking-tight") {{ post.title }}
 				hr(class="border-zinc-200")
 				.author-date(class="flex gap-4 *:tracking-tight")
 					p By #[span(class="text-brand-accent") Grugbox]
 					p Published #[NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric" relative)]
-			.photo(class="w-full lg:h-96 pointer-events-none")
+			.photo(class="w-full lg:aspect-video pointer-events-none")
 				NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center")
-section#post(class="py-20")
+section#post(class="py-12 lg:py-20")
 	div(class="max-lg:container")
 		div(class="lg:w-1/2 mx-auto flex flex-col gap-12")
 			ContentRenderer(v-if="post" :value="post" class="prose max-w-none prose-a:no-underline prose-h2:pb-4 prose-h1:font-normal prose-h1:text-xl prose-p:text-zinc-600")

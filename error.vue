@@ -15,7 +15,7 @@ const handleError = () => clearError({ redirect: '/' })
 <template lang="pug">
 .body-outlet(class="flex h-screen flex-col")
 	app-header
-	section#error(class="relative flex-1 flex items-center justify-center")
+	section#error(class="relative flex-1 flex items-center justify-center max-lg:container")
 		div(class="text-center")
 			h2(class="text-8xl pb-8 font-extrabold tracking-tighter") #[span(class="sr-only") Error] {{ error.statusCode }}
 			p(class="text-xl lg:text-2xl") Sorry, there is nothing to see here.

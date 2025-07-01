@@ -1,6 +1,12 @@
 <script setup lang="ts">
 const { x, y } = useWindowScroll()
 
+const show = ref(false)
+
+const toggleShow = () => {
+	show.value = !show.value
+}
+
 useHead({
 	title: 'Grugbox',
 })
@@ -22,7 +28,8 @@ useSeoMeta({
 	Transition(name="top")
 		.top(v-if="y > 200" class="fixed bottom-6 right-6 z-10 aspect-square bg-black group duration-200 hover:bg-white hover:border size-10 flex items-center justify-center cursor-pointer" @click="() => y = 0")
 			svgo-caret(class="text-white group-hover:text-black text-sm")
-	app-header
+	app-header(@toggle-show="toggleShow")
+	Aside(:show="show" @toggle-show="toggleShow")
 	main(class="lg:grow")
 		NuxtPage
 	app-footer

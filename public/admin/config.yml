@@ -3,25 +3,54 @@ backend:
   branch: main
   repo: dcln00/grugbox
   base_url: https://sveltia-cms-auth.nii-aryh.workers.dev
+  open_authoring: true
 
 media_folder: public/articles
 public_folder: /articles
 site_url: https://www.grugbox.world
 site_name: Grugbox
+publish_mode: editorial_workflow
 
 collections:
   - name: 'post'
+    slug: '{{slug}}'
     label: 'Posts'
+    label_singular: 'Post'
+    icon: 'sticky_note_2'
     folder: 'content/articles'
     format: 'frontmatter'
     create: true
     identifier_field: "title"
     editor:
-      preview: false
+      preview: true
+      default:
+        field: published_date
+        direction: descending
     fields:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Featured Image', name: 'image', widget: 'image', required: false }
-      - { label: 'Tags', name: 'tags', widget: 'list', allow_add: true, required: false, hint: 'Add tags like trending, lifestyle, etc..' }
+      - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like trending, lifestyle, etc..',}
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+
+  - name: 'playlist'
+    slug: '{{slug}}'
+    label: 'Playlists'
+    icon: 'play_arrow'
+    folder: 'content/playlists'
+    format: 'frontmatter'
+    create: true
+    identifier_field: "title"
+    editor:
+      preview: true
+      default:
+        field: published_date
+        direction: descending
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Description', name: 'description', widget: 'string' }
+      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Featured Image', name: 'image', widget: 'image', required: false }
+      - { label: 'Tags', name: 'tags', widget: 'list', allow_add: true, delimiter: ',', required: false, hint: 'Add tags like trending, lifestyle, etc..' }
       - { label: 'Body', name: 'body', widget: 'markdown' }

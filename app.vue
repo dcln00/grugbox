@@ -27,7 +27,7 @@ useSeoMeta({
 	twitterTitle: 'Grugbox',
 	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
 	twitterDescription: 'Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld',
-}) 
+})
 </script>
 
 <template lang="pug">

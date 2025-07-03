@@ -6,7 +6,12 @@ const { data: posts, status, error } = await useAsyncData('posts', () => {
 	.all()
 })
 
-console.log(posts.value)
+const { data: playlists } = await useAsyncData('playlists', () => {
+  return queryCollection('playlists')
+	.select('title', 'path', 'image', 'date')
+	.order('date', 'DESC')
+	.all()
+})
 </script>
 
 <template lang="pug">
@@ -53,9 +58,11 @@ section(class="py-12")
 			//- PLAYLISTS
 			div(class="bg-brand-green col-span-full lg:col-span-1 max-lg:order-3 flex flex-col gap-8")
 				h6 Playlists
-				article(v-for="(playlist, idx) in 1" :key="idx" class="flex flex-col gap-6 group cursor-pointer mb-12 last:mb-0")
-					h2(class="text-6xl font-extralight") 0{{ playlist}}.
-					p(class="text-xl group-hover:text-brand-accent tracking-tight") Grugbox on Apple Music
+				article(v-for="(playlist, idx) in playlists" :key="idx" class="flex flex-col gap-6 group cursor-pointer mb-12 last:mb-0")
+					.photo(class="aspect-square bg-gray-200 overflow-hidden")
+						NuxtLink(:to="playlist.path")
+							NuxtImg(:src="playlist.image" alt="featured image" class="w-full h-full object-cover object-center")
+					p(class="text-xl group-hover:text-brand-accent tracking-tight duration-300") {{playlist.title }}
 
 section#newsletter(class="py-12 lg:py-20 bg-black")
 	.container

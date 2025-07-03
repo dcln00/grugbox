@@ -37,6 +37,7 @@ collections:
   - name: 'playlist'
     slug: '{{slug}}'
     label: 'Playlists'
+    label_singular: 'Playlist'
     icon: 'play_arrow'
     folder: 'content/playlists'
     format: 'frontmatter'
@@ -52,5 +53,4 @@ collections:
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Featured Image', name: 'image', widget: 'image', required: false }
-      - { label: 'Tags', name: 'tags', widget: 'list', allow_add: true, delimiter: ',', required: false, hint: 'Add tags like trending, lifestyle, etc..' }
       - { label: 'Body', name: 'body', widget: 'markdown' }

@@ -1,10 +1,9 @@
 ---
 title: King Promise’s global expansion
 description: King Promise’s global expansion
-date: 2025-06-12 19:28:00 -0700
+date: 2025-04-03T23:45:00
 image: /content/promise.jpg
 ---
-
 Proin faucibus nec mauris a sodales, sed elementum mi tincidunt. Sed eget viverra egestas nisi in consequat. Fusce sodales augue a accumsan. Cras sollicitudin, ipsum eget blandit pulvinar.
 
 Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim.

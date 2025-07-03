@@ -5,6 +5,8 @@ const { data: posts, status, error } = await useAsyncData('posts', () => {
 	.order('date', 'DESC')
 	.all()
 })
+
+console.log(posts.value)
 </script>
 
 <template lang="pug">
@@ -27,19 +29,19 @@ section(class="py-12")
 			div(class="bg-brand-green col-span-full lg:col-span-2 max-lg:order-1 flex flex-col gap-8")
 				h6 The Latest
 				//- FULL
-				article.featured(v-for="(post, idx) in posts.slice(0, 1)" :key="idx")
-					div(v-if="!post.tags?.includes('trending')")
-						div(class="flex flex-col gap-6 group tracking-tight")
-							.photo(class="aspect-video bg-gray-200 overflow-hidden")
-								NuxtLink(:to="post.path")
-									NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center group-hover:scale-110 duration-700 group-hover:rotate-3")
-							div(class="flex flex-col gap-4")
-								NuxtLink(:to="post.path")
-									p(class="text-3xl lg:text-5xl group-hover:text-brand-accent tracking-tight duration-300") {{ post.title }}
-								NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric" relative class="text-xs uppercase tracking-tight text-zinc-600")
+				article.featured(v-for="(post, idx) in posts.filter(x => !x.tags?.includes('trending')).slice(0, 1)" :key="idx")
+					//- div(v-if="!post.tags?.includes('trending')")
+					div(class="flex flex-col gap-6 group tracking-tight")
+						.photo(class="aspect-video bg-gray-200 overflow-hidden")
+							NuxtLink(:to="post.path")
+								NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center group-hover:scale-110 duration-700 group-hover:rotate-3")
+						div(class="flex flex-col gap-4")
+							NuxtLink(:to="post.path")
+								p(class="text-3xl lg:text-5xl group-hover:text-brand-accent tracking-tight duration-300") {{ post.title }}
+							NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric" relative class="text-xs uppercase tracking-tight text-zinc-600")
 				//- GRID
 				div(class="grid grid-cols-2 gap-4 lg:gap-8")
-					article(v-for="(post, idx) in posts.slice(1).filter(x => !x.tags?.includes('trending'))" :key="idx" class="col-span-1")
+					article(v-for="(post, idx) in posts.filter(x => !x.tags?.includes('trending')).slice(1)" :key="idx" class="col-span-1")
 						div(class="flex flex-col gap-4 group tracking-tight")
 							.photo(class="aspect-video bg-gray-200 overflow-hidden")
 								NuxtLink(:to="post.path")

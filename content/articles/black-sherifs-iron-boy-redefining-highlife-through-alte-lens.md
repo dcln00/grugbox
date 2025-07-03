@@ -2,7 +2,7 @@
 title: Black Sherif’s Iron Boy Delivers a Bold Statement of Resilience and Artistry
 description: Black Sherif’s Iron Boy Delivers a Bold Statement of Resilience and Artistry
 date: 2025-04-03 19:28:00 -0700
-image: /articles/iron-boy.png
+image: /content/iron-boy.png
 tags: [trending]
 ---
 Yo! Let’s talk Black Sherif’s “Iron Boy”; this album is straight fire.

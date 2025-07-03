@@ -2,7 +2,7 @@
 title: Moliy Unites Ghana on the BET Awards Stage
 description: Moliy Unites Ghana on the BET Awards Stage
 date: 2025-06-12 19:28:00 -0700
-image: /articles/moliy-bet.jpg
+image: /content/moliy-bet.jpg
 tags: [trending, performance, moliy]
 ---
 

@@ -2,7 +2,7 @@
 title: How Amaarae Is Pioneering Ghana’s Alte Wave After Coachella Debut
 description: How Amaarae Is Pioneering Ghana’s Alte Wave After Coachella Debut
 date: 2025-04-12 19:28:00 -0700
-image: /articles/amaarae-coachella.jpeg
+image: /content/amaarae-coachella.jpeg
 tags: [trending, performance, amaarae]
 ---
 

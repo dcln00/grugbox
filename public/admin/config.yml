@@ -5,8 +5,8 @@ backend:
   base_url: https://sveltia-cms-auth.nii-aryh.workers.dev
   open_authoring: true
 
-media_folder: public/articles
-public_folder: /articles
+media_folder: public/content
+public_folder: /content
 site_url: https://www.grugbox.world
 site_name: Grugbox
 publish_mode: editorial_workflow

@@ -2,7 +2,7 @@
 title: GB on Apple Music
 description: GB on Apple Music
 date: 2025-07-03T21:59:00
-image: /articles/gb-list.png
+image: /content/gb-list.png
 ---
 Discover new artistes. A weekly playlist curated by Grugbox made up of rising artistes.
 

@@ -1,7 +1,7 @@
 ---
 title: 'Kevin Nkrumah: Whispering Stories in Light and Shadow'
 description: 'Kevin Nkrumah: Whispering Stories in Light and Shadow'
-date: 2025-07-11T21:23:00
+date: 2025-07-09T21:27:00
 image: /content/black-and-white-photography-kevin-nkrumah-02.jpg
 tags: []
 ---

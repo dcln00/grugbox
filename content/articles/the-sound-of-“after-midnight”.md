@@ -1,7 +1,7 @@
 ---
 title: The Sound of “After Midnight”
 description: The Sound of Gyakies “After Midnight”
-date: 2025-10-05T18:12:00
+date: 2025-09-15T18:12:00
 image: /content/gyakie-featured.jpg
 tags:
   - music

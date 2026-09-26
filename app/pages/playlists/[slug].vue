@@ -9,11 +9,15 @@ const formatSlug = computed(() => {
 		.join(" ")
 })
 
-const { data: playlist } = await useAsyncData(`${route.params.slug}`, () => {
+const { data: playlist } = await useAsyncData(`playlist-${route.params.slug}`, () => {
 	return queryCollection("playlists")
 		.path(`/playlists/${route.params.slug}`)
 		.first()
 })
+
+if (!playlist.value) {
+	throw createError({ status: 404, statusText: "Playlist not found", fatal: true })
+}
 
 useHead({
 	title: () => `${formatSlug.value} - Grugbox`,
@@ -34,21 +38,21 @@ useSeoMeta({
 
 <template lang="pug">
 section#hero(class="pt-12 lg:pt-20")
-	.container(class="lg:w-1/2")
+	div(class="container lg:w-1/2")
 		div(class="flex flex-col gap-8")
-			.photo(class="w-full lg:aspect-video pointer-events-none")
+			div(class="photo w-full lg:aspect-video pointer-events-none")
 				NuxtImg(:src="playlist.image" alt="featured image" class="w-full h-full object-cover object-center")
-			.title(class="flex flex-col gap-4 lg:gap-6")
+			div(class="title flex flex-col gap-4 lg:gap-6")
 				h1(class="text-2xl lg:text-7xl tracking-tight") {{ playlist.title }}
 				hr(class="border-zinc-200")
-				.author-date(class="flex gap-4 *:tracking-tight")
+				div(class="author-date flex gap-4 *:tracking-tight")
 					p Published #[NuxtTime(:datetime="playlist.date" month="long" day="numeric" year="numeric" relative)]
 
 section#playlist(class="py-12 lg:py-12")
-	.container(class="lg:w-1/2")
+	div(class="container lg:w-1/2")
 		div(class="flex flex-col gap-12")
 			ContentRenderer(v-if="playlist" :value="playlist" class="prose max-w-none prose-a:no-underline prose-h2:pb-4 prose-h1:font-normal prose-h1:text-xl prose-p:text-zinc-600")
-			.tags(class="flex items-center gap-4" v-if="playlist.tags?.length")
+			div(class="tags flex items-center gap-4" v-if="playlist.tags?.length")
 				p(class="text-xs uppercase") tags: 
-				div(v-for="tag in post.tags" class="uppercase text-zinc-400 text-xs border px-4 py-2 hover:bg-black hover:text-white hover:border-0 duration-300") {{ tag }}
+				div(v-for="tag in playlist.tags" class="uppercase text-zinc-400 text-xs border px-4 py-2 hover:bg-black hover:text-white hover:border-0 duration-300") {{ tag }}
 </template>

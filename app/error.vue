@@ -10,10 +10,10 @@ const props = defineProps({
 })
 
 const handleError = () => clearError({ redirect: '/' })
-</script>?
+</script>
 
 <template lang="pug">
-.body-outlet(class="flex h-screen flex-col")
+div(class="body-outlet flex h-screen flex-col")
 	app-header
 	section#error(class="relative flex-1 flex items-center justify-center max-lg:container")
 		div(class="text-center")

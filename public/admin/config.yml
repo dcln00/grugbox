@@ -24,13 +24,67 @@ collections:
     editor:
       preview: true
       default:
-        field: published_date
+        field: date
         direction: descending
     fields:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Featured Image', name: 'image', widget: 'image', required: false }
+      - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like trending, lifestyle, etc..',}
+      - label: 'Category'
+        name: 'category'
+        widget: 'select'
+        hint: 'How this piece is classified on the site.'
+        options:
+          - { label: 'Feature', value: 'feature' }
+          - { label: 'Editorial', value: 'editorial' }
+          - { label: 'Profile', value: 'profile' }
+          - { label: 'Event', value: 'event' }
+          - { label: 'Screen', value: 'screen' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+
+  - name: 'review'
+    slug: '{{slug}}'
+    label: 'Reviews'
+    label_singular: 'Review'
+    icon: 'rate_review'
+    folder: 'content/reviews'
+    format: 'frontmatter'
+    create: true
+    identifier_field: "title"
+    editor:
+      preview: true
+      default:
+        field: date
+        direction: descending
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Description', name: 'description', widget: 'string' }
+      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Featured Image', name: 'image', widget: 'image', required: true, hint: 'Required — the review page and its Open Graph tags both render it.' }
+      - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like album, ep, single, etc..',}
+      - { label: 'Score', name: 'score', widget: 'number', required: false, min: 1, max: 10, value_types: ['int'], hint: 'Score out of 10. Leave blank for reviews that are not scored.' }
+      - { label: 'Body', name: 'body', widget: 'markdown' }
+
+  - name: 'interview'
+    slug: '{{slug}}'
+    label: 'Interviews'
+    label_singular: 'Interview'
+    icon: 'record_voice_over'
+    folder: 'content/interviews'
+    format: 'frontmatter'
+    create: true
+    identifier_field: "title"
+    editor:
+      preview: true
+      default:
+        field: date
+        direction: descending
+    fields:
+      - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - { label: 'Featured Image', name: 'image', widget: 'image', required: true, hint: 'Required — the interview page and its Open Graph tags both render it.' }
       - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like trending, lifestyle, etc..',}
       - { label: 'Body', name: 'body', widget: 'markdown' }
 
@@ -46,7 +100,7 @@ collections:
     editor:
       preview: true
       default:
-        field: published_date
+        field: date
         direction: descending
     fields:
       - { label: 'Title', name: 'title', widget: 'string' }

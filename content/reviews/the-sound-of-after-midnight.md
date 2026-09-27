@@ -5,6 +5,7 @@ date: 2025-09-15T18:12:00
 image: /content/gyakie-featured.jpg
 tags:
   - music
+score: 8
 ---
 If you've been paying attention to the African music scene, you'll know that Gyakie's rise has been nothing short of phenomenal. The Ghanaian songbird, who first captured hearts with her breakout hit "Forever," has now given us her most personal and powerful project yet: her debut album, "After Midnight." And let me tell you, it isn't just a collection of songs; it's a statement that's already making waves.
 

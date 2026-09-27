@@ -3,6 +3,7 @@ title: 'Ghanaian Fire Ignites the Croisette: A Look Back at Cannes and What It M
 description: 'Ghanaian Fire Ignites the Croisette: A Look Back at Cannes and What It Means for Our Creative Scene!'
 date: 2025-06-02T20:33:00
 image: /content/2059C8C7-FD0B-478A-8E50-C3347D431EBE_1_201_a.jpeg
+category: feature
 ---
 What's up, you guys! So, the glitz and glam of the Cannes Film Festival have wrapped up, and as always, it was a whirlwind of stunning cinema, red carpet moments, and major industry buzz. But beyond the headlines, we've got some exciting news closer to home! Ghanaian creatives were not just present; they were making waves and showing the world what Ghana is truly made of. 
 

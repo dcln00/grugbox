@@ -1,10 +1,11 @@
 ---
 title: Black Sherif’s Iron Boy Delivers a Bold Statement of Resilience and Artistry
-description: Black Sherif’s Iron Boy Delivers a Bold Statement of Resilience and Artistry
+description: Iron Boy finds Black Sherif trading in raw, street-smart lyricism over production built for both moshpits and quiet reflection, with 'ONE', 'SACRIFICE' and 'WHERE THEM BOYS' standing out on a record about resilience and staying true.
 date: 2025-04-03T22:26:00
 image: /content/iron-boy.png
 tags:
   - trending
+score: 9
 ---
 Yo! Let’s talk Black Sherif’s “Iron Boy”; this album is straight fire.
 

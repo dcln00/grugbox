@@ -3,6 +3,7 @@ title: 'Ghanaian Excellence Shines at the Met Gala: A Look Back at a Fab Night!'
 description: 'Ghanaian Excellence Shines at the Met Gala: A Look Back at a Fab Night!'
 date: 2025-05-02T16:13:00
 image: /content/met-gala.png
+category: feature
 ---
 Hey fashion lovers! What is up? Can we just take a moment to talk about the Met Gala that just wrapped up? As always, it was the night for jaw-dropping fashion, creative interpretations, and a whole lot of buzz. This year's theme, "Sleeping Beauties: Reawakening Fashion", with a dress code of "The Garden of Time", truly brought out some incredible looks that had us all talking. 
 

@@ -9,13 +9,21 @@ tags:
   - burnaboy
   - afrofusion
   - music
-score: 8
+albumTitle: "No Sign of Weakness"
+score: 9.1
+releaseDate: "July 11, 2025"
+keyTracks:
+  - "Wildfire (feat. Mick Jagger)"
+  - "Ghetto Symphony"
+  - "Midnight in Port Harcourt"
+good:
+  - "Audacious sonic alchemy uniting Highlife horns with Mick Jagger's rock vocals on 'Wildfire'"
+  - "Haunting Niger Delta storytelling and Kalabari percussion on 'Midnight in Port Harcourt'"
+  - "Uncompromising political defiance and razor-sharp Afro-fusion production"
+bad:
+  - "Experimental genre clashes may alienate fans seeking standard club bangers"
+  - "Heavy thematic weight makes for a demanding single-sitting listen"
 ---
-
-**Rating:** 9.1 / 10  
-**Release Date:** July 11, 2025  
-**Label:** Spaceship / Bad Habit / Atlantic Records  
-**Key Tracks:** *Wildfire* (feat. Mick Jagger), *Ghetto Symphony*, *Midnight in Port Harcourt*
 
 Across his legendary career, Damini Ogulu—**Burna Boy**—has consistently redefined what is possible for African music on the global stage. Yet on his eighth studio LP, ***No Sign of Weakness***, the Grammy-winning icon pivots away from conventional pop formulas to deliver his most uncompromising, musically audacious project since 2019's *African Giant*.
 

@@ -9,13 +9,19 @@ tags:
   - stonebwoy
   - dancehall
   - ghana
-score: 7
+albumTitle: "Jejereje"
+score: 9.2
+releaseDate: "November 2024"
+keyTracks:
+  - "Jejereje (feat. Ginton)"
+good:
+  - "Hypnotic acoustic guitar licks by Dutch guitarist Ginton"
+  - "Masterful blend of palmwine highlife grooves with Caribbean dancehall bounce"
+  - "Unforgettable hook and instant cross-continental party appeal"
+bad:
+  - "Short track duration rushes the final energetic breakdown"
+  - "Leaves little room for extended lyrical verses"
 ---
-
-**Rating:** 9.2 / 10  
-**Release Date:** Late 2024 / 2025  
-**Label:** Burniton Music Group / Def Jam Recordings Africa  
-**Featured Artist:** Ginton  
 
 Few artists in African music command the respect, versatility, and longevity of Ghanaian icon Livingstone Etse Satekla, better known as **Stonebwoy**. Across his decade-plus reign, the 1GAD has mastered reggae, dancehall, highlife, and Afropop. But with "Jejereje", featuring Dutch guitarist and producer Ginton, Stonebwoy delivered one of the most culturally resonant and instantly infectious anthems of his career.
 

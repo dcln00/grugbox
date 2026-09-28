@@ -5,7 +5,20 @@ date: 2025-09-15T18:12:00
 image: /content/gyakie-featured.jpg
 tags:
   - music
+albumTitle: "After Midnight"
 score: 8
+releaseDate: "August 29, 2025"
+keyTracks:
+  - "Sankofa"
+  - "Unconditional"
+  - "Y2K Luv"
+good:
+  - "Intimate midnight songwriting displaying deep vulnerability and healing"
+  - "Sentimental homage to Nana Acheampong on 'Y2K Luv' bridging generations"
+  - "Seamless global collaborations with 6LACK and Kojey Radical"
+bad:
+  - "Eclectic genre-hopping makes the album's thematic focus feel fragmented at times"
+  - "Some late-night slow jams blend into each other"
 ---
 If you've been paying attention to the African music scene, you'll know that Gyakie's rise has been nothing short of phenomenal. The Ghanaian songbird, who first captured hearts with her breakout hit "Forever," has now given us her most personal and powerful project yet: her debut album, "After Midnight." And let me tell you, it isn't just a collection of songs; it's a statement that's already making waves.
 

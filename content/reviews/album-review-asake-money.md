@@ -9,13 +9,21 @@ tags:
   - asake
   - afrobeats
   - music
-score: 10
+albumTitle: "M$NEY"
+score: 8.8
+releaseDate: "May 1, 2026"
+keyTracks:
+  - "Worship (with DJ Snake)"
+  - "Badman Gangsta (feat. Tiakola)"
+  - "Asambe (feat. Kabza De Small)"
+good:
+  - "Bold sonic expansion fusing Fuji choir harmonies with international electronic house"
+  - "Stellar cross-continental collaborations with DJ Snake, Tiakola, and Kabza De Small"
+  - "Unyielding spiritual grounding and heartfelt Yoruba street devotion"
+bad:
+  - "Relentless high-octane tempo leaves little breathing room between anthems"
+  - "Ambitious 13-track scope occasionally overshadows quieter acoustic moments"
 ---
-
-**Rating:** 8.8 / 10  
-**Release Date:** May 1, 2026  
-**Label:** YBNL Nation / EMPIRE  
-**Key Tracks:** _Worship_ (with DJ Snake), _Badman Gangsta_ (feat. Tiakola), _Asambe_ (feat. Kabza De Small)
 
 When Ahmed Ololade, known globally as **Asake**, burst into mainstream prominence in 2022, sceptics questioned whether his high-energy fusion of Fuji street chants, dramatic string flourishes, and amapiano log drums could sustain longevity. Four albums in four years later, Asake has not only silenced doubters—he has fundamentally re-engineered the sonic architecture of West African popular music.
 

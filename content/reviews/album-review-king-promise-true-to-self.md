@@ -9,13 +9,21 @@ tags:
   - kingpromise
   - ghana
   - afropop
-score: 8
+albumTitle: "True to Self"
+score: 8.7
+releaseDate: "May 2025"
+keyTracks:
+  - "Paris"
+  - "Favourite Story (feat. Sarkodie & Olivetheboy)"
+  - "Continental (feat. Shallipopi)"
+good:
+  - "Silky, honeyed vocal performances and timeless romantic Afropop melodies"
+  - "Brilliant vintage Highlife sample of Ofori Amponsah on 'Favourite Story'"
+  - "Seamless blend of Ghanaian elegance and Benin street swagger on 'Continental'"
+bad:
+  - "Lyrical themes stick closely to familiar romance and nightlife tropes"
+  - "A few mid-tempo tracks share very similar chord progressions"
 ---
-
-**Rating:** 8.7 / 10  
-**Release Date:** May 2025  
-**Label:** 5K Records / Sony Music UK  
-**Key Tracks:** *Paris*, *Favourite Story* (feat. Sarkodie & Olivetheboy), *Continental* (feat. Shallipopi)
 
 Gregory Bortey Newman, known across the globe as **King Promise**, possesses one of the most instantly recognizable, honeyed voices in modern African music. His third studio album, ***True to Self***—which took home Album of the Year at the 2025 Telecel Ghana Music Awards—stands as his most accomplished body of work to date.
 

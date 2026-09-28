@@ -5,7 +5,20 @@ date: 2025-04-03T22:26:00
 image: /content/iron-boy.png
 tags:
   - trending
+albumTitle: "Iron Boy"
 score: 9
+releaseDate: "April 2025"
+keyTracks:
+  - "ONE"
+  - "SACRIFICE"
+  - "WHERE THEM BOYS"
+good:
+  - "Gritty, authentic storytelling capturing real street hustle and perseverance"
+  - "Impeccable drum-heavy production blending highlife with drill and moshpit bangers"
+  - "Visceral emotional delivery on standout tracks like 'SACRIFICE' and 'ONE'"
+bad:
+  - "Mid-album pacing dips slightly on more introspective ballads"
+  - "Subliminal friction and Kwesi Arthur diss narratives distract from musical themes"
 ---
 Yo! Let’s talk Black Sherif’s “Iron Boy”; this album is straight fire.
 

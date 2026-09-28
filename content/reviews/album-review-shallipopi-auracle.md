@@ -9,13 +9,21 @@ tags:
   - shallipopi
   - streethop
   - edo
-score: 7
+albumTitle: "Auracle"
+score: 8.4
+releaseDate: "December 5, 2025"
+keyTracks:
+  - "Pluto Oracle"
+  - "Benin Boy Global"
+  - "Evian Vibes"
+good:
+  - "Irresistible nonchalant delivery and distinctive Edo linguistic idioms"
+  - "Thunderous sub-bass grooves tailored for club sound systems"
+  - "Authentic street minimalism that avoids overwrought production tricks"
+bad:
+  - "Repetitive rhythmic pockets across the latter half of the tracklist"
+  - "Lyrical focus rarely strays outside viral catchphrases and bravado"
 ---
-
-**Rating:** 8.4 / 10  
-**Release Date:** December 5, 2025  
-**Label:** Plutomania Records / Dapper Music  
-**Key Tracks:** *Pluto Oracle*, *Benin Boy Global*, *Evian Vibes*
 
 Crown Uzama, widely known as **Shallipopi** or the 'Pluto President', is one of the most unique cultural phenomena to emerge from Nigeria in recent years. Hailing from Benin City, Edo State, Shallipopi bypassed conventional Afrobeats melodies to construct an entirely distinct sub-genre: relaxed, hypnotic, conversational street-hop propelled by heavy basslines and rich Edo linguistic idioms.
 

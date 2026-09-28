@@ -9,13 +9,21 @@ tags:
   - seyivibez
   - streethop
   - burnaboy
-score: 10
+albumTitle: "SWAGUU"
+score: 8.5
+releaseDate: "September 22, 2026"
+keyTracks:
+  - "Atlanta to Ikorodu (feat. Quavo)"
+  - "Alhamdulillah"
+  - "Apala 2.0"
+good:
+  - "Explosive fusion of indigenous Yoruba Islamic poetry and global trap"
+  - "High-profile Burna Boy executive production elevates sonic polish"
+  - "Dynamic guest turn from Quavo on 'Atlanta to Ikorodu'"
+bad:
+  - "Dense 14-track sequence occasionally blurs sonic textures"
+  - "High-tempo momentum overshadows more introspective songwriting"
 ---
-
-**Rating:** 8.5 / 10  
-**Release Date:** September 22, 2026  
-**Label:** Vibez Inc. / Dapper Music  
-**Key Tracks:** _Atlanta to Ikorodu_ (feat. Quavo), _Alhamdulillah_, _Apala 2.0_
 
 Few artists in contemporary West African music command the fervent, almost spiritual devotion that surrounds Ketu-born street-hop titan **Seyi Vibez**. Known for his prolific output and deeply personal Islamic-Yoruba poetry, Seyi Vibez's latest 14-track album, **_SWAGUU_**, marks a monumental step forward in his career.
 

@@ -9,13 +9,21 @@ tags:
   - tems
   - soul
   - rnb
-score: 7
+albumTitle: "Love Is A Kingdom"
+score: 9
+releaseDate: "November 21, 2025"
+keyTracks:
+  - "Kingdom"
+  - "Sanctuary"
+  - "Hold On To Light"
+good:
+  - "Peerless vocal architecture and rich, resonant contralto harmonies"
+  - "Autonomous self-production displaying exquisite spiritual depth"
+  - "Atmospheric, sacred soundscapes on 'Sanctuary' and 'Kingdom'"
+bad:
+  - "Brief 7-track runtime leaves listeners yearning for full-length expansion"
+  - "Some melodic ideas feel like sketches awaiting album completion"
 ---
-
-**Rating:** 9.0 / 10  
-**Release Date:** November 21, 2025  
-**Label:** Since '93 / RCA Records  
-**Key Tracks:** *Kingdom*, *Sanctuary*, *Hold On To Light*
 
 Temilade Openiyi—**Tems**—occupies a unique category in modern music. Possessing a rich, resonant contralto and an intuitive grasp of harmonic architecture, she creates music that feels like a sacred sanctuary amidst the noise of contemporary pop.
 

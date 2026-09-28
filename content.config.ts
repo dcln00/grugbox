@@ -30,13 +30,19 @@ export default defineContentConfig({
 				image: z.string(),
 				date: z.date(),
 				tags: z.array(z.string()),
-				score: z.number().int().min(1).max(10).optional(),
+				albumTitle: z.string().optional(),
+				score: z.number().min(0).max(10).optional(),
+				releaseDate: z.string().optional(),
+				keyTracks: z.union([z.array(z.string()), z.string()]).optional(),
+				good: z.array(z.string()).optional(),
+				bad: z.array(z.string()).optional(),
 			})
 		}),
 		interviews: defineCollection({
 			source: 'interviews/*.md',
 			type: 'page',
 			schema: z.object({
+				description: z.string().optional(),
 				image: z.string(),
 				date: z.date(),
 				tags: z.array(z.string()),

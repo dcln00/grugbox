@@ -60,11 +60,16 @@ collections:
         direction: descending
     fields:
       - { label: 'Title', name: 'title', widget: 'string' }
+      - { label: 'Album / Project Title', name: 'albumTitle', widget: 'string', required: false, hint: 'Title of the album, EP, or project for the scoreboard' }
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
       - { label: 'Featured Image', name: 'image', widget: 'image', required: true, hint: 'Required — the review page and its Open Graph tags both render it.' }
       - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like album, ep, single, etc..',}
-      - { label: 'Score', name: 'score', widget: 'number', required: false, min: 1, max: 10, value_types: ['int'], hint: 'Score out of 10. Leave blank for reviews that are not scored.' }
+      - { label: 'Score', name: 'score', widget: 'number', required: false, min: 1, max: 10, hint: 'Score out of 10. Leave blank for reviews that are not scored.' }
+      - { label: 'Release Date', name: 'releaseDate', widget: 'string', required: false, hint: 'e.g. November 21, 2025' }
+      - { label: 'Key Tracks', name: 'keyTracks', widget: 'list', required: false, hint: 'List of standout tracks' }
+      - { label: 'The Good', name: 'good', widget: 'list', required: false, hint: 'Highlights and strengths' }
+      - { label: 'The Bad', name: 'bad', widget: 'list', required: false, hint: 'Criticisms or drawbacks' }
       - { label: 'Body', name: 'body', widget: 'markdown' }
 
   - name: 'interview'

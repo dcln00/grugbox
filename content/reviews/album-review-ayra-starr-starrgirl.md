@@ -9,13 +9,21 @@ tags:
   - ayrastarr
   - pop
   - music
-score: 8
+albumTitle: "Starrgirl"
+score: 8.9
+releaseDate: "August 14, 2026"
+keyTracks:
+  - "Where Do We Go (feat. Wizkid)"
+  - "Tornado"
+  - "Celestial Glow (feat. ZAYN)"
+good:
+  - "Immaculate vocal versatility across Afropop, UK garage, and shimmering synth-pop"
+  - "Sensual, effortless chemistry alongside Wizkid on 'Where Do We Go'"
+  - "Stunning emotional range on transatlantic ballad 'Celestial Glow' with ZAYN"
+bad:
+  - "Dense 16-track runtime has a couple of formulaic radio fillers"
+  - "Guest features occasionally overpower her solo introspective presence"
 ---
-
-**Rating:** 8.9 / 10  
-**Release Date:** August 14, 2026  
-**Label:** Mavin Records / Republic Records  
-**Key Tracks:** *Where Do We Go* (feat. Wizkid), *Tornado*, *Celestial Glow* (feat. ZAYN)
 
 At just 24 years old, Oyinkansola Sarah Aderibigbe—**Ayra Starr**—has transitioned from promising teenage prodigy to an undisputed global pop sovereign. Following the breakout success of *19 & Dangerous* and *The Year I Turned 21*, her third studio album, ***Starrgirl***, represents the definitive crystallization of her celestial sonic identity.
 

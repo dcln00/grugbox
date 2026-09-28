@@ -1,0 +1,32 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --color-brand-accent: #911f1c;
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+* {
+	box-sizing: border-box;
+	scroll-behavior: smooth;
+}
+
+::selection {
+	background-color: black;
+	color: white;
+}
+
+body {
+	font-family: "Google Sans", sans-serif;
+}
+
+.prose :is(h1, h2, h3, h4, h5, h6),
+.prose :is(h1, h2, h3, h4, h5, h6) a,
+.prose :is(h1, h2, h3, h4, h5, h6) a:hover {
+	color: #000;
+	text-decoration: underline;
+}

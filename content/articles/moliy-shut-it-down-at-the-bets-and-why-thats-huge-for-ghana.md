@@ -1,12 +1,13 @@
 ---
 title: Moliy Shut It Down at the BETs, and Why That's HUGE for Ghana!
-description: Moliy Shut It Down at the BETs, and Why That's HUGE for Ghana!
+description: Moliy became the first Ghanaian artist to perform at the BET Awards main ceremony, lighting up Los Angeles' Peacock Theater with a high-energy run through 'Shake It to the Max (FLY)' and bringing Ghanaian music to millions.
 date: 2025-06-10T22:23:00
 image: /content/moliy-bet.jpg
 tags:
   - trending
   - performance
   - moliy
+category: feature
 ---
 Okay, so if you weren't already in the loop, let's talk about Moliy at the recent BET Awards! Our very own Ghanaian queen, Moliy, absolutely slayed on the global stage, and it's not just about a cool outfit (though she definitely brought the fashion!). This moment is actually a massive win for Ghana, and here's why. 
 

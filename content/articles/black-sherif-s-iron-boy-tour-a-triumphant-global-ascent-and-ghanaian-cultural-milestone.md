@@ -5,6 +5,7 @@ date: 2025-07-11T21:31:00
 image: /content/STILLS FROM TOUR - THE AMSTERDAM  TO STOCKHOLM SWAGGA.stills by @apmworldmag (1).jpg
 tags:
   - ''
+category: feature
 ---
 Black Sherif just wrapped up his highly anticipated "Iron Boy" tour, and let me tell you, it was an absolute movie! The Konongo Zongo superstar took over stages across North America and Europe, leaving a trail of sold-out venues and unforgettable performances in his wake.
 

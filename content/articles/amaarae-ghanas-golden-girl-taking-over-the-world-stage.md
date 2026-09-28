@@ -1,12 +1,13 @@
 ---
 title: Amaarae, Ghana's Golden Girl Taking Over the World Stage!
-description: Amaarae, Ghana's Golden Girl Taking Over the World Stage!
+description: Amaarae made her Coachella debut on the Gobi Tent stage, using the set to spotlight Ghanaian artists from Eazzy and Joey B to La Même Gang and the Asakaa Boys, and teasing her forthcoming album 'Black Star'.
 date: 2025-04-15T23:38:00
 image: /content/amaarae-coachella.jpeg
 tags:
   - trending
   - performance
   - amaarae
+category: feature
 ---
 Okay, so if you've been anywhere near a music playlist or a trending topic lately, you've probably heard the buzz about Amaarae. This Ghanaian-American queen is absolutely killing it on the global stage, and honestly, she's making Ghana super proud!
 

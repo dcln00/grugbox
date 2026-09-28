@@ -6,6 +6,7 @@ image: /content/rapperholic-featured.jpg
 tags:
   - featured
   - rapperholic
+category: feature
 ---
 Yo, buckle up, because the recent **Rapperholic concert**, branded as a definitive "Homecoming", was a cultural phenomenon that cemented its place in Ghana's music history. Taking the biggest event on the hip-hop calendar to the **Baba Yara Sports Stadium** was a statement. An unapologetic affirmation of the Ashanti Region's pivotal role in Ghanaian music and the national love affair with the King of Rap, **Sarkodie**.
 

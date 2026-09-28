@@ -3,6 +3,7 @@ title: "King Promise: From Accra to the World Stage – A Ghanaian Icon's Global
 description: "King Promise: From Accra to the World Stage – A Ghanaian Icon's Global Takeover!"
 date: 2025-04-03T23:45:00
 image: /content/promise.jpg
+category: profile
 ---
 Our very own "5 Star General," King Promise, has been making some serious waves lately, and it's not just us in Ghana who are buzzing about it! From topping charts to selling out venues across the globe, it's safe to say King Promise is officially a global phenomenon, and we couldn't be prouder.
 

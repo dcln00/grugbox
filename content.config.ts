@@ -52,8 +52,10 @@ export default defineContentConfig({
 			source: 'playlists/*.md',
 			type: 'page',
 			schema: z.object({
+				description: z.string().optional(),
 				image: z.string(),
-				date: z.date()
+				date: z.date(),
+				tags: z.array(z.string()).optional(),
 			})
 		}),
 	},

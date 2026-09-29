@@ -27,8 +27,8 @@ useSeoMeta({
 <template lang="pug">
 div(class="body-outlet flex flex-col min-h-screen")
 	Transition(name="top")
-		div(v-if="y > 200" class="top fixed bottom-6 right-6 z-10 aspect-square bg-black group duration-200 hover:bg-white hover:border size-10 flex items-center justify-center cursor-pointer" @click="() => y = 0")
-			svg-arrow-up(class="w-3.5 h-3.5 text-white group-hover:text-black")
+		div(v-if="y > 200" class="top fixed bottom-6 right-6 z-10 aspect-square bg-black group duration-200 size-10 flex items-center justify-center cursor-pointer" @click="() => y = 0")
+			svg-arrow-up(class="w-3.5 h-3.5 text-white")
 	app-header
 	app-drawer
 	main(class="lg:grow")

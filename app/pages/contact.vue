@@ -25,43 +25,43 @@ const primaryTag = (tags?: string[] | null): string => tags?.find(tag => tag !==
 const contacts = [
 	{
 		question: 'If you have questions about your subscription or need assistance, our Customer Care team is here to help.',
-		email: 'help@grugbox.com',
-		href: 'mailto:help@grugbox.com',
+		email: 'help@grugbox.world',
+		href: 'mailto:help@grugbox.world',
 	},
 	{
 		question: 'Where do I report technical errors on the site (images won’t load, broken links, etc.)?',
-		email: 'corrections@grugbox.com',
-		href: 'mailto:corrections@grugbox.com',
+		email: 'corrections@grugbox.world',
+		href: 'mailto:corrections@grugbox.world',
 	},
 	{
 		question: 'Where do I report editorial errors on the site?',
-		email: 'corrections@grugbox.com',
-		href: 'mailto:corrections@grugbox.com',
+		email: 'corrections@grugbox.world',
+		href: 'mailto:corrections@grugbox.world',
 	},
 	{
 		question: 'How do I get in touch with the Grugbox news department?',
-		email: 'news@grugbox.com',
-		href: 'mailto:news@grugbox.com',
+		email: 'news@grugbox.world',
+		href: 'mailto:news@grugbox.world',
 	},
 	{
 		question: 'Where should I send a press release?',
-		email: 'news@grugbox.com',
-		href: 'mailto:news@grugbox.com',
+		email: 'news@grugbox.world',
+		href: 'mailto:news@grugbox.world',
 	},
 	{
 		question: 'Whom should I contact regarding press inquiries?',
-		email: 'press@grugbox.com',
-		href: 'mailto:press@grugbox.com',
+		email: 'press@grugbox.world',
+		href: 'mailto:press@grugbox.world',
 	},
 	{
 		question: 'Whom should I contact in regards to business development ideas and opportunities?',
-		email: 'ads@grugbox.com',
-		href: 'mailto:ads@grugbox.com',
+		email: 'ads@grugbox.world',
+		href: 'mailto:ads@grugbox.world',
 	},
 	{
 		question: 'Where should I submit music, demos, or artist releases for editorial review consideration?',
-		email: 'submissions@grugbox.com',
-		href: 'mailto:submissions@grugbox.com',
+		email: 'submissions@grugbox.world',
+		href: 'mailto:submissions@grugbox.world',
 	},
 ]
 </script>

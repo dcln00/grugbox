@@ -30,3 +30,12 @@ body {
 	color: #000;
 	text-decoration: underline;
 }
+
+.prose img {
+	display: block;
+	margin-inline: auto;
+}
+
+.prose p:has(img) {
+	text-align: center;
+}

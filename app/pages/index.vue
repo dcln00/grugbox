@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { data: posts } = await useAsyncData('posts', () => {
   return queryCollection('articles')
-	.select('title', 'description', 'path', 'image', 'date', 'tags', 'category')
+	.select('title', 'description', 'path', 'image', 'video', 'date', 'tags', 'category')
 	.order('date', 'DESC')
 	.all()
 })
@@ -39,7 +39,7 @@ const latest = computed(() => posts.value?.filter(post => !post.tags?.includes(T
 const heroLead = computed(() => trending.value[0])
 const heroSecond = computed(() => trending.value[1])
 
-const primaryTag = (tags: string[] = []): string => tags.find(tag => tag !== TRENDING_TAG) ?? ''
+const primaryTag = (tags?: string[] | null): string => tags?.find(tag => tag !== TRENDING_TAG) ?? ''
 
 //- "More From Grugbox" opens with six cards, then reveals three more per click
 const INITIAL_VISIBLE = 6
@@ -108,7 +108,8 @@ section(id="ad-top" aria-label="Advertisement" class="py-8")
 section(id="hero" aria-label="Top trending" class="grid grid-cols-1 md:grid-cols-3 gap-px")
 	article(v-if="heroLead" class="group relative md:col-span-2 h-[60vh] overflow-hidden bg-zinc-800")
 		NuxtLink(:to="heroLead.path" class="block w-full h-full")
-			NuxtImg(:src="heroLead.image" alt="" class="absolute inset-0 w-full h-full object-cover object-center")
+			video(v-if="isVideo(heroLead.video || heroLead.image)" :src="heroLead.video || heroLead.image" :poster="!isVideo(heroLead.image) ? heroLead.image : undefined" autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover object-center")
+			NuxtImg(v-else :src="heroLead.image" alt="" class="absolute inset-0 w-full h-full object-cover object-center")
 			div(class="absolute right-0 bottom-0 w-full lg:w-3/4 bg-zinc-900 px-6 py-8 flex flex-col items-center gap-4 text-center")
 				span(class="text-[11px] uppercase tracking-widest text-neutral-300 underline underline-offset-4") {{ primaryTag(heroLead.tags) }}
 				h3(class="text-xl lg:text-3xl text-white tracking-tight duration-300 group-hover:underline") {{ heroLead.title }}
@@ -118,7 +119,8 @@ section(id="hero" aria-label="Top trending" class="grid grid-cols-1 md:grid-cols
 		NuxtLink(:to="heroSecond.path" class="flex h-full flex-col")
 			//- min-h-0 lets the image shrink instead of forcing the panel out of the box
 			div(class="flex-1 min-h-0 overflow-hidden")
-				NuxtImg(:src="heroSecond.image" alt="" class="h-full w-full object-cover object-center")
+				video(v-if="isVideo(heroSecond.video || heroSecond.image)" :src="heroSecond.video || heroSecond.image" :poster="!isVideo(heroSecond.image) ? heroSecond.image : undefined" autoplay loop muted playsinline class="h-full w-full object-cover object-center")
+				NuxtImg(v-else :src="heroSecond.image" alt="" class="h-full w-full object-cover object-center")
 			div(class="shrink-0 px-6 py-5 flex flex-col items-start gap-3 ")
 				span(class="text-[11px] font-medium uppercase tracking-wide text-neutral-600 underline underline-offset-4") {{ primaryTag(heroSecond.tags) }}
 				h3(class="text-xl lg:text-xl tracking-tight duration-300 group-hover:text-brand-accent") {{ heroSecond.title }}
@@ -138,7 +140,8 @@ section(id="profiles" class="my-20")
 							div(class="h-px flex-1 bg-zinc-200")
 					article(v-if="leadEditorial" class="group relative aspect-video overflow-hidden bg-zinc-900")
 						NuxtLink(:to="leadEditorial.path" class="block w-full h-full")
-							NuxtImg(:src="leadEditorial.image" alt="featured image" class="w-full h-full object-cover object-center duration-700")
+							video(v-if="isVideo(leadEditorial.video || leadEditorial.image)" :src="leadEditorial.video || leadEditorial.image" :poster="!isVideo(leadEditorial.image) ? leadEditorial.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-700")
+							NuxtImg(v-else :src="leadEditorial.image" alt="featured image" class="w-full h-full object-cover object-center duration-700")
 							div(class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-6 text-center gap-3 duration-300 group-hover:bg-black/50")
 								h3(class="text-xl md:text-2xl lg:text-3xl text-white tracking-tight duration-300 group-hover:underline max-w-xl text-center") {{ leadEditorial.title }}
 								p(class="text-[10px] uppercase tracking-widest text-zinc-300") By Grugbox · #[NuxtTime(:datetime="leadEditorial.date" month="long" day="numeric" year="numeric")]
@@ -146,7 +149,8 @@ section(id="profiles" class="my-20")
 						article(v-for="editorial in gridEditorials" :key="editorial.path" class="group flex flex-col gap-3")
 							div(class="photo aspect-video bg-gray-200 overflow-hidden")
 								NuxtLink(:to="editorial.path")
-									NuxtImg(:src="editorial.image" alt="featured image" class="w-full h-full object-cover object-center duration-700")
+									video(v-if="isVideo(editorial.video || editorial.image)" :src="editorial.video || editorial.image" :poster="!isVideo(editorial.image) ? editorial.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-700")
+									NuxtImg(v-else :src="editorial.image" alt="featured image" class="w-full h-full object-cover object-center duration-700")
 							div(class="flex flex-col gap-2")
 								NuxtLink(:to="editorial.path")
 									h3(class="text-base lg:text-lg leading-snug tracking-tight duration-300 group-hover:text-brand-accent") {{ editorial.title }}
@@ -164,7 +168,8 @@ section(id="profiles" class="my-20")
 						article(v-if="leadProfile" class="group flex flex-col gap-4")
 							div(class="photo aspect-3/2 bg-gray-200 overflow-hidden")
 								NuxtLink(:to="leadProfile.path")
-									NuxtImg(:src="leadProfile.image" alt="featured image" class="w-full h-full object-cover object-center duration-700")
+									video(v-if="isVideo(leadProfile.video || leadProfile.image)" :src="leadProfile.video || leadProfile.image" :poster="!isVideo(leadProfile.image) ? leadProfile.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-700")
+									NuxtImg(v-else :src="leadProfile.image" alt="featured image" class="w-full h-full object-cover object-center duration-700")
 							div(class="flex flex-col gap-3")
 								NuxtLink(:to="leadProfile.path")
 									h3(class="text-xl lg:text-xl tracking-tight duration-300 group-hover:text-brand-accent") {{ leadProfile.title }}
@@ -174,7 +179,8 @@ section(id="profiles" class="my-20")
 							article(v-for="profile in compactProfiles" :key="profile.path" class="group flex gap-4")
 								div(class="photo h-22.5 w-22.5 shrink-0 bg-gray-200 overflow-hidden")
 									NuxtLink(:to="profile.path")
-										NuxtImg(:src="profile.image" alt="featured image" class="w-full h-full object-cover object-center")
+										video(v-if="isVideo(profile.video || profile.image)" :src="profile.video || profile.image" :poster="!isVideo(profile.image) ? profile.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center")
+										NuxtImg(v-else :src="profile.image" alt="featured image" class="w-full h-full object-cover object-center")
 								div(class="flex flex-col gap-2")
 									NuxtLink(:to="profile.path")
 										h3(class="text-sm leading-snug tracking-tight line-clamp-2 duration-300 group-hover:text-brand-accent") {{ profile.title }}
@@ -273,7 +279,8 @@ section(id="more" class="my-20")
 				div(class="flex flex-col items-center gap-4 text-center mb-4")
 					div(class="photo w-full aspect-video bg-gray-200 overflow-hidden")
 						NuxtLink(:to="post.path")
-							NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center")
+							video(v-if="isVideo(post.video || post.image)" :src="post.video || post.image" :poster="!isVideo(post.image) ? post.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center")
+							NuxtImg(v-else :src="post.image" alt="featured image" class="w-full h-full object-cover object-center")
 					div(class="flex flex-col gap-4")
 						span(class="text-[11px] font-medium uppercase tracking-wide text-neutral-600 underline underline-offset-4") {{ post.category }}
 						NuxtLink(:to="post.path")

@@ -16,7 +16,7 @@ if (!post.value) {
 
 const { data: allArticles } = await useAsyncData('sidebar-popular-articles', () => {
   return queryCollection('articles')
-	.select('title', 'path', 'image', 'date', 'category', 'tags')
+	.select('title', 'path', 'image', 'video', 'date', 'category', 'tags')
 	.order('date', 'DESC')
 	.limit(6)
 	.all()
@@ -26,7 +26,7 @@ const popularPosts = computed(() => {
   return allArticles.value?.filter(item => item.path !== post.value?.path).slice(0, 3) ?? []
 })
 
-const primaryTag = (tags: string[] = []): string => tags.find(tag => tag !== 'trending') ?? ''
+const primaryTag = (tags?: string[] | null): string => tags?.find(tag => tag !== 'trending') ?? ''
 
 const shareUrl = computed(() => `https://grugbox.com${post.value?.path || ''}`)
 
@@ -41,6 +41,12 @@ onBeforeUnmount(() => {
   currentArticleTitle.value = null
 })
 
+const defaultOgImage = 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png'
+const postOgImage = computed(() => {
+  const img = post.value?.image
+  return img && !isVideo(img) ? img : defaultOgImage
+})
+
 useHead({
 	title: () => `${formatSlug.value} - Grugbox`,
 })
@@ -49,8 +55,8 @@ useSeoMeta({
 	description: () => post.value?.description || `Read the latest article on Grugbox about ${formatSlug.value}.`,
 	ogDescription: () => post.value?.description || `Read the latest article on Grugbox about ${formatSlug.value}.`,
 	twitterDescription: () => post.value?.description || `Read the latest article on Grugbox about ${formatSlug.value}.`,
-	ogImage: post.value?.image || 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
-	twitterImage: post.value?.image || 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
+	ogImage: () => postOgImage.value,
+	twitterImage: () => postOgImage.value,
 })
 </script>
 
@@ -71,9 +77,10 @@ article#article(v-if="post")
 			div(class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start")
 				//- LEFT COLUMN: Featured Image + Share Icons + Prose
 				div(class="lg:col-span-8 flex flex-col gap-10")
-					//- Featured hero image with subtle credit tag
+					//- Featured hero media with subtle credit tag
 					div(class="relative aspect-3/2 lg:aspect-16/10 overflow-hidden bg-zinc-100")
-						NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center")
+						video(v-if="isVideo(post.video || post.image)" :src="post.video || post.image" :poster="!isVideo(post.image) ? post.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center")
+						NuxtImg(v-else :src="post.image" alt="featured image" class="w-full h-full object-cover object-center")
 						span(class="absolute bottom-3 right-3 text-[9px] uppercase tracking-widest text-white/80 bg-black/50 px-2 py-0.5 backdrop-blur-xs") Grugbox Media
 
 					//- Floating Share Icons + Article Content
@@ -89,7 +96,7 @@ article#article(v-if="post")
 
 						//- Article Markdown Content
 						div(class="flex-1 min-w-0 flex flex-col gap-8")
-							ContentRenderer(:value="post" class="prose max-w-none prose-p:text-base prose-p:text-zinc-500 prose-p:leading-relaxed prose-a:text-brand-accent prose-a:underline hover:prose-a:text-black prose-headings:text-black prose-headings:underline prose-headings:font-bold prose-headings:tracking-tight prose-img:rounded-none")
+							ContentRenderer(:value="post" class="prose max-w-none prose-p:text-base prose-p:text-zinc-500 prose-p:leading-relaxed prose-a:text-brand-accent prose-a:underline hover:prose-a:text-black prose-headings:text-black prose-headings:underline prose-headings:font-bold prose-headings:tracking-tight prose-img:rounded-none prose-img:mx-auto prose-img:block")
 							
 							//- Tags
 							div(class="flex flex-wrap items-center gap-2 pt-6 border-t border-zinc-200" v-if="post.tags?.length")
@@ -109,7 +116,8 @@ article#article(v-if="post")
 							article(v-for="item in popularPosts" :key="item.path" class="group flex gap-4 items-start py-5 first:pt-0 last:pb-0")
 								div(class="photo size-20 shrink-0 bg-zinc-200 overflow-hidden")
 									NuxtLink(:to="item.path")
-										NuxtImg(:src="item.image" alt="" class="w-full h-full object-cover object-center duration-300")
+										video(v-if="isVideo(item.video || item.image)" :src="item.video || item.image" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-300")
+										NuxtImg(v-else :src="item.image" alt="" class="w-full h-full object-cover object-center duration-300")
 								div(class="flex flex-col gap-1 min-w-0")
 									span(class="text-[9px] uppercase font-medium tracking-wide text-neutral-500") {{ item.category || primaryTag(item.tags) }}
 									NuxtLink(:to="item.path")

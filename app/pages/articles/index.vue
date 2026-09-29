@@ -15,7 +15,7 @@ useSeoMeta({
 
 const { data: articles } = await useAsyncData('articles', () => {
   return queryCollection('articles')
-	.select('title', 'description', 'path', 'image', 'date', 'tags', 'category')
+	.select('title', 'description', 'path', 'image', 'video', 'date', 'tags', 'category')
 	.order('date', 'DESC')
 	.all()
 })
@@ -113,7 +113,8 @@ section#articles(class="py-10 lg:py-16")
 					div(class="flex flex-col items-center gap-4 text-center mb-4")
 						div(class="photo w-full aspect-video bg-gray-200 overflow-hidden")
 							NuxtLink(:to="post.path")
-								NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center duration-700 group-hover:scale-105")
+								video(v-if="isVideo(post.video || post.image)" :src="post.video || post.image" :poster="!isVideo(post.image) ? post.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-700 group-hover:scale-105")
+								NuxtImg(v-else :src="post.image" alt="featured image" class="w-full h-full object-cover object-center duration-700 group-hover:scale-105")
 						div(class="flex flex-col gap-4")
 							span(v-if="post.category || post.tags?.[0]" class="text-[11px] font-medium uppercase tracking-wide text-neutral-600 underline underline-offset-4") {{ post.category || primaryTag(post.tags) }}
 							NuxtLink(:to="post.path")

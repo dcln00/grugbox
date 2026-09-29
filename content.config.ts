@@ -17,6 +17,7 @@ export default defineContentConfig({
 			schema: z.object({
 				description: z.string(),
 				image: z.string(),
+				video: z.string().optional(),
 				date: z.date(),
 				tags: z.array(z.string()),
 				category: z.enum(ARTICLE_CATEGORIES),

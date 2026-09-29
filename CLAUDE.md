@@ -32,15 +32,23 @@ requires reading across files to understand:
 4. **`content.config.ts`** (repo root, not `app/`) declares the Zod schemas that
    `queryCollection()` validates against at build time.
 
-Two mismatches are live here and are the likely cause of confusion:
+The CMS and `content.config.ts` agree on collections: `post`, `review`, `interview` and
+`playlist` exist in both, and both are authorable through `/admin`. (`legal` has a schema but no
+CMS collection — those files are hand-written.)
 
-- **The CMS declares only `post` (→ `content/articles`) and `playlist` (→ `content/playlists`).
-  There is no `interviews` collection.** `content.config.ts` defines an `interviews` collection,
-  and the app has `/interviews` routes and a nav link, but no one can author interviews through
-  the CMS — which is why `content/interviews/` is empty.
-- **`description` exists in the CMS and in every article's frontmatter, but is absent from all
-  three schemas in `content.config.ts`.** Zod strips undeclared keys, so `description` is not
-  available via `queryCollection()`. Add it to the schema if you need it in a component.
+Three schema fields have no CMS widget, so they can only be set by editing frontmatter directly:
+
+- **`articles.video`** — the frontend renders it (`isVideo()` in `pages/index.vue` and
+  `pages/articles/index.vue`), but the CMS post collection has no video field.
+- **`interviews.description`** — optional in the schema and read by `pages/interviews/index.vue`
+  and `[slug].vue` for the listing blurb and Open Graph tags, but absent from the CMS interview
+  fields.
+- **`playlists.tags`** — optional in the schema, with no tags field in the CMS playlist collection.
+
+Every collection extends Nuxt Content's `PageCollectionItemBase`, so `title` and `description`
+are queryable on any collection even where its schema does not redeclare them. Generated types
+land in `.nuxt/content/types.d.ts` after `npm run postinstall` — read that file rather than
+guessing whether a field survived validation.
 
 Featured images use `/content/...` paths, which resolve to `public/content/` (the CMS sets
 `media_folder: public/content` and `public_folder: /content`). A few components fall back to a

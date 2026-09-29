@@ -8,10 +8,10 @@ useSeoMeta({
 	description: 'Subscribe to the Grugbox newsletter for the best album reviews, artist interviews, and African music culture in your inbox.',
 	ogTitle: 'The best of Grugbox in your inbox',
 	ogDescription: 'Subscribe to the Grugbox newsletter for the best album reviews, artist interviews, and African music culture in your inbox.',
-	ogImage: '/content/kwesi-arthur-redemption-valley-cover.jpg',
+	ogImage: '/content/black-sherif-sun-sherif-cover.jpg',
 	twitterTitle: 'The best of Grugbox in your inbox',
 	twitterDescription: 'Subscribe to the Grugbox newsletter for the best album reviews, artist interviews, and African music culture in your inbox.',
-	twitterImage: '/content/kwesi-arthur-redemption-valley-cover.jpg',
+	twitterImage: '/content/black-sherif-sun-sherif-cover.jpg',
 })
 
 const email = ref('')
@@ -75,36 +75,30 @@ function resetForm() {
 section#newsletter(class="py-10 lg:py-16")
 	div(class="container")
 		div(class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start")
-			//- LEFT COLUMN: Kwesi Arthur album image
-			div(class="lg:col-span-5 xl:col-span-5")
-				div(class="sticky top-28 flex flex-col gap-4")
-					div(class="photo relative aspect-square sm:aspect-4/3 lg:aspect-square overflow-hidden bg-zinc-950 border border-zinc-200 shadow-xs group")
-						NuxtImg(
-							src="/content/kwesi-arthur-redemption-valley-cover.jpg"
-							alt="Kwesi Arthur – Redemption Valley"
-							class="w-full h-full object-cover object-center duration-700 group-hover:scale-105"
-						)
-						div(class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none")
-						div(class="absolute bottom-4 left-4 right-4 flex flex-col gap-1.5 text-white")
-							span(class="text-[10px] uppercase font-bold tracking-widest text-brand-accent") Featured Album Cover
-							h2(class="text-lg sm:text-xl font-bold tracking-tight text-white") Kwesi Arthur — Redemption Valley
-							p(class="text-xs text-zinc-300 line-clamp-2") A declaration of creative emancipation and one of the year's defining records. Rated 8.0 by Grugbox.
-							NuxtLink(
-								to="/reviews/album-review-kwesi-arthur-redemption-valley"
-								class="text-[10px] uppercase font-bold tracking-widest text-white hover:text-brand-accent underline underline-offset-4 mt-1 inline-flex items-center gap-1 w-fit duration-200"
-							) Read Album Review →
+			//- LEFT COLUMN: Black Sherif EP review image (sticky on desktop)
+			aside(class="lg:col-span-5 xl:col-span-5 lg:sticky lg:top-24 self-start flex flex-col gap-4")
+				div(class="photo relative aspect-square sm:aspect-4/3 lg:aspect-square overflow-hidden bg-zinc-950 border border-zinc-200 shadow-xs group")
+					NuxtImg(
+						src="/content/black-sherif-sun-sherif-cover.jpg"
+						alt="Black Sherif – SUN SHERIF"
+						class="w-full h-full object-cover object-center duration-700"
+					)
+					div(class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none")
+					div(class="absolute bottom-4 left-4 right-4 flex flex-col gap-1.5 text-white")
+						h2(class="text-lg sm:text-xl font-bold tracking-tight text-white") Black Sherif — SUN SHERIF
+						p(class="text-xs text-zinc-300 line-clamp-2") Black Sherif trades grim street narratives for warmth and romance on his six-track EP. Rated 7.5 by Grugbox.
+						NuxtLink(
+							to="/reviews/ep-review-black-sherif-sun-sherif"
+							class="text-[10px] uppercase font-bold tracking-widest text-white hover:text-brand-accent underline underline-offset-6 mt-1 inline-flex items-center gap-1 w-fit duration-200"
+						) Read EP Review
 
 			//- RIGHT COLUMN: Headline, subhead, and subscription form
 			div(class="lg:col-span-7 xl:col-span-7 flex flex-col gap-8")
 				//- Editorial Header matching Pitchfork layout
 				div(class="flex flex-col gap-3")
-					span(class="text-[11px] font-bold uppercase tracking-widest text-neutral-500") Grugbox Dispatches
-					h1(class="text-3xl sm:text-5xl lg:text-6xl font-medium tracking-tight text-zinc-900 leading-[1.08]") The best of Grugbox in your inbox
-					p(class="text-base sm:text-lg text-zinc-600 leading-relaxed max-w-2xl") Select the newsletters you would like to receive. Get independent music journalism, unfiltered album verdicts, and exclusive sound profiles delivered weekly.
-
-				div(class="flex items-center")
-					div(class="h-px w-12 shrink-0 bg-black")
-					div(class="h-px flex-1 bg-zinc-200")
+					span(class="text-[10px] font-bold uppercase tracking-widest text-neutral-500") Grugbox Dispatches
+					h1(class="text-3xl sm:text-5xl font-medium tracking-tight text-zinc-900 leading-[1.08]") The best of Grugbox in your inbox
+					p(class="text-zinc-600 leading-relaxed max-w-2xl") Select the newsletters you would like to receive. Get independent music journalism, unfiltered album verdicts, and exclusive sound profiles delivered weekly.
 
 				//- Success State
 				div(v-if="isSuccess" class="border-2 border-black p-8 sm:p-10 bg-zinc-50 flex flex-col items-start gap-5")

@@ -239,7 +239,7 @@ article#article(v-if="post")
 						article(v-if="leadReview" class="group flex flex-col gap-3 pb-6 border-b border-zinc-200/70")
 							div(class="photo relative aspect-16/10 bg-zinc-200 overflow-hidden")
 								NuxtLink(:to="leadReview.path")
-									NuxtImg(:src="leadReview.image" alt="" class="w-full h-full object-cover object-center duration-300 group-hover:scale-105")
+									NuxtImg(:src="leadReview.image" alt="" class="w-full h-full object-cover object-center duration-300")
 								span(v-if="leadReview.score" class="absolute top-3 right-3 px-2.5 py-1 bg-black text-white text-xs font-bold") {{ leadReview.score }}
 							div(class="flex flex-col gap-1")
 								span(class="text-[9px] uppercase font-medium tracking-wide text-neutral-500") {{ primaryTag(leadReview.tags) }}

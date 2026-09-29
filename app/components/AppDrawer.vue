@@ -13,8 +13,8 @@ const primaryLinks = [
 
 // Subsection links
 const secondaryLinks = [
-	{ href: '/#newsletter', name: 'Newsletter' },
-	{ href: 'mailto:info@grugbox.com', name: 'Contact' },
+	{ href: '/newsletter', name: 'Newsletter' },
+	{ href: '/contact', name: 'Contact' },
 ]
 
 // Query trending articles

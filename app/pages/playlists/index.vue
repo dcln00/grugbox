@@ -118,7 +118,7 @@ section#playlists(class="py-10 lg:py-16")
 							span(v-if="primaryTag(post.tags)" class="text-[11px] font-medium uppercase tracking-wide text-neutral-600 underline underline-offset-4") {{ primaryTag(post.tags) }}
 							NuxtLink(:to="post.path")
 								h3(class="text-xl lg:text-xl tracking-tight duration-300 group-hover:text-brand-accent") {{ post.title }}
-							p(v-if="post.description" class="text-sm leading-snug text-zinc-600 line-clamp-3") {{ post.description }}
+							p(v-if="post.description" class="text-sm leading-snug text-zinc-600 line-clamp-2") {{ post.description }}
 							NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric" class="text-[10px] uppercase tracking-widest text-zinc-500")
 
 			//- Pagination controls replacing show more button

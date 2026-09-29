@@ -13,7 +13,7 @@ export const NAV_LINKS: NavLink[] = [
 	{ href: '/reviews', name: 'Reviews' },
 	{ href: '/interviews', name: 'Interviews' },
 	{ href: '/playlists', name: 'Playlists' },
-	{ href: '/#newsletter', name: 'Newsletter' },
+	{ href: '/newsletter', name: 'Newsletter' },
 ]
 
 export const FOOTER_SECTIONS: FooterSection[] = [
@@ -23,7 +23,7 @@ export const FOOTER_SECTIONS: FooterSection[] = [
 			{ href: '#', name: 'Podcast' },
 			{ href: '#', name: 'Site Map' },
 			{ href: '#', name: 'FAQ' },
-			{ href: '/#newsletter', name: 'Subscribe' },
+			{ href: '/newsletter', name: 'Subscribe' },
 		],
 	},
 	{
@@ -36,10 +36,10 @@ export const FOOTER_SECTIONS: FooterSection[] = [
 ]
 
 export const LEGAL_LINKS: NavLink[] = [
-	{ href: '#', name: 'User Agreement' },
-	{ href: '#', name: 'Privacy Policy' },
-	{ href: '#', name: 'Terms of Use' },
-	{ href: '#', name: 'Newsletter' },
-	{ href: '#', name: 'Contact' },
-	{ href: '#', name: 'Advertising' },
+	{ href: '/user-agreement', name: 'User Agreement' },
+	{ href: '/privacy-policy', name: 'Privacy Policy' },
+	{ href: '/terms-of-use', name: 'Terms of Use' },
+	{ href: '/newsletter', name: 'Newsletter' },
+	{ href: '/contact', name: 'Contact' },
+	{ href: '/advertising', name: 'Advertising' },
 ]

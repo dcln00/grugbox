@@ -59,5 +59,14 @@ export default defineContentConfig({
 				tags: z.array(z.string()).optional(),
 			})
 		}),
+		legal: defineCollection({
+			source: 'legal/*.md',
+			type: 'page',
+			schema: z.object({
+				title: z.string(),
+				description: z.string().optional(),
+				lastUpdated: z.string().optional(),
+			})
+		}),
 	},
 })

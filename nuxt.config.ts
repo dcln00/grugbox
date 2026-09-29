@@ -51,6 +51,7 @@ async function stripDsStore(publicDir: string): Promise<void> {
 export default defineNuxtConfig({
 	compatibilityDate: "2026-09-25",
 	srcDir: "app",
+	css: ["~/assets/css/tailwind.css"],
 	devtools: { enabled: true },
 	modules: [
 		"@nuxt/fonts",
@@ -61,6 +62,9 @@ export default defineNuxtConfig({
 		"nuxt-gtag",
 	],
 	fonts: {
+		families: [
+			{ name: "Google Sans", provider: "none" },
+		],
 		defaults: {
 			weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
 		},

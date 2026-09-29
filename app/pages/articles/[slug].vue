@@ -79,8 +79,8 @@ article#article(v-if="post")
 				div(class="lg:col-span-8 flex flex-col gap-10")
 					//- Featured hero media with subtle credit tag
 					div(class="relative aspect-3/2 lg:aspect-16/10 overflow-hidden bg-zinc-100")
-						video(v-if="isVideo(post.video || post.image)" :src="post.video || post.image" :poster="!isVideo(post.image) ? post.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center")
-						NuxtImg(v-else :src="post.image" alt="featured image" class="w-full h-full object-cover object-center")
+						video(v-if="isVideo(post.video || post.image)" :src="post.video || post.image" :poster="!isVideo(post.image) ? post.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center select-none pointer-events-none")
+						NuxtImg(v-else :src="post.image" alt="featured image" class="w-full h-full object-cover object-center select-none pointer-events-none")
 						span(class="absolute bottom-3 right-3 text-[9px] uppercase tracking-widest text-white/80 bg-black/50 px-2 py-0.5 backdrop-blur-xs") Grugbox Media
 
 					//- Floating Share Icons + Article Content
@@ -116,8 +116,8 @@ article#article(v-if="post")
 							article(v-for="item in popularPosts" :key="item.path" class="group flex gap-4 items-start py-5 first:pt-0 last:pb-0")
 								div(class="photo size-20 shrink-0 bg-zinc-200 overflow-hidden")
 									NuxtLink(:to="item.path")
-										video(v-if="isVideo(item.video || item.image)" :src="item.video || item.image" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-300")
-										NuxtImg(v-else :src="item.image" alt="" class="w-full h-full object-cover object-center duration-300")
+										video(v-if="isVideo(item.video || item.image)" :src="item.video || item.image" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-300 select-none pointer-events-none")
+										NuxtImg(v-else :src="item.image" alt="" class="w-full h-full object-cover object-center duration-300 select-none pointer-events-none")
 								div(class="flex flex-col gap-1 min-w-0")
 									span(class="text-[9px] uppercase font-medium tracking-wide text-neutral-500") {{ item.category || primaryTag(item.tags) }}
 									NuxtLink(:to="item.path")

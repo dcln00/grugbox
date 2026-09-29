@@ -117,8 +117,8 @@ div#contact-page
 							article(v-for="item in popularPosts" :key="item.path" class="group flex gap-4 items-start py-5 first:pt-0 last:pb-0")
 								div(class="photo size-20 shrink-0 bg-zinc-200 overflow-hidden")
 									NuxtLink(:to="item.path")
-										video(v-if="isVideo(item.video || item.image)" :src="item.video || item.image" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-300")
-										NuxtImg(v-else :src="item.image" alt="" class="w-full h-full object-cover object-center duration-300")
+										video(v-if="isVideo(item.video || item.image)" :src="item.video || item.image" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-300 select-none pointer-events-none")
+										NuxtImg(v-else :src="item.image" alt="" class="w-full h-full object-cover object-center duration-300 select-none pointer-events-none")
 								div(class="flex flex-col gap-1 min-w-0")
 									span(class="text-[9px] uppercase font-medium tracking-wide text-neutral-500") {{ item.category || primaryTag(item.tags) }}
 									NuxtLink(:to="item.path")

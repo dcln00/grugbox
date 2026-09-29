@@ -31,6 +31,12 @@ body {
 	text-decoration: underline;
 } */
 
+img, video {
+	user-select: none;
+	-webkit-user-select: none;
+	pointer-events: none;
+}
+
 .prose img {
 	display: block;
 	margin-inline: auto;

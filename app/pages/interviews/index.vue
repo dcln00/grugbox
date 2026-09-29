@@ -113,7 +113,7 @@ section#interviews(class="py-10 lg:py-16")
 					div(class="flex flex-col items-center gap-4 text-center mb-4")
 						div(class="photo w-full aspect-video bg-gray-200 overflow-hidden")
 							NuxtLink(:to="post.path")
-								NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center duration-700")
+								NuxtImg(:src="post.image" alt="featured image" class="w-full h-full object-cover object-center duration-700 select-none pointer-events-none")
 						div(class="flex flex-col gap-4")
 							span(v-if="primaryTag(post.tags)" class="text-[11px] font-medium uppercase tracking-wide text-neutral-600 underline underline-offset-4") {{ primaryTag(post.tags) }}
 							NuxtLink(:to="post.path")

@@ -2,7 +2,7 @@
 title: "Amaarae: Refusing Genre and Staying Rooted in Accra"
 description: "Amaarae talks about ignoring genre labels, how her live shows changed as the stages got bigger, and why she still works out of Accra."
 date: 2026-09-18T14:30:00
-image: /content/amaarae-world-stage-coachella.jpeg
+image: /content/amaarae-interview-featured.jpg
 tags:
   - interview
   - music

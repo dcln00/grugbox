@@ -2,7 +2,7 @@
 title: "GuiltyBeatz on Drum Swing, Beyoncé Sessions and Producer Royalties"
 description: "GuiltyBeatz talks about programming drums with human swing, his sessions for Beyoncé, and why African producers need to understand publishing."
 date: 2026-08-25T11:00:00
-image: /content/guiltybeatz-interview.jpg
+image: /content/guiltybeatz-interview-featured.jpg
 tags:
   - interview
   - production

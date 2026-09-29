@@ -81,7 +81,7 @@ section#newsletter(class="py-10 lg:py-16")
 					NuxtImg(
 						src="/content/black-sherif-sun-sherif-cover.jpg"
 						alt="Black Sherif – SUN SHERIF"
-						class="w-full h-full object-cover object-center duration-700"
+						class="w-full h-full object-cover object-center duration-700 select-none pointer-events-none"
 					)
 					div(class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none")
 					div(class="absolute bottom-4 left-4 right-4 flex flex-col gap-1.5 text-white")

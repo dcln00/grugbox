@@ -2,7 +2,7 @@
 title: "Bloody Civilian on Self-Production and Writing for Cinema"
 description: "Bloody Civilian talks about reclaiming a military insult as her stage name, producing her own records, and writing music for film."
 date: 2026-07-30T16:00:00
-image: /content/bloody-civilian-interview.jpg
+image: /content/bloody-civilian-interview-featured.jpg
 tags:
   - interview
   - soundtrack

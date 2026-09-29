@@ -139,7 +139,7 @@ Teleport(to="body")
 							class="group flex gap-4 items-center"
 						)
 							div(class="size-20 shrink-0 bg-zinc-100 overflow-hidden")
-								NuxtImg(:src="post.image" alt="" class="w-full h-full object-cover object-center")
+								NuxtImg(:src="post.image" alt="" class="w-full h-full object-cover object-center select-none pointer-events-none")
 							div(class="flex flex-col gap-2 min-w-0")
 								h4(class="text-xs leading-snug tracking-tight text-zinc-900 group-hover:text-brand-accent duration-200 line-clamp-2") {{ post.title }}
 								NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric" class="text-[9px] uppercase text-zinc-400")

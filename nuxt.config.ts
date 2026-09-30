@@ -63,10 +63,10 @@ export default defineNuxtConfig({
 	],
 	fonts: {
 		families: [
-			{ name: "Google Sans", provider: "none" },
+			{ name: "Google Sans", provider: "google", global: true, weights: ["400", "500", "600", "700"] },
 		],
 		defaults: {
-			weights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+			weights: ["400", "500", "600", "700"],
 		},
 	},
 	gtag: {
@@ -82,5 +82,13 @@ export default defineNuxtConfig({
 	},
 	nitro: {
 		preset: "vercel",
+	},
+	runtimeConfig: {
+		googleAppsScriptUrl: process.env.GOOGLE_APPS_SCRIPT_URL || '',
+	},
+	vite: {
+		server: {
+			allowedHosts: true,
+		},
 	},
 })

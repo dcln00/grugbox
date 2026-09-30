@@ -46,7 +46,9 @@ const selectedEditions = ref<string[]>(['digest', 'reviews', 'playlists'])
 
 async function handleSubscribe() {
 	errorMessage.value = ''
-	if (!email.value || !email.value.includes('@')) {
+	const emailVal = email.value.trim()
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+	if (!emailVal || !emailRegex.test(emailVal)) {
 		errorMessage.value = 'Please enter a valid email address.'
 		return
 	}
@@ -56,11 +58,29 @@ async function handleSubscribe() {
 	}
 
 	isSubmitting.value = true
-	// Simulate brief network submission for responsive user feedback
-	await new Promise(resolve => setTimeout(resolve, 600))
-	submittedEmail.value = email.value
-	isSubmitting.value = false
-	isSuccess.value = true
+	try {
+		await $fetch('/api/subscribe', {
+			method: 'POST',
+			body: {
+				email: emailVal,
+				name: name.value.trim() || undefined,
+				editions: selectedEditions.value,
+				source: 'newsletter_page',
+			},
+		})
+		submittedEmail.value = emailVal
+		isSuccess.value = true
+		const subCookie = useCookie<boolean>('grugbox_subscribed', { maxAge: 60 * 60 * 24 * 365 })
+		subCookie.value = true
+		if (import.meta.client) {
+			localStorage.setItem('grugbox_subscribed', 'true')
+			localStorage.setItem('grugbox_subscribed_email', emailVal)
+		}
+	} catch (err: any) {
+		errorMessage.value = err?.data?.statusMessage || err?.message || 'Failed to submit. Please try again.'
+	} finally {
+		isSubmitting.value = false
+	}
 }
 
 function resetForm() {

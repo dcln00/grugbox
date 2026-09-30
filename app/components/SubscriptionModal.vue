@@ -4,12 +4,20 @@ const emit = defineEmits<{
 	(e: 'subscribed', email: string): void
 }>()
 
+const ONE_WEEK_SECONDS = 60 * 60 * 24 * 7 // 1 week in seconds
+const ONE_WEEK_MS = ONE_WEEK_SECONDS * 1000
+
 const isSubscribedCookie = useCookie<boolean>('grugbox_subscribed', {
 	maxAge: 60 * 60 * 24 * 365, // 1 year
 	default: () => false,
 })
 
-const isModalOpen = ref(!isSubscribedCookie.value)
+const isDismissedCookie = useCookie<boolean>('grugbox_modal_dismissed', {
+	maxAge: ONE_WEEK_SECONDS, // 1 week
+	default: () => false,
+})
+
+const isModalOpen = ref(!isSubscribedCookie.value && !isDismissedCookie.value)
 const modalEmail = ref('')
 const modalName = ref('')
 const isSubmitting = ref(false)
@@ -60,13 +68,18 @@ async function handleSubscribe() {
 }
 
 function closeModal() {
-	// The modal should only close after the user has input a valid email address
-	if (!isSuccess.value) return
-	isSubscribedCookie.value = true
-	if (import.meta.client) {
-		localStorage.setItem('grugbox_subscribed', 'true')
-	}
 	isModalOpen.value = false
+
+	// If closed without subscribing, set 1-week persistent cookie and localStorage
+	if (!isSuccess.value && !isSubscribedCookie.value) {
+		isDismissedCookie.value = true
+		if (import.meta.client) {
+			const expiry = Date.now() + ONE_WEEK_MS
+			localStorage.setItem('grugbox_modal_dismissed', 'true')
+			localStorage.setItem('grugbox_modal_dismissed_until', expiry.toString())
+		}
+	}
+
 	emit('close')
 }
 
@@ -74,6 +87,13 @@ onMounted(() => {
 	if (localStorage.getItem('grugbox_subscribed') === 'true') {
 		isModalOpen.value = false
 		isSubscribedCookie.value = true
+		return
+	}
+
+	const dismissedUntil = localStorage.getItem('grugbox_modal_dismissed_until')
+	if (dismissedUntil && Number(dismissedUntil) > Date.now()) {
+		isModalOpen.value = false
+		isDismissedCookie.value = true
 	}
 })
 
@@ -108,7 +128,7 @@ if (import.meta.client) {
 	}, { immediate: true })
 
 	const handleKeyDown = (e: KeyboardEvent) => {
-		if (e.key === 'Escape' && isSuccess.value) {
+		if (e.key === 'Escape') {
 			closeModal()
 		}
 	}
@@ -132,8 +152,17 @@ Teleport(to="body")
 			aria-labelledby="subscription-modal-title"
 			class="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6 overflow-y-auto overscroll-contain"
 			@touchmove.self.prevent
+			@click.self="closeModal"
 		)
-			div(class="w-full max-w-lg bg-white p-6 sm:p-8 shadow-2xl relative my-auto" @click.stop)
+			div(class="w-full max-w-lg bg-white border border-black p-6 sm:p-8 shadow-2xl relative my-auto" @click.stop)
+				//- Close Button
+				button(
+					type="button"
+					aria-label="Close"
+					@click="closeModal"
+					class="absolute top-4 right-4 size-9 flex items-center justify-center text-zinc-500 hover:text-black hover:bg-zinc-100 duration-200 cursor-pointer z-10"
+				)
+					svg-close(class="size-5")
 				//- Success State
 				div(v-if="isSuccess" class="border-2 border-black p-6 sm:p-8 bg-zinc-50 flex flex-col items-start gap-4 mt-6")
 					div(class="flex items-center gap-3")

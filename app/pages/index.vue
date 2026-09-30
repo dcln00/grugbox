@@ -100,9 +100,9 @@ const scoreWidth = (score?: number): string => `${((score ?? 0) / MAX_SCORE) * 1
 //- AD SLOT — centred 728x90 IAB leaderboard
 section(id="ad-top" aria-label="Advertisement" class="py-8")
 	div(class="container flex justify-center")
-		//- h-22.5 = 90px, max-w-182 = 728px
-		div(class="flex h-22.5 w-full max-w-182 items-center justify-center bg-zinc-300")
-			span(class="text-[10px] uppercase tracking-widest text-zinc-500") Advertisement
+		//- 728x90 IAB leaderboard with responsive aspect ratio scaling
+		div(class="relative w-full max-w-182 aspect-[728/90] bg-black overflow-hidden min-w-0")
+			video(src="/ads/leaderboard-banner.webm" autoplay loop muted playsinline class="block w-full h-full object-cover object-center select-none pointer-events-none")
 
 //- FULL-WIDTH HERO
 section(id="hero" aria-label="Top trending" class="grid grid-cols-1 md:grid-cols-3 gap-px")
@@ -138,7 +138,7 @@ section(id="profiles" class="my-20")
 						div(class="flex items-center")
 							div(class="h-px w-10 shrink-0 bg-black")
 							div(class="h-px flex-1 bg-zinc-200")
-					article(v-if="leadEditorial" class="group relative aspect-video overflow-hidden bg-zinc-900")
+					article(v-if="leadEditorial" class="group relative aspect-16/12 lg:aspect-video overflow-hidden bg-zinc-900")
 						NuxtLink(:to="leadEditorial.path" class="block w-full h-full")
 							video(v-if="isVideo(leadEditorial.video || leadEditorial.image)" :src="leadEditorial.video || leadEditorial.image" :poster="!isVideo(leadEditorial.image) ? leadEditorial.image : undefined" autoplay loop muted playsinline class="w-full h-full object-cover object-center duration-700 select-none pointer-events-none")
 							NuxtImg(v-else :src="leadEditorial.image" alt="featured image" class="w-full h-full object-cover object-center duration-700 select-none pointer-events-none")
@@ -305,7 +305,7 @@ section(id="more" class="my-20")
 //- AD SLOT — centred 728x90 IAB leaderboard
 section(id="ad-bottom" aria-label="Advertisement" class="py-8")
 	div(class="container flex justify-center")
-		//- h-22.5 = 90px, max-w-182 = 728px
-		div(class="flex h-22.5 w-full max-w-182 items-center justify-center bg-zinc-300")
-			span(class="text-[10px] uppercase tracking-widest text-zinc-500") Advertisement
+		//- 728x90 IAB leaderboard with responsive aspect ratio scaling
+		div(class="relative w-full max-w-182 aspect-[728/90] bg-black overflow-hidden min-w-0")
+			video(src="/ads/leaderboard-banner.webm" autoplay loop muted playsinline class="block w-full h-full object-cover object-center select-none pointer-events-none")
 </template>

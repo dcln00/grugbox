@@ -12,7 +12,7 @@ We collect information in two principal ways: information you provide voluntaril
 
 ### Information You Provide Directly
 - **Newsletter Subscription Data:** When you sign up for the Grugbox Digest or edition alerts, we collect your email address, optional first name, and topic preferences.
-- **Direct Correspondence:** If you contact us via email at `info@grugbox.com`, we collect your name, email address, and the contents of your message.
+- **Direct Correspondence:** If you contact us via email at `info@grugbox.world`, we collect your name, email address, and the contents of your message.
 - **Reader Surveys & Contests:** When you participate in editorial surveys, giveaways, or live event RSVPs, we may collect requested contact details.
 
 ### Information Collected Automatically
@@ -57,7 +57,7 @@ We implement robust administrative, technical, and physical safeguards to protec
 Regardless of your geographic location, Grugbox respects your control over your data:
 
 - **Unsubscribe:** Every newsletter email includes an instant "Unsubscribe" link at the footer. Clicking it immediately halts further scheduled mailings.
-- **Access and Correction:** You may request a copy of the personal information we hold about you or request corrections by emailing `info@grugbox.com`.
+- **Access and Correction:** You may request a copy of the personal information we hold about you or request corrections by emailing `info@grugbox.world`.
 - **Right to Deletion:** You may request complete erasure of your subscriber record at any time.
 
 ## 7. International Data Considerations
@@ -72,6 +72,6 @@ We may periodically update this Privacy Policy to reflect changes in our editori
 
 If you have questions or concerns regarding this Privacy Policy or your personal information, please reach out to:
 
-- **Email:** [info@grugbox.com](mailto:info@grugbox.com)
+- **Email:** [info@grugbox.world](mailto:info@grugbox.world)
 - **Subject:** Privacy & Data Protection
 - **Location:** Grugbox Media, Accra, Ghana

@@ -84,7 +84,7 @@ article#article(v-if="page")
 						p(class="text-xs text-zinc-600 leading-relaxed")
 							| Our editorial and legal staff in Accra are available to assist with syndication requests, privacy queries, and brand partnerships.
 						a(
-							href="mailto:info@grugbox.com"
+							href="mailto:info@grugbox.world"
 							class="mt-2 w-full bg-black text-white hover:bg-brand-accent py-3 text-[11px] font-bold uppercase tracking-widest text-center transition-colors duration-200"
-						) Email info@grugbox.com
+						) Email info@grugbox.world
 </template>

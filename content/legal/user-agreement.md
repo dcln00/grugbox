@@ -31,7 +31,7 @@ We welcome community discussion, letters to the editor, tip submissions, and mus
 
 - **Respectful Discourse:** Harassment, defamation, hate speech, abusive language, or personal attacks against writers, artists, or community members will not be tolerated.
 - **Original Work:** Any submissions, unsolicited pitches, demo submissions, or feedback provided to Grugbox must be your original work and must not infringe upon the intellectual property or privacy rights of any third party.
-- **Pitch Policy:** Submitting music or press materials to `info@grugbox.com` or our editorial team grants Grugbox permission to review, listen to, and reference the material for journalistic purposes. We do not guarantee coverage or return submitted physical or digital media.
+- **Pitch Policy:** Submitting music or press materials to `info@grugbox.world` or our editorial team grants Grugbox permission to review, listen to, and reference the material for journalistic purposes. We do not guarantee coverage or return submitted physical or digital media.
 
 ## 5. Intellectual Property Rights
 
@@ -63,5 +63,5 @@ Grugbox is provided on an "as is" and "as available" basis without warranties of
 
 For inquiries, copyright concerns, or questions regarding this User Agreement, please contact our team:
 
-- **Email:** [info@grugbox.com](mailto:info@grugbox.com)
+- **Email:** [info@grugbox.world](mailto:info@grugbox.world)
 - **Publication:** Grugbox Media, Accra, Ghana

@@ -1,6 +1,6 @@
 ---
 title: "Profile: Lalid, Tema's Long Game"
-description: "Tema produced Sarkodie, R2Bees and Kwesi Arthur. Lalid knows exactly what that list means, and he's building a live circuit instead of chasing the next viral moment."
+description: Tema produced Sarkodie, R2Bees and Kwesi Arthur. Lalid knows exactly what that list means, and he's building a live circuit instead of chasing the next viral moment.
 date: 2026-07-18T16:45:00
 image: /content/profile-lalid.jpg
 tags:
@@ -15,6 +15,8 @@ category: profile
 Tema has produced Sarkodie, R2Bees and Kwesi Arthur, which means every rapper who comes out of the harbour city gets measured against that list the moment they pick up a mic. **Lalid** treats it as useful pressure rather than a burden.
 
 His name is an acronym: Living A Life I Deserve. He chose it in junior high school, which sounds like something you'd grow out of, except he never did.
+
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/18eUnEkhFO7mnMNDURU1UV?utm_source=generator&si=121ea69a64364fcc" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ### _The Matter_, and what came after
 

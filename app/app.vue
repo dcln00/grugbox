@@ -2,23 +2,23 @@
 const { x, y } = useWindowScroll()
 
 useHead({
-	title: 'Grugbox',
+	title: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
 	htmlAttrs: {
     lang: 'en'
   },
 })
 
 useSeoMeta({
-	title: 'Grugbox',
-	ogTitle: 'Grugbox',
+	title: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
+	ogTitle: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
 	description: `Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld`,
 	ogDescription: `Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld`,
 	ogType: 'website',
 	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
-	ogSiteName: 'Grugbox ®',
+	ogSiteName: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
 	ogUrl: 'https://grugbox.world',
 	twitterCard: 'summary',
-	twitterTitle: 'Grugbox',
+	twitterTitle: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
 	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
 	twitterDescription: 'Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld',
 })

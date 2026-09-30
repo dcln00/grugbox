@@ -1,6 +1,6 @@
 ---
-title: "Profile: Mellissa and the Case for Owning Everything"
-description: "Mellissa sings, writes, produces and art-directs her own records. In the Ghanaian industry that still counts as unusual, which is exactly her point."
+title: 'Profile: Mellissa and the Case for Owning Everything'
+description: Mellissa sings, writes, produces and art-directs her own records. In the Ghanaian industry that still counts as unusual, which is exactly her point.
 date: 2026-09-15T14:30:00
 image: /content/profile-mellissa.jpg
 tags:
@@ -13,6 +13,8 @@ category: profile
 ---
 
 "Afro-Sexy" is not a real genre, which is part of why it works as a label for what **Mellissa** does. Born Melissa Adjua Montgomery, she sings, writes and produces her own records, and she directs the visual side too. In the Ghanaian industry that still makes her unusual rather than standard.
+
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/30OlnKlh10yCfIuAWBmBkW?utm_source=generator&si=5d2c8411528d407c" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ### Highlife at home, R&B from everywhere else
 

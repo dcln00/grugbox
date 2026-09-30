@@ -1,6 +1,6 @@
 ---
 title: "Profile: Gonaboy and the North's Turn"
-description: "Accra and Kumasi take almost all the attention. Gonaboy came out of Sissala East and built a following without relocating his identity to get it."
+description: Accra and Kumasi take almost all the attention. Gonaboy came out of Sissala East and built a following without relocating his identity to get it.
 date: 2026-08-22T11:15:00
 image: /content/profile-gonaboy.jpg
 tags:
@@ -16,6 +16,8 @@ category: profile
 Ghanaian music has a geography problem. Accra and Kumasi take almost all of the attention, and artists from anywhere else are usually expected to move, adjust how they sound, and stop mentioning where they're from.
 
 **Gonaboy** did the opposite. Born Abdul-Razak Muniru Gona in Sissala East, in the Upper West Region, he writes in a mix of Northern folklore, Akan street slang and whatever the beat asks for, and has built a real following without trading his accent in.
+
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/4jSujazuMMQ5Pe2QV1Ca1s?utm_source=generator&si=e801458452884289" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ### Legon, Madina, and _Abom_
 

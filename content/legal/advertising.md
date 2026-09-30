@@ -61,7 +61,7 @@ All display advertising assets and sponsored assets must meet Grugbox technical 
 
 To receive our current rate card, readership statistics, case studies, or to discuss custom brand activations, please contact our partnerships team:
 
-- **Email:** [info@grugbox.com](mailto:info@grugbox.com)
+- **Email:** [info@grugbox.world](mailto:info@grugbox.world)
 - **Subject Line:** "Advertising & Partnerships Inquiry"
 - **Headquarters:** Grugbox Media, Accra, Ghana
 

@@ -1,6 +1,6 @@
 ---
-title: "Profile: BeeztrapKOTM and the Long Game of Drill"
-description: "The Kumerica sound was supposed to burn out. BeeztrapKOTM is one of the reasons it didn't, and his Best New Artiste run is only the start of the argument."
+title: 'Profile: BeeztrapKOTM and the Long Game of Drill'
+description: The Kumerica sound was supposed to burn out. BeeztrapKOTM is one of the reasons it didn't, and his Best New Artiste run is only the start of the argument.
 date: 2026-05-24T18:00:00
 image: /content/profile-beeztrapkotm.jpg
 tags:
@@ -15,6 +15,8 @@ category: profile
 When the Kumerica drill wave broke in 2020, the standard prediction was that it would burn out fast. **BeeztrapKOTM** is one of the reasons it didn't, mostly because he refused to treat it as a single sound. Drill bass slides on one side, Akan highlife and gospel street melody on the other, and a career built in the space between them.
 
 Born Edwin Eshun, raised in Kumasi with family roots in Cape Coast, he started recording in 2018. As the Asakaa collective went global, he found the lane nobody else was working: verses with genuine tenderness in them, folklore in the phrasing.
+
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/39IXXExWT64CmkWwkO2ANn?utm_source=generator&si=f72c6eb9496146f2" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ### From _Fly Girl_ to the awards stage
 

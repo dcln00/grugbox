@@ -270,7 +270,7 @@ section(id="interviews" aria-label="Interviews" class="my-20 py-16 lg:py-20 bg-z
 section(id="more" class="my-20")
 	div(class="container flex flex-col gap-8")
 		div(class="flex flex-col gap-2")
-			h2(class="text-xs font-bold tracking-wide uppercase") Latest
+			h2(class="text-xs font-bold tracking-wide uppercase") More from Grugbox
 			div(class="flex items-center")
 				div(class="h-px w-10 shrink-0 bg-black")
 				div(class="h-px flex-1 bg-zinc-200")

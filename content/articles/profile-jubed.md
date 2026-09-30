@@ -1,6 +1,6 @@
 ---
-title: "Profile: Jubed and the Soil He Came From"
-description: "For a decade, Kumasi music abroad meant drill. Jubed works in acoustic guitars and love songs instead, and one Citi TV appearance was all it took to start."
+title: 'Profile: Jubed and the Soil He Came From'
+description: For a decade, Kumasi music abroad meant drill. Jubed works in acoustic guitars and love songs instead, and one Citi TV appearance was all it took to start.
 date: 2026-01-26T15:00:00
 image: /content/profile-jubed.jpg
 tags:
@@ -13,6 +13,8 @@ category: profile
 ---
 
 For most of the last decade, when people outside Ghana talked about Kumasi music, they meant drill. **Jubed** is part of the correction: a vocalist signed to Enish Music who works in acoustic guitars and love songs rather than 808 slides, and who has become one of the more distinctive male voices in West African Afro-fusion without ever raising his.
+
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/1cRKqHdKhNPTdouuF6HcbC?utm_source=generator&si=4ffe845a535446ee" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ### A TV performance that wouldn't stop moving
 

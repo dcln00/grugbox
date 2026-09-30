@@ -65,6 +65,6 @@ Grugbox reserves the right to amend or replace these Terms of Use at any time. Y
 
 For inquiries regarding these Terms of Use or permissions and syndication requests:
 
-- **Email:** [info@grugbox.com](mailto:info@grugbox.com)
+- **Email:** [info@grugbox.world](mailto:info@grugbox.world)
 - **Subject:** Terms of Use & Licensing
 - **Address:** Grugbox Media, Accra, Ghana

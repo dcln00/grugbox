@@ -1,6 +1,6 @@
 ---
-title: "Profile: Moffy and the Sound of Coastal Accra"
-description: "Ga Soloku has been part of Accra's street life for generations but rarely treated as pop music. Moffy treated it as pop music and it worked."
+title: 'Profile: Moffy and the Sound of Coastal Accra'
+description: Ga Soloku has been part of Accra's street life for generations but rarely treated as pop music. Moffy treated it as pop music and it worked.
 date: 2026-06-12T13:20:00
 image: /content/profile-moffy.jpg
 tags:
@@ -15,6 +15,8 @@ category: profile
 Accra's indigenous Ga percussion has been part of the city's street life for generations, but it has rarely been treated as pop music. **Moffy** treats it as pop music, and it turns out that was all it needed.
 
 He is a member of the 99 PHACES collective and one half of the duo DROMOBII, and his signature is **Ga Soloku**, the communal coastal street rhythm native to Accra celebrations. Rather than sanding it down to fit an Afrobeats template, he built the record around it.
+
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/artist/3kimFDAjJ9z2uZuOhl4mK9?utm_source=generator&si=7df60be382264126" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ### _Wo_ and everything after
 

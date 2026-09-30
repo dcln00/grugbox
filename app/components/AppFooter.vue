@@ -41,5 +41,5 @@ footer(class="bg-zinc-900 text-neutral-300")
 					li(v-if="idx > 0" aria-hidden="true" class="text-neutral-600") |
 					li
 						NuxtLink(:to="link.href" class="text-neutral-400 duration-300 hover:text-white") {{ link.name }}
-		p(class="mt-6 max-w-3xl text-xs leading-relaxed text-neutral-500") © {{ new Date().getFullYear() }} Grugbox. All rights reserved. The material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except with the prior written permission of Grugbox.
+		p(class="mt-6 max-w-3xl text-xs leading-relaxed text-neutral-500") © {{ new Date().getFullYear() }} Grugbox. All rights reserved. The material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except with the prior written permission of Grugbox. Powered by #[NuxtLink(to="https://byar.online" class="text-neutral-500 duration-300 hover:text-white") Byar].
 </template>

@@ -101,7 +101,7 @@ const scoreWidth = (score?: number): string => `${((score ?? 0) / MAX_SCORE) * 1
 section(id="ad-top" aria-label="Advertisement" class="py-8")
 	div(class="container flex justify-center")
 		//- 728x90 IAB leaderboard with responsive aspect ratio scaling
-		div(class="relative w-full max-w-182 aspect-[728/90] bg-black overflow-hidden min-w-0")
+		div(class="relative w-full max-w-182 aspect-[728/90] overflow-hidden min-w-0")
 			video(src="/ads/leaderboard-banner.webm" autoplay loop muted playsinline class="block w-full h-full object-cover object-center select-none pointer-events-none")
 
 //- FULL-WIDTH HERO
@@ -306,6 +306,6 @@ section(id="more" class="my-20")
 section(id="ad-bottom" aria-label="Advertisement" class="py-8")
 	div(class="container flex justify-center")
 		//- 728x90 IAB leaderboard with responsive aspect ratio scaling
-		div(class="relative w-full max-w-182 aspect-[728/90] bg-black overflow-hidden min-w-0")
+		div(class="relative w-full max-w-182 aspect-[728/90] overflow-hidden min-w-0")
 			video(src="/ads/leaderboard-banner.webm" autoplay loop muted playsinline class="block w-full h-full object-cover object-center select-none pointer-events-none")
 </template>

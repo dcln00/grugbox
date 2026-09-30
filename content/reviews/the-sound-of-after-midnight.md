@@ -3,7 +3,7 @@ title: "Album Review: Gyakie – 'After Midnight'"
 albumTitle: After Midnight
 description: Gyakie's 17-track debut has strong Afro-R&B and highlife moments, but the length and the interchangeable ballads undercut them. The review argues the album needed an editor.
 date: 2025-09-05T18:12:00
-image: /content/gyakie-after-midnight-featured.jpg
+image: /content/gyakie-after-midnight-cover.jpg
 tags:
   - review
   - album
@@ -33,7 +33,7 @@ Translating that talent into a cohesive debut album is one of the most demanding
 
 On her official debut album, **_After Midnight_**, released on August 29, 2025, Gyakie attempts to build an entire universe around the quiet stillness of the witching hour. Across an overstuffed 17 tracks, the project struggles to hold that focus, and genuine flashes end up buried beneath repetitive slow jams, playlist-oriented filler and an unresolved sonic identity.
 
-<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/43Y4zN76J03w8pXb4m3q45?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+<iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/album/76fGDuks8oWP7yumsfunzL?utm_source=generator&si=42407304d8204143" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
 ## The perils of the bloated tracklist
 
@@ -44,6 +44,8 @@ Too often, the production defaults to interchangeable mid-tempo loops, muted gui
 ![Gyakie After Midnight In Studio](/content/gyakie-after-midnight-01.jpeg)
 
 ## The tracklist
+
+![After Midnight Official Tracklist Artwork](/content/gyakie-after-midnight-tracklist.jpg)
 
 ### 1. intro & 2. fire on the mountain
 

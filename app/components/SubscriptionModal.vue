@@ -1,21 +1,25 @@
 <script setup lang="ts">
+import { ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useBodyScrollLock } from '~/composables/useBodyScrollLock'
+import { useSubscriptionStorage } from '~/composables/useSubscriptionStorage'
+
 const emit = defineEmits<{
-	(e: 'close'): void
-	(e: 'subscribed', email: string): void
+  (e: 'close'): void
+  (e: 'subscribed', email: string): void
 }>()
 
-const ONE_WEEK_SECONDS = 60 * 60 * 24 * 7 // 1 week in seconds
-const ONE_WEEK_MS = ONE_WEEK_SECONDS * 1000
+const {
+  isSubscribedCookie,
+  isDismissedCookie,
+  setSubscribed,
+  setDismissed,
+  getSubscribedEmail,
+  setSubscribedEmail,
+  ONE_WEEK_SECONDS,
+  ONE_WEEK_MS
+} = useSubscriptionStorage()
 
-const isSubscribedCookie = useCookie<boolean>('grugbox_subscribed', {
-	maxAge: 60 * 60 * 24 * 365, // 1 year
-	default: () => false,
-})
-
-const isDismissedCookie = useCookie<boolean>('grugbox_modal_dismissed', {
-	maxAge: ONE_WEEK_SECONDS, // 1 week
-	default: () => false,
-})
+const { lockScroll, unlockScroll } = useBodyScrollLock()
 
 const isModalOpen = ref(!isSubscribedCookie.value && !isDismissedCookie.value)
 const modalEmail = ref('')
@@ -26,119 +30,105 @@ const isAlreadySubscribed = ref(false)
 const submittedEmail = ref('')
 const errorMessage = ref('')
 
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 async function handleSubscribe() {
-	errorMessage.value = ''
-	const emailVal = modalEmail.value.trim()
-	const nameVal = modalName.value.trim()
-	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-	if (!emailVal || !emailRegex.test(emailVal)) {
-		errorMessage.value = 'Please enter a valid email address.'
-		return
-	}
+  errorMessage.value = ''
+  const emailVal = modalEmail.value.trim()
+  const nameVal = modalName.value.trim()
 
-	isSubmitting.value = true
-	try {
-		const res = await $fetch<{ ok: boolean, email?: string, alreadySubscribed?: boolean }>('/api/subscribe', {
-			method: 'POST',
-			body: {
-				email: emailVal,
-				name: nameVal || undefined,
-				source: 'modal',
-			},
-		})
-		submittedEmail.value = emailVal
-		isAlreadySubscribed.value = Boolean(res?.alreadySubscribed)
-		isSuccess.value = true
-		isSubscribedCookie.value = true
-		if (import.meta.client) {
-			localStorage.setItem('grugbox_subscribed', 'true')
-			localStorage.setItem('grugbox_subscribed_email', emailVal)
-		}
-		emit('subscribed', emailVal)
+  if (!emailVal || !EMAIL_REGEX.test(emailVal)) {
+    errorMessage.value = 'Please enter a valid email address.'
+    return
+  }
 
-		// Automatically close the modal after brief confirmation
-		setTimeout(() => {
-			closeModal()
-		}, 1500)
-	} catch (err: any) {
-		errorMessage.value = err?.data?.statusMessage || err?.message || 'Failed to submit. Please try again.'
-	} finally {
-		isSubmitting.value = false
-	}
+  isSubmitting.value = true
+  try {
+    const res = await $fetch<{ ok: boolean, email?: string, alreadySubscribed?: boolean }>('/api/subscribe', {
+      method: 'POST',
+      body: {
+        email: emailVal,
+        name: nameVal || undefined,
+        source: 'modal',
+      },
+    })
+    submittedEmail.value = emailVal
+    isAlreadySubscribed.value = Boolean(res?.alreadySubscribed)
+    isSuccess.value = true
+    setSubscribed(true)
+    if (import.meta.client) {
+      setSubscribedEmail(emailVal)
+    }
+    emit('subscribed', emailVal)
+
+    // Automatically close the modal after brief confirmation
+    setTimeout(() => {
+      closeModal()
+    }, 1500)
+  } catch (err) {
+    // Properly narrow unknown error
+    if (err instanceof Error) {
+      errorMessage.value = err.message
+    } else if (err && typeof err === 'object' && 'message' in err) {
+      errorMessage.value = String(err.message)
+    } else {
+      errorMessage.value = 'Failed to submit. Please try again.'
+    }
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 function closeModal() {
-	isModalOpen.value = false
+  isModalOpen.value = false
 
-	// If closed without subscribing, set 1-week persistent cookie and localStorage
-	if (!isSuccess.value && !isSubscribedCookie.value) {
-		isDismissedCookie.value = true
-		if (import.meta.client) {
-			const expiry = Date.now() + ONE_WEEK_MS
-			localStorage.setItem('grugbox_modal_dismissed', 'true')
-			localStorage.setItem('grugbox_modal_dismissed_until', expiry.toString())
-		}
-	}
+  // If closed without subscribing, set 1-week persistent cookie and localStorage
+  if (!isSuccess.value && !isSubscribedCookie.value) {
+    setDismissed(true, modalEmail.value.trim())
+  }
 
-	emit('close')
+  emit('close')
 }
 
 onMounted(() => {
-	if (localStorage.getItem('grugbox_subscribed') === 'true') {
-		isModalOpen.value = false
-		isSubscribedCookie.value = true
-		return
-	}
+  if (import.meta.client) {
+    const storedSubscribed = localStorage.getItem('grugbox_subscribed')
+    if (storedSubscribed === 'true') {
+      isModalOpen.value = false
+      setSubscribed(true)
+      return
+    }
 
-	const dismissedUntil = localStorage.getItem('grugbox_modal_dismissed_until')
-	if (dismissedUntil && Number(dismissedUntil) > Date.now()) {
-		isModalOpen.value = false
-		isDismissedCookie.value = true
-	}
+    const dismissedUntil = localStorage.getItem('grugbox_modal_dismissed_until')
+    if (dismissedUntil && Number(dismissedUntil) > Date.now()) {
+      isModalOpen.value = false
+      setDismissed(true)
+    }
+  }
 })
 
 // Lock scroll when modal is active
 if (import.meta.client) {
-	let scrollPosition = 0
+  watch(isModalOpen, (open) => {
+    if (open) {
+      lockScroll()
+    } else {
+      unlockScroll()
+    }
+  }, { immediate: true })
 
-	const lockScroll = () => {
-		scrollPosition = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0
-		document.documentElement.style.overflow = 'hidden'
-		document.body.style.overflow = 'hidden'
-		document.body.style.position = 'fixed'
-		document.body.style.top = `-${scrollPosition}px`
-		document.body.style.width = '100%'
-	}
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeModal()
+    }
+  }
 
-	const unlockScroll = () => {
-		document.documentElement.style.overflow = ''
-		document.body.style.overflow = ''
-		document.body.style.position = ''
-		document.body.style.top = ''
-		document.body.style.width = ''
-		window.scrollTo(0, scrollPosition)
-	}
+  window.addEventListener('keydown', handleKeyDown)
 
-	watch(isModalOpen, (open) => {
-		if (open) {
-			lockScroll()
-		} else {
-			unlockScroll()
-		}
-	}, { immediate: true })
-
-	const handleKeyDown = (e: KeyboardEvent) => {
-		if (e.key === 'Escape') {
-			closeModal()
-		}
-	}
-
-	window.addEventListener('keydown', handleKeyDown)
-
-	onBeforeUnmount(() => {
-		unlockScroll()
-		window.removeEventListener('keydown', handleKeyDown)
-	})
+  onBeforeUnmount(() => {
+    unlockScroll()
+    window.removeEventListener('keydown', handleKeyDown)
+  })
 }
 </script>
 

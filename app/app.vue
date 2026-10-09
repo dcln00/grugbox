@@ -2,25 +2,25 @@
 const { x, y } = useWindowScroll()
 
 useHead({
-	title: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
+	title: 'Grugbox | Music, Culture, Lifestyle + More.',
 	htmlAttrs: {
     lang: 'en'
   },
 })
 
 useSeoMeta({
-	title: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
-	ogTitle: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
-	description: `Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld`,
-	ogDescription: `Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld`,
+	title: 'Grugbox | Music, Culture, Lifestyle + More.',
+	ogTitle: 'Grugbox | Music, Culture, Lifestyle + More.',
+	description: `Creative hub of music, culture, lifestyle + more. @grugbox.wrld`,
+	ogDescription: `Creative hub of music, culture, lifestyle + more. @grugbox.wrld`,
 	ogType: 'website',
-	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
-	ogSiteName: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
+	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	ogSiteName: 'Grugbox | Music, Culture, Lifestyle + More.',
 	ogUrl: 'https://grugbox.world',
 	twitterCard: 'summary',
-	twitterTitle: 'Grugbox | Music, culture and lifestyle stories from Ghana and beyond.',
-	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
-	twitterDescription: 'Creative hub of music, culture, lifestyle + more. Read the latest Alte, Afrobeats, Amapiano and African music news and interviews. @grugbox.wrld',
+	twitterTitle: 'Grugbox | Music, Culture, Lifestyle + More.',
+	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	twitterDescription: 'Creative hub of music, culture, lifestyle + more. @grugbox.wrld',
 })
 </script>
 

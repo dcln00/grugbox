@@ -1,4 +1,5 @@
 import { defineCollection, defineContentConfig } from '@nuxt/content'
+import { defineSitemapSchema } from '@nuxtjs/sitemap/content'
 import { z } from 'zod'
 
 const ARTICLE_CATEGORIES = [
@@ -15,6 +16,14 @@ export default defineContentConfig({
 			source: 'articles/*.md',
 			type: 'page',
 			schema: z.object({
+				sitemap: defineSitemapSchema({
+					z,
+					name: 'articles',
+					onUrl(url, entry) {
+						const date = entry.date
+						if (typeof date === 'string' || date instanceof Date) url.lastmod = date
+					},
+				}),
 				description: z.string(),
 				image: z.string(),
 				video: z.string().optional(),
@@ -27,6 +36,14 @@ export default defineContentConfig({
 			source: 'reviews/*.md',
 			type: 'page',
 			schema: z.object({
+				sitemap: defineSitemapSchema({
+					z,
+					name: 'reviews',
+					onUrl(url, entry) {
+						const date = entry.date
+						if (typeof date === 'string' || date instanceof Date) url.lastmod = date
+					},
+				}),
 				description: z.string(),
 				image: z.string(),
 				date: z.date(),
@@ -43,6 +60,14 @@ export default defineContentConfig({
 			source: 'interviews/*.md',
 			type: 'page',
 			schema: z.object({
+				sitemap: defineSitemapSchema({
+					z,
+					name: 'interviews',
+					onUrl(url, entry) {
+						const date = entry.date
+						if (typeof date === 'string' || date instanceof Date) url.lastmod = date
+					},
+				}),
 				description: z.string().optional(),
 				image: z.string(),
 				date: z.date(),
@@ -53,6 +78,14 @@ export default defineContentConfig({
 			source: 'playlists/*.md',
 			type: 'page',
 			schema: z.object({
+				sitemap: defineSitemapSchema({
+					z,
+					name: 'playlists',
+					onUrl(url, entry) {
+						const date = entry.date
+						if (typeof date === 'string' || date instanceof Date) url.lastmod = date
+					},
+				}),
 				description: z.string().optional(),
 				image: z.string(),
 				date: z.date(),
@@ -63,6 +96,13 @@ export default defineContentConfig({
 			source: 'legal/*.md',
 			type: 'page',
 			schema: z.object({
+				sitemap: defineSitemapSchema({
+					z,
+					name: 'legal',
+					onUrl(url) {
+						url.loc = url.loc.replace('/legal/', '/')
+					},
+				}),
 				title: z.string(),
 				description: z.string().optional(),
 				lastUpdated: z.string().optional(),

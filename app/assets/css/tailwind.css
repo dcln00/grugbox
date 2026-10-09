@@ -42,6 +42,10 @@ img, video {
 	margin-inline: auto;
 }
 
+.prose video {
+	pointer-events: auto;
+}
+
 .prose p:has(img) {
 	text-align: center;
 }

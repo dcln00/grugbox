@@ -1,6 +1,8 @@
 interface NavLink {
 	href: string
 	name: string
+	target?: string
+	external?: boolean
 }
 
 export interface FooterSection {
@@ -21,7 +23,7 @@ export const FOOTER_SECTIONS: FooterSection[] = [
 		title: 'More from Grugbox',
 		links: [
 			{ href: '#', name: 'Podcast' },
-			{ href: '#', name: 'Site Map' },
+			{ href: '/sitemap.xml', name: 'Site Map', target: '_blank', external: true },
 			{ href: '#', name: 'FAQ' },
 			{ href: '/newsletter', name: 'Subscribe' },
 		],
@@ -42,4 +44,5 @@ export const LEGAL_LINKS: NavLink[] = [
 	{ href: '/newsletter', name: 'Newsletter' },
 	{ href: '/contact', name: 'Contact' },
 	{ href: '/advertising', name: 'Advertising' },
+	{ href: '/sitemap.xml', name: 'Site Map', target: '_blank', external: true },
 ]

@@ -53,7 +53,12 @@ export default defineNuxtConfig({
 	srcDir: "app",
 	css: ["~/assets/css/tailwind.css"],
 	devtools: { enabled: true },
+	site: {
+		url: 'https://grugbox.world',
+		name: 'Grugbox',
+	},
 	modules: [
+		"@nuxtjs/sitemap",
 		"@nuxt/fonts",
 		"@nuxt/content",
 		"@nuxt/image",
@@ -82,6 +87,9 @@ export default defineNuxtConfig({
 	},
 	nitro: {
 		preset: "vercel",
+		prerender: {
+			routes: ["/sitemap.xml"],
+		},
 	},
 	runtimeConfig: {
 		googleAppsScriptUrl: process.env.GOOGLE_APPS_SCRIPT_URL || '',

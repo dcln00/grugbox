@@ -32,7 +32,7 @@ footer(class="bg-zinc-900 text-neutral-300")
 				h6(class="text-neutral-400 tracking-wide uppercase font-bold text-[11px]") {{ section.title }}
 				ul(class="flex flex-col gap-px")
 					li(v-for="link in section.links" :key="link.name")
-						NuxtLink(:to="link.href" class="text-xs uppercase tracking-wide duration-300 hover:underline") {{ link.name }}
+						NuxtLink(:to="link.href" :target="link.target" :external="link.external" class="text-xs uppercase tracking-wide duration-300 hover:underline") {{ link.name }}
 		hr(class="my-12 border-neutral-700")
 		//- Legal row
 		div(class="flex flex-col gap-8 lg:flex-row lg:items-start lg:justify-between")
@@ -40,6 +40,6 @@ footer(class="bg-zinc-900 text-neutral-300")
 				template(v-for="(link, idx) in LEGAL_LINKS" :key="link.name")
 					li(v-if="idx > 0" aria-hidden="true" class="text-neutral-600") |
 					li
-						NuxtLink(:to="link.href" class="text-neutral-400 duration-300 hover:text-white") {{ link.name }}
+						NuxtLink(:to="link.href" :target="link.target" :external="link.external" class="text-neutral-400 duration-300 hover:text-white") {{ link.name }}
 		p(class="mt-6 max-w-3xl text-xs leading-relaxed text-neutral-500") © {{ new Date().getFullYear() }} Grugbox. All rights reserved. The material on this site may not be reproduced, distributed, transmitted, cached or otherwise used, except with the prior written permission of Grugbox. Powered by #[NuxtLink(to="https://byar.online" class="text-neutral-500 duration-300 hover:text-white") Byar].
 </template>

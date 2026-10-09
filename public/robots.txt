@@ -1,2 +1,4 @@
 User-Agent: *
-Disallow:
+Disallow: /__nuxt_content/
+
+Sitemap: https://grugbox.world/sitemap.xml

@@ -1,9 +1,15 @@
+import { useLocalStorage } from '@vueuse/core'
+
 import { useSlideDeck } from '~/composables/useSlideDeck'
 import { useCaptionFit } from '~/composables/useCaptionFit'
 import { useCanvasRenderer } from '~/composables/useCanvasRenderer'
 import { useWorkspaceFonts } from '~/composables/useWorkspaceFonts'
 import { useRecentCategories } from '~/composables/useRecentCategories'
 import { normalizeCategory } from '~/utils/workspace/categories'
+import { resolveMarkTheme } from '~/utils/workspace/mark'
+import type { MarkTheme } from '~/utils/workspace/mark'
+
+const MARK_THEME_KEY = 'grugbox_workspace_mark_theme'
 
 const loadedData = (video: HTMLVideoElement): Promise<void> =>
 	new Promise(resolve => {
@@ -40,6 +46,22 @@ export function useWorkspaceStudio() {
 	const category = ref('')
 	const status = ref('')
 
+	/**
+	 * The SHARED default colourway of the mark. Persisted because it is a
+	 * preference rather than part of a draft — it tends to follow the team's
+	 * photography, not a single post. Individual slides may override it.
+	 */
+	const storedMarkTheme = useLocalStorage<MarkTheme>(MARK_THEME_KEY, 'white')
+
+	// Reads are validated rather than trusted: a hand-edited localStorage value
+	// would otherwise reach the renderer as an unknown theme key.
+	const defaultMarkTheme = computed<MarkTheme>({
+		get: () => (storedMarkTheme.value === 'black' ? 'black' : 'white'),
+		set: (value: MarkTheme) => {
+			storedMarkTheme.value = value
+		},
+	})
+
 	/** Reported back from the last draw so the UI can warn about an overlong caption. */
 	const captionInfo = ref({ fontSize: 0, lines: 0, truncated: false, atMinimumFont: false })
 
@@ -54,6 +76,11 @@ export function useWorkspaceStudio() {
 	})
 
 	const activeSlide = deck.activeSlide
+
+	/** The colourway actually painted: the slide's own override, else the default. */
+	const activeMarkTheme = computed<MarkTheme>(() =>
+		resolveMarkTheme(activeSlide.value?.markThemeOverride, defaultMarkTheme.value),
+	)
 
 	const hasMedia = computed(() => {
 		const slide = activeSlide.value
@@ -114,6 +141,7 @@ export function useWorkspaceStudio() {
 			sourceHeight,
 			caption: layout,
 			category: category.value,
+			markTheme: activeMarkTheme.value,
 		})
 	}
 
@@ -203,7 +231,7 @@ export function useWorkspaceStudio() {
 
 	// Any of these changing should repaint exactly once.
 	watch(
-		[activeCaption, category, activeSlide],
+		[activeCaption, category, activeSlide, activeMarkTheme],
 		() => {
 			invalidate()
 		},
@@ -234,6 +262,8 @@ export function useWorkspaceStudio() {
 		category,
 		status,
 		captionInfo,
+		defaultMarkTheme,
+		activeMarkTheme,
 		fontFailed,
 		suggestions,
 		recents,

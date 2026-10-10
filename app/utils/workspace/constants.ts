@@ -11,7 +11,13 @@ export const CHIP_FONT_SIZE = 28
 export const CHIP_PADDING_X = 22
 export const CHIP_MAX_LABEL_LENGTH = 24
 
-export const LOGO_HEIGHT = 50
+/**
+ * Side of the square Grugbox mark in the top-right. Sized above CHIP_HEIGHT
+ * (48) so the symbol reads at Instagram's display sizes — the previous
+ * wordmark filled ~197px of this band at a 3.94:1 aspect, and a square mark
+ * at chip height looked like a speck.
+ */
+export const LOGO_HEIGHT = 72
 
 /** Where the scrim gradient begins, as a fraction of canvas height. */
 export const SCRIM_START_RATIO = 0.55

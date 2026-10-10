@@ -7,6 +7,7 @@ import { downloadBlob, nextPaint } from '~/utils/workspace/download'
 import { buildFileName } from '~/utils/workspace/format'
 import { extensionForMime, isMp4 } from '~/utils/workspace/mime'
 import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/utils/workspace/constants'
+import type { MarkTheme } from '~/utils/workspace/mark'
 
 definePageMeta({ middleware: 'workspace-auth' })
 
@@ -44,6 +45,12 @@ const overrideText = computed({
 })
 
 const usesOverride = computed(() => !!activeSlide.value?.captionOverride.trim())
+
+/** Per-slide mark colourway; null means this slide follows the shared default. */
+const markOverride = computed<MarkTheme | null>({
+	get: () => activeSlide.value?.markThemeOverride ?? null,
+	set: (value: MarkTheme | null) => studio.setMarkThemeOverride(activeIndex.value, value),
+})
 
 const captionFor = (slide: WorkspaceSlide): string =>
 	slide.captionOverride.trim() || studio.caption.value
@@ -163,26 +170,36 @@ watch(monitorAudio, value => setExportMonitor(value))
 </script>
 
 <template lang="pug">
-div(class="min-h-screen bg-zinc-950 text-white")
-	header(class="flex items-center justify-between gap-4 border-b border-zinc-800 px-6 py-4")
+div(class="min-h-screen bg-zinc-950 text-white lg:flex lg:h-screen lg:flex-col lg:overflow-hidden")
+	header(class="flex shrink-0 items-center justify-between gap-4 border-b border-zinc-800 px-6 py-4")
 		div(class="flex items-center gap-4")
-			svg-logo(class="h-5 w-auto text-white" aria-hidden="true")
-			span(class="text-[11px] font-bold uppercase tracking-wide text-zinc-500") Workspace
+			span(class="text-[11px] font-bold uppercase tracking-wide text-zinc-500") Grugbox Workspace
 		button(
 			type="button"
 			class="text-[10px] font-bold uppercase tracking-wide text-zinc-500 duration-200 hover:text-white"
 			@click="logout"
 		) Sign out
 
-	div(class="mx-auto grid max-w-7xl grid-cols-1 gap-8 px-6 py-8 lg:grid-cols-[minmax(0,1fr)_380px]")
+	div(class="mx-auto grid w-full max-w-7xl grid-cols-1 gap-8 px-6 py-8 lg:min-h-0 lg:flex-1 lg:grid-cols-[minmax(0,1fr)_380px] lg:py-6")
 		//- CANVAS
-		section(class="flex flex-col gap-4")
-			div(class="relative mx-auto w-full max-w-md overflow-hidden bg-black lg:max-w-none")
+		//- On desktop the whole page is a fixed-height flex column, so this column is
+		//- a definite-height flex child and the frame can fill whatever is actually
+		//- left, rather than a guessed slice of the viewport. The aside scrolls on its
+		//- own, so nothing moves the canvas.
+		section(class="flex flex-col gap-4 lg:min-h-0")
+			//- `w-auto` plus the aspect ratio derives width from height; `max-w-full`
+			//- re-derives the height when width is the binding constraint (narrow
+			//- phones), so the 4:5 ratio holds either way. `object-contain` is the
+			//- safety net for the one case where it does not — a very tall viewport,
+			//- where the column width clamps first and the height does not follow. It
+			//- letterboxes rather than stretching the preview; identical ratios make it
+			//- a no-op everywhere else.
+			div(class="relative flex min-h-0 justify-center overflow-hidden bg-black lg:flex-1")
 				canvas(
 					ref="canvasEl"
 					:width="CANVAS_WIDTH"
 					:height="CANVAS_HEIGHT"
-					class="block w-full aspect-4/5"
+					class="block h-auto max-h-[calc(100vh-11rem)] w-auto max-w-full aspect-4/5 object-contain lg:max-h-full"
 				)
 
 			//- Off-screen playback source. Kept rendered rather than display:none so
@@ -210,7 +227,9 @@ div(class="min-h-screen bg-zinc-950 text-white")
 				| Long caption — the text is at its smallest size ({{ studio.captionInfo.value.lines }} lines).
 
 		//- CONTROLS
-		aside(class="flex flex-col gap-8")
+		aside(class="flex flex-col gap-8 lg:min-h-0 lg:overflow-y-auto")
+			workspace-mark-picker(v-model="studio.defaultMarkTheme.value")
+
 			workspace-category-field(
 				v-model="studio.category.value"
 				:suggestions="studio.suggestions.value"
@@ -241,7 +260,7 @@ div(class="min-h-screen bg-zinc-950 text-white")
 
 			p(v-if="studio.error.value" class="text-xs leading-relaxed text-red-400") {{ studio.error.value }}
 
-			//- PER-SLIDE CAPTION
+			//- PER-SLIDE OVERRIDES (caption and logo colourway)
 			div(v-if="activeSlide" class="flex flex-col gap-3 border-t border-zinc-800 pt-6")
 				div(class="flex items-center justify-between gap-3")
 					span(class="text-[11px] font-bold uppercase tracking-wide text-zinc-400") This slide
@@ -262,6 +281,11 @@ div(class="min-h-screen bg-zinc-950 text-white")
 					v-model="overrideText"
 					rows="3"
 					class="w-full resize-y bg-zinc-900 border border-zinc-700 px-3 py-2 text-sm leading-relaxed outline-none duration-200 focus:border-white"
+				)
+
+				workspace-slide-mark-picker(
+					v-model="markOverride"
+					:default-theme="studio.defaultMarkTheme.value"
 				)
 
 			//- VIDEO TRIM

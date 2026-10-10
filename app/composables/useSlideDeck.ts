@@ -2,6 +2,7 @@ import { MAX_CLIP_SECONDS, MAX_SLIDES } from '~/utils/workspace/constants'
 import { kindForFile } from '~/utils/workspace/fileKind'
 import { useMediaLoader } from '~/composables/useMediaLoader'
 import type { MediaKind, TrimRange } from '~/utils/workspace/types'
+import type { MarkTheme } from '~/utils/workspace/mark'
 
 export interface WorkspaceSlide {
 	id: string
@@ -17,6 +18,8 @@ export interface WorkspaceSlide {
 	trim: TrimRange
 	/** Empty means "use the shared caption". */
 	captionOverride: string
+	/** `null` means "use the shared mark colourway". */
+	markThemeOverride: MarkTheme | null
 }
 
 export function useSlideDeck() {
@@ -83,6 +86,7 @@ export function useSlideDeck() {
 						duration: 0,
 						trim: { start: 0, end: 0 },
 						captionOverride: '',
+						markThemeOverride: null,
 					})
 				} else {
 					const loaded = await loadVideoFile(file)
@@ -98,6 +102,7 @@ export function useSlideDeck() {
 						// Default to the opening of the clip, capped at the platform limit.
 						trim: { start: 0, end: Math.min(loaded.duration, MAX_CLIP_SECONDS) },
 						captionOverride: '',
+						markThemeOverride: null,
 					})
 				}
 			} catch (caught: unknown) {
@@ -151,6 +156,13 @@ export function useSlideDeck() {
 		slide.captionOverride = value
 	}
 
+	/** `null` clears the override so the slide follows the shared default again. */
+	const setMarkThemeOverride = (index: number, theme: MarkTheme | null): void => {
+		const slide = slides.value[index]
+		if (!slide) return
+		slide.markThemeOverride = theme
+	}
+
 	const reset = (): void => {
 		for (const slide of slides.value) releaseSlide(slide)
 		slides.value = []
@@ -173,6 +185,7 @@ export function useSlideDeck() {
 		selectSlide,
 		setTrim,
 		setCaptionOverride,
+		setMarkThemeOverride,
 		reset,
 	}
 }

@@ -21,9 +21,6 @@ const onSubmit = async (): Promise<void> => {
 <template lang="pug">
 div(class="min-h-screen bg-zinc-950 text-white flex items-center justify-center px-6")
 	div(class="w-full max-w-sm flex flex-col gap-8")
-		div(class="flex flex-col gap-3")
-			svg-logo(class="h-6 w-auto text-white" aria-hidden="true")
-			p(class="text-sm text-zinc-400 leading-relaxed") Team workspace. Members only.
 
 		div(v-if="!configured" class="border border-amber-500/40 bg-amber-500/10 p-4 text-sm leading-relaxed text-amber-200")
 			| #[strong WORKSPACE_PASSWORD] is not set. Add it to #[code .env] and to your Vercel environment variables, then restart.

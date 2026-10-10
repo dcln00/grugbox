@@ -14,7 +14,7 @@ import {
 	SCRIM_START_RATIO,
 } from './constants'
 import { coverRect } from './geometry'
-import { GRUGBOX_LOGO_VIEWBOX } from '../logo'
+import { MARK_VIEWBOX } from './mark'
 import type { CaptionLayout } from './types'
 
 /**
@@ -127,23 +127,39 @@ export const drawChip = (ctx: CanvasRenderingContext2D, label: string): void => 
 	ctx.restore()
 }
 
+/** One painted layer of the mark. Order in the array is the paint order. */
+export interface LogoShape {
+	path: Path2D
+	color: string
+}
+
 /**
- * The wordmark, drawn from SVG path data via Path2D.
+ * The wordmark-sized slot, now holding the square Grugbox symbol.
  *
- * Path2D needs no rasterisation: it is synchronous, cannot taint the canvas (so
- * PNG export cannot fail with a SecurityError) and takes its colour from
- * fillStyle — none of the async-load or Safari-0x0 problems an SVG data URL
- * would bring.
+ * Built from SVG path data via Path2D: synchronous, needs no image load, cannot
+ * taint the canvas (so PNG export cannot fail with a SecurityError) and takes
+ * its colour from fillStyle — none of the async-load or Safari-0x0 problems an
+ * SVG data URL would bring.
+ *
+ * The mark is two-tone and its shapes overlap, so each layer is filled in turn
+ * rather than silhouetting the whole thing in one colour.
  */
-export const drawLogo = (ctx: CanvasRenderingContext2D, logo: Path2D): void => {
-	const scale = LOGO_HEIGHT / GRUGBOX_LOGO_VIEWBOX.height
-	const width = GRUGBOX_LOGO_VIEWBOX.width * scale
+export const drawLogo = (ctx: CanvasRenderingContext2D, shapes: readonly LogoShape[]): void => {
+	const scale = LOGO_HEIGHT / MARK_VIEWBOX.height
+	const width = MARK_VIEWBOX.width * scale
 
 	ctx.save()
-	ctx.translate(CANVAS_WIDTH - PAGE_MARGIN - width, PAGE_MARGIN + (CHIP_HEIGHT - LOGO_HEIGHT) / 2)
+	// Top-aligned with the chip rather than centred on the chip band: the mark is
+	// now taller than the chip, and centring would push its top edge above the
+	// chip's and off the visual grid.
+	ctx.translate(CANVAS_WIDTH - PAGE_MARGIN - width, PAGE_MARGIN)
 	ctx.scale(scale, scale)
-	ctx.fillStyle = WHITE
-	ctx.fill(logo)
+
+	for (const shape of shapes) {
+		ctx.fillStyle = shape.color
+		ctx.fill(shape.path)
+	}
+
 	ctx.restore()
 }
 

@@ -1,4 +1,5 @@
-import { GRUGBOX_LOGO_PATHS } from '~/utils/logo'
+import { MARK_SHAPES, MARK_THEMES } from '~/utils/workspace/mark'
+import type { MarkTheme } from '~/utils/workspace/mark'
 import {
 	CANVAS_HEIGHT,
 	CANVAS_WIDTH,
@@ -11,21 +12,26 @@ import {
 	drawLogo,
 	drawScrim,
 } from '~/utils/workspace/draw'
+import type { LogoShape } from '~/utils/workspace/draw'
 import type { CaptionLayout } from '~/utils/workspace/types'
 
 /**
- * Built once and cached. Path2D is immutable and cheap to reuse, and building it
- * per frame would re-parse seven path strings 30 times a second during export.
+ * Built lazily per colourway and cached. Path2D is immutable and cheap to reuse,
+ * and rebuilding it per frame would re-parse the path strings 30 times a second
+ * during export.
  */
-let cachedLogoPath: Path2D | null = null
+const buildMark = (theme: MarkTheme): readonly LogoShape[] =>
+	MARK_SHAPES.map(shape => ({ path: new Path2D(shape.d), color: MARK_THEMES[theme][shape.tone] }))
 
-const getLogoPath = (): Path2D => {
-	if (!cachedLogoPath) {
-		const path = new Path2D()
-		for (const definition of GRUGBOX_LOGO_PATHS) path.addPath(new Path2D(definition))
-		cachedLogoPath = path
-	}
-	return cachedLogoPath
+const markCache: Partial<Record<MarkTheme, readonly LogoShape[]>> = {}
+
+const getLogoMark = (theme: MarkTheme): readonly LogoShape[] => {
+	const cached = markCache[theme]
+	if (cached) return cached
+
+	const built = buildMark(theme)
+	markCache[theme] = built
+	return built
 }
 
 /** Everything a single frame needs. Recomputed on change, not per draw. */
@@ -36,6 +42,8 @@ export interface Scene {
 	sourceHeight: number
 	caption: CaptionLayout
 	category: string
+	/** Which colourway of the mark to paint. */
+	markTheme: MarkTheme
 }
 
 export function useCanvasRenderer() {
@@ -52,7 +60,7 @@ export function useCanvasRenderer() {
 
 		drawScrim(ctx)
 		drawChip(ctx, scene.category)
-		drawLogo(ctx, getLogoPath())
+		drawLogo(ctx, getLogoMark(scene.markTheme))
 		drawCaption(ctx, scene.caption)
 	}
 

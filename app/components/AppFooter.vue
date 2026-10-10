@@ -2,8 +2,6 @@
 import type { Component } from 'vue'
 import SvgSocialsInstagram from '~/components/svg/socials/instagram.vue'
 import SvgSocialsX from '~/components/svg/socials/x.vue'
-import SvgSocialsFacebook from '~/components/svg/socials/facebook.vue'
-import SvgSocialsYouTube from '~/components/svg/socials/youtube.vue'
 import SvgSocialsTikTok from '~/components/svg/socials/tiktok.vue'
 
 interface SocialLink {

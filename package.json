@@ -10,7 +10,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
+    "postinstall": "nuxt prepare",
+    "test": "vitest run"
   },
   "dependencies": {
     "@nuxt/content": "^3.16.1",
@@ -28,6 +29,7 @@
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.20",
-    "pug": "^3.0.3"
+    "pug": "^3.0.3",
+    "vitest": "^4.1.11"
   }
 }

@@ -31,10 +31,18 @@ export default defineNuxtConfig({
 		preset: "vercel",
 		prerender: {
 			routes: ["/sitemap.xml"],
+			ignore: ["/workspace", "/workspace/**"],
 		},
+	},
+	routeRules: {
+		"/workspace/**": { prerender: false },
+	},
+	sitemap: {
+		exclude: ["/workspace", "/workspace/**"],
 	},
 	runtimeConfig: {
 		googleAppsScriptUrl: process.env.GOOGLE_APPS_SCRIPT_URL || '',
+		workspacePassword: process.env.WORKSPACE_PASSWORD || '',
 	},
 	vite: {
 		server: {

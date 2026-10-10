@@ -41,7 +41,7 @@ onBeforeUnmount(() => {
   currentArticleTitle.value = null
 })
 
-const defaultOgImage = 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png'
+const defaultOgImage = 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg'
 const postOgImage = computed(() => {
   const img = post.value?.image
   return img && !isVideo(img) ? img : defaultOgImage
@@ -56,6 +56,9 @@ useSeoMeta({
 	ogDescription: () => post.value?.description || `Read the latest article on Grugbox about ${formatSlug.value}.`,
 	twitterDescription: () => post.value?.description || `Read the latest article on Grugbox about ${formatSlug.value}.`,
 	ogImage: () => postOgImage.value,
+	ogImageWidth: 1200,
+	ogImageHeight: 630,
+	twitterCard: 'summary_large_image',
 	twitterImage: () => postOgImage.value,
 })
 </script>

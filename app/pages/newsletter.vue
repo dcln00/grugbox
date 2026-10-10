@@ -16,6 +16,8 @@ useSeoMeta({
 
 const email = ref('')
 const name = ref('')
+const turnstileRef = ref()
+const turnstileToken = ref('')
 const isSubmitting = ref(false)
 const isSuccess = ref(false)
 const submittedEmail = ref('')
@@ -66,6 +68,7 @@ async function handleSubscribe() {
 				name: name.value.trim() || undefined,
 				editions: selectedEditions.value,
 				source: 'newsletter_page',
+				token: turnstileToken.value || undefined,
 			},
 		})
 		submittedEmail.value = emailVal
@@ -77,6 +80,7 @@ async function handleSubscribe() {
 			localStorage.setItem('grugbox_subscribed_email', emailVal)
 		}
 	} catch (err: any) {
+		turnstileRef.value?.reset()
 		errorMessage.value = err?.data?.statusMessage || err?.message || 'Failed to submit. Please try again.'
 	} finally {
 		isSubmitting.value = false
@@ -86,6 +90,8 @@ async function handleSubscribe() {
 function resetForm() {
 	email.value = ''
 	name.value = ''
+	turnstileToken.value = ''
+	turnstileRef.value?.reset()
 	errorMessage.value = ''
 	isSuccess.value = false
 }
@@ -185,6 +191,10 @@ section#newsletter(class="py-10 lg:py-16")
 								placeholder="Your name"
 								class="w-full border border-zinc-300 px-4 py-3 text-sm text-zinc-900 focus:border-black focus:outline-none transition-colors"
 							)
+
+						//- Cloudflare Turnstile
+						div(class="flex justify-start")
+							NuxtTurnstile(ref="turnstileRef" v-model="turnstileToken" :options="{ size: 'flexible', theme: 'light', action: 'newsletter_subscribe' }")
 
 						//- Validation error notice
 						p(v-if="errorMessage" class="text-xs font-medium text-red-700 bg-red-50 border border-red-200 px-3 py-2")

@@ -22,9 +22,8 @@ export const FOOTER_SECTIONS: FooterSection[] = [
 	{
 		title: 'More from Grugbox',
 		links: [
-			{ href: '#', name: 'Podcast' },
-			{ href: '/sitemap.xml', name: 'Site Map', target: '_blank', external: true },
-			{ href: '#', name: 'FAQ' },
+			{ href: '/submissions', name: 'Submissions' },
+			{ href: '/volunteer', name: 'Volunteer' },
 			{ href: '/newsletter', name: 'Subscribe' },
 		],
 	},

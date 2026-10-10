@@ -24,6 +24,8 @@ const { lockScroll, unlockScroll } = useBodyScrollLock()
 const isModalOpen = ref(!isSubscribedCookie.value && !isDismissedCookie.value)
 const modalEmail = ref('')
 const modalName = ref('')
+const turnstileRef = ref()
+const modalTurnstileToken = ref('')
 const isSubmitting = ref(false)
 const isSuccess = ref(false)
 const isAlreadySubscribed = ref(false)
@@ -50,6 +52,7 @@ async function handleSubscribe() {
         email: emailVal,
         name: nameVal || undefined,
         source: 'modal',
+        token: modalTurnstileToken.value || undefined,
       },
     })
     submittedEmail.value = emailVal
@@ -66,6 +69,7 @@ async function handleSubscribe() {
       closeModal()
     }, 1500)
   } catch (err) {
+    turnstileRef.value?.reset()
     // Properly narrow unknown error
     if (err instanceof Error) {
       errorMessage.value = err.message
@@ -81,6 +85,8 @@ async function handleSubscribe() {
 
 function closeModal() {
   isModalOpen.value = false
+  modalTurnstileToken.value = ''
+  turnstileRef.value?.reset()
 
   // If closed without subscribing, set 1-week persistent cookie and localStorage
   if (!isSuccess.value && !isSubscribedCookie.value) {
@@ -203,6 +209,10 @@ Teleport(to="body")
 								placeholder="Your name"
 								class="w-full border border-zinc-300 px-4 py-3 text-sm text-zinc-900 focus:border-black focus:outline-none transition-colors"
 							)
+
+						//- Cloudflare Turnstile
+						div(class="flex justify-start")
+							NuxtTurnstile(ref="turnstileRef" v-model="modalTurnstileToken" :options="{ size: 'flexible', theme: 'light', action: 'newsletter_subscribe' }")
 
 						//- Validation error notice
 						p(v-if="errorMessage" class="text-xs font-medium text-red-700 bg-red-50 border border-red-200 px-3 py-2")

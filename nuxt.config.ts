@@ -15,6 +15,7 @@ export default defineNuxtConfig({
 		"@nuxtjs/tailwindcss",
 		"@vueuse/nuxt",
 		"nuxt-gtag",
+		"@nuxtjs/turnstile",
 	],
 	fonts: {
 		families: [
@@ -40,9 +41,16 @@ export default defineNuxtConfig({
 	sitemap: {
 		exclude: ["/workspace", "/workspace/**"],
 	},
+	turnstile: {
+		siteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY,
+		addValidateEndpoint: true,
+	},
 	runtimeConfig: {
 		googleAppsScriptUrl: process.env.GOOGLE_APPS_SCRIPT_URL || '',
 		workspacePassword: process.env.WORKSPACE_PASSWORD || '',
+		turnstile: {
+			secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY || '',
+		},
 	},
 	vite: {
 		server: {

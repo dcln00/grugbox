@@ -168,8 +168,6 @@ article#article(v-if="post")
 								svg-socials-facebook(class="size-4")
 							a(:href="`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(post.title)}`" target="_blank" rel="noopener noreferrer" aria-label="Share on X" class="size-14 flex items-center justify-center text-zinc-500 hover:text-black hover:bg-zinc-50 duration-200")
 								svg-socials-x(class="size-4")
-							a(:href="`https://pinterest.com/pin/create/button/?url=${encodeURIComponent(shareUrl)}&description=${encodeURIComponent(post.title)}`" target="_blank" rel="noopener noreferrer" aria-label="Share on Pinterest" class="size-14 flex items-center justify-center text-zinc-500 hover:text-black hover:bg-zinc-50 duration-200")
-								svg-socials-pinterest(class="size-4")
 
 						//- Article Markdown Content
 						div(class="flex-1 min-w-0 flex flex-col gap-8")

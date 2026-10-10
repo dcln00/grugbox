@@ -5,13 +5,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Commands
 
 ```bash
-npm run dev    # dev server — the only way to preview this app locally
-npm run build  # production build → .vercel/output
+npm run dev        # dev server — the only way to preview this app locally
+npm test           # vitest run, one pass (test/**/*.spec.ts)
+npm run build      # production build → .vercel/output
 npm run generate
 npm run postinstall  # nuxt prepare; regenerates .nuxt/ and the generated tsconfigs
 ```
 
-There is **no test suite, no linter, and no typecheck script**. `vue-tsc` is not installed.
+There is **no linter and no typecheck script** — `vue-tsc` is not installed, so nothing here
+catches type errors but the build. `npm test` exists but is narrow: see **Testing** below.
 
 `npm run preview` **does not work here.** Because `nitro.preset` is `vercel`, Nitro writes to
 Vercel's Build Output API layout (`.vercel/output/`) rather than the default `.output/`, and
@@ -19,22 +21,35 @@ Vercel's Build Output API layout (`.vercel/output/`) rather than the default `.o
 verify changes. (`.vercel/` is ~63 MB and `.output/` is a vestigial empty shell; both are
 gitignored and rebuilt from scratch.)
 
+There is no CI, no `.github/` directory and no `vercel.json` — deployment config is entirely
+`nitro.preset` in `nuxt.config.ts`.
+
 ## Content pipeline
 
-Publishing flows through four files that must be kept in sync — this is the main thing that
+Publishing flows through files that must be kept in sync — this is the main thing that
 requires reading across files to understand:
 
 1. **`public/admin/index.html`** loads Sveltia CMS from a CDN. The editor UI lives at `/admin`.
 2. **`public/admin/config.yml`** defines what editors can create: a GitHub-backed backend
    (repo `dcln00/grugbox`, branch `main`) authenticated through a Cloudflare Worker OAuth proxy
-   at `base_url`, with `publish_mode: editorial_workflow` (drafts go through PRs).
+   at `base_url`, with `publish_mode: editorial_workflow` (drafts go through PRs) and
+   `open_authoring: true` — anyone who reaches the CMS can propose an edit, but nothing lands on
+   `main` without merging the PR.
 3. **`content/*.md`** holds the markdown, with frontmatter matching the CMS fields.
 4. **`content.config.ts`** (repo root, not `app/`) declares the Zod schemas that
    `queryCollection()` validates against at build time.
+5. **`nuxt.config.ts`**'s `site.url` feeds the sitemap and canonical URLs. Keep it in step with
+   `public/admin/config.yml`'s `site_url` — these currently disagree on the `www` host
+   (`nuxt.config.ts` has no `www`, the CMS does).
 
 The CMS and `content.config.ts` agree on collections: `post`, `review`, `interview` and
 `playlist` exist in both, and both are authorable through `/admin`. (`legal` has a schema but no
 CMS collection — those files are hand-written.)
+
+Every collection also carries a `defineSitemapSchema` entry whose `onUrl` sets `lastmod` from
+`date`; the `legal` collection rewrites `/legal/` out of the path so those pages serve at the
+root. Adding a collection means touching **both** `content.config.ts` and the CMS config, or
+editors cannot create it and the sitemap will not know about it.
 
 Three schema fields have no CMS widget, so they can only be set by editing frontmatter directly:
 
@@ -43,7 +58,8 @@ Three schema fields have no CMS widget, so they can only be set by editing front
 - **`interviews.description`** — optional in the schema and read by `pages/interviews/index.vue`
   and `[slug].vue` for the listing blurb and Open Graph tags, but absent from the CMS interview
   fields.
-- **`playlists.tags`** — optional in the schema, with no tags field in the CMS playlist collection.
+- **`playlists.tags`** — optional in the schema, with no tags field in the CMS playlist
+  collection.
 
 Every collection extends Nuxt Content's `PageCollectionItemBase`, so `title` and `description`
 are queryable on any collection even where its schema does not redeclare them. Generated types
@@ -51,14 +67,19 @@ land in `.nuxt/content/types.d.ts` after `npm run postinstall` — read that fil
 guessing whether a field survived validation.
 
 Featured images use `/content/...` paths, which resolve to `public/content/` (the CMS sets
-`media_folder: public/content` and `public_folder: /content`). A few components fall back to a
-hardcoded Cloudinary URL for Open Graph images.
+`media_folder: public/content` and `public_folder: /content`).
 
 ## App structure
 
 `srcDir` is `app/`, set explicitly in `nuxt.config.ts` (Nuxt's auto-detection infers it from the
 directory's *contents*, so an empty or half-populated `app/` would silently fall back to the repo
-root and drop routes). `content/`, `public/`, and `content.config.ts` deliberately stay outside it.
+root and drop routes). `content/`, `public/`, `server/` and `content.config.ts` deliberately stay
+outside it.
+
+**There is no `app/layouts/`.** `app/app.vue` is the single shell, and it gates the chrome —
+`SubscriptionModal`, the back-to-top button, `AppHeader`, `AppDrawer` and `AppFooter` are all
+`v-if="!isWorkspaceRoute"`, so `/workspace/**` renders bare. A new global element belongs there
+behind the same guard.
 
 **Every `.vue` file uses `<template lang="pug">`.** `pug` is a devDependency and is load-bearing —
 Vue's `compiler-sfc` resolves it at build time, and removing it breaks all components at once.
@@ -79,26 +100,121 @@ article(v-for="p in posts" :key="p.path" class="featured")
 The shorthand class goes first in the attribute, so the rendered `class` value is identical either
 way — this is purely about keeping the template readable and greppable.
 
-Navigation lives in **`app/utils/nav.ts`** (`NAV_LINKS`, `FOOTER_LINKS`), auto-imported into
-`Aside` and `AppFooter`. It was previously duplicated across three components, which is how dead
-links drifted apart — keep it single-source. The desktop header carries no section links; the
-drawer (`Aside`) is the nav at every breakpoint.
+### Header, drawer and nav
 
-`AppHeader.vue` renders **two** headers: one in flow at the top of the page, and a `fixed` copy
-that slides in via `<Transition>` once you scroll past 200px. Both render the same markup, which
-lives in **`HeaderBar.vue`** — restyle that component, not its two call sites, and note that both
-call sites forward `toggleShow` up to `app.vue`, which owns the drawer's open state.
+`AppHeader.vue` renders **two** headers itself — one in flow, and a `fixed` copy inside a
+`<Transition name="nav">` that slides in once scrolled — both inlined in that one component.
+The fixed copy swaps the wordmark for the current article title on a slug route, reading the
+`currentArticleTitle` `useState` that the four slug pages set and clear. The in-flow header
+renders the section links; the fixed one has an identical `nav` block commented out.
 
-Icons are **inline `<svg>`** in whichever component needs one — there is no icon module. The
-hamburger (`AppHeader.vue`), drawer close (`Aside.vue`) and back-to-top caret (`app.vue`) each carry
-their own `<path>`, all using `currentColor` so the surrounding `text-*` class drives their colour.
-`app/assets/icons/hamburger.svg` is retained as the source for that path but is not imported at
-runtime. `nuxt-svgo` was removed deliberately; don't reintroduce an icon module for a handful of
-one-off glyphs.
+The drawer is **`AppDrawer.vue`**, `Teleport`ed to `body`, opened via the `isMenuOpen` `useState`
+(shared with `AppHeader`, which also sets `isDynamicHeaderHidden` to slide the fixed header away
+first). There is no `Aside.vue` and no `HeaderBar.vue`; `app.vue` does not own the open state.
 
-Styling is **Tailwind 4 via `@nuxtjs/tailwindcss` v7 (beta)**, configured entirely in CSS — there
-is no `tailwind.config.js`. See `app/assets/css/tailwind.css`, which uses `@theme` (the
+Navigation lives in **`app/utils/nav.ts`** — `NAV_LINKS`, `FOOTER_SECTIONS` and `LEGAL_LINKS`
+(note: `FOOTER_SECTIONS`, not `FOOTER_LINKS`), auto-imported into `AppHeader` and `AppFooter`.
+`AppDrawer.vue` is the exception: it redeclares its own `primaryLinks` / `secondaryLinks` arrays,
+so editing `nav.ts` does not update the drawer. Keep `nav.ts` the source and fix the drawer's
+copy rather than adding a fourth list.
+
+### Icons
+
+Icons are **SVG components in `app/components/svg/`** (`hamburger`, `close`, `chevron-right`,
+`chevron-down`, `arrow-up`, `logo`, and `socials/*`), auto-imported and used as `<svg-hamburger>`,
+`<svg-socials-x>`. They paint with `currentColor`, so the surrounding `text-*` class drives their
+colour. There is no icon module and no `app/assets/icons/` directory; `nuxt-svgo` was removed
+deliberately — add a small `.vue` here for a new glyph rather than reintroducing a module.
+
+`app/utils/logo.ts` is the **single source for the wordmark** as raw SVG path data. `svg-logo.vue`
+and the workspace canvas renderer both read it, the latter via `Path2D`, which takes SVG path data
+directly — no rasterising, no async image load, no canvas tainting. Do not inline a second copy.
+
+### Styling
+
+Tailwind 4 via `@nuxtjs/tailwindcss` v7 (beta), configured entirely in CSS — there is no
+`tailwind.config.js`. See `app/assets/css/tailwind.css`, which uses `@theme` (the
 `--color-brand-accent` token), `@plugin` (typography), and `@utility`.
+
+`<style>` blocks exist in exactly four files (`app.vue`, `AppHeader`, `AppDrawer`,
+`SubscriptionModal`) and only ever define Vue `<Transition>` classes, which Tailwind cannot
+express. That is the one sanctioned reason for a style block; everything else is utilities.
+
+## The workspace (`/workspace`)
+
+A password-gated internal tool under `app/pages/workspace/`: the team attaches photos and videos,
+and the app composites each into a 1080×1350 Instagram portrait with a category chip, the Grugbox
+mark and a bottom caption, then exports PNG or MP4/WebM. Attachments are **in-memory only** —
+a refresh loses them.
+
+**Auth.** The real gate is **`server/middleware/workspace-auth.ts`**, which runs before render, so
+an unauthenticated visitor never receives workspace markup: document requests get a 302 to
+`/workspace/login`, data requests a 401. `app/middleware/workspace-auth.ts` (applied by
+`definePageMeta({ middleware: 'workspace-auth' })` on `index.vue`) is documented defence in depth
+for client-side navigation only. The session is a **stateless HMAC token** —
+`<expiryEpoch>.<hmac-sha256(password, expiry)>`, 7-day TTL, `httpOnly`/`lax`/`secure` cookie —
+keyed by the password itself, so **rotating `WORKSPACE_PASSWORD` invalidates every issued
+session**. `server/utils/workspaceAuth.ts` holds the crypto and the routing predicates, with the
+password passed in rather than read from `runtimeConfig` so it can be unit-tested without Nitro.
+`MIN_PASSWORD_LENGTH` is 12 and refuses to run below it. The login route's fixed 250 ms failure
+delay is deliberately **not** rate limiting — Vercel isolates invocations, so an in-memory counter
+would be theatre; the long random password is the defence.
+
+**Canvas and the pure core.** The frame is fixed at 1080×1350 (`app/utils/workspace/constants.ts`)
+and PNG export does no rescaling; the preview `<canvas>` is sized by CSS only. `coverRect` in
+`geometry.ts` returns a *destination* rect, not a source crop — `drawImage` accepts negative
+x/y — so callers draw straight in with no clipping, and zero/negative source dims return a
+full-frame rect to stop an undecoded video producing `NaN`. The caption block is bottom-anchored
+and grows upward, its line budget *derived* from the space above it; the font shrinks 62→28,
+manual line breaks are inviolable, and an over-long caption reports `atMinimumFont` separately
+from genuinely dropped lines (`truncated`).
+
+`app/utils/workspace/` splits cleanly: `geometry`, `caption`, `mark`, `mime`, `format`,
+`categories` are **pure** — every browser dependency is injected (`fitCaption` takes a
+`measureText` function, `pickRecorderFormat` takes an `isSupported` predicate), which is exactly
+what makes them testable. `draw.ts` and `download.ts` need a real canvas and DOM.
+
+**Export.** Video export is real-time `MediaRecorder` over `canvas.captureStream(30)` — no
+WebCodecs, no Worker, no OffscreenCanvas. Consequences worth knowing before touching it: exports
+stall if the tab is backgrounded (the rAF loop stops on `visibilitychange`); MP4 is preferred and
+Firefox falls back to WebM, which the UI warns is unreliable for Instagram; the `AudioContext` and
+`createMediaElementSource` node are **session singletons** because the source may be created only
+once per element, ever; and the single shared `<video>` element stays rendered at 1px rather than
+`display:none` so the decoder keeps producing frames. Rendering uses a coalesced rAF loop, not
+`requestVideoFrameCallback`, because rVFC never fires for a compositor-hidden element.
+
+Only the recent-categories list and the shared mark colourway persist. `useWorkspaceFonts.ts`
+probes for Google Sans and treats an **empty resolved array as failure** — `fonts.load` resolves
+empty rather than rejecting when no face matches. Fonts are load-bearing: the canvas measures in
+`Google Sans` (loaded globally by `@nuxt/fonts`), so a fallback changes every caption's fit.
+
+## Server routes
+
+`server/` is outside `srcDir` and holds only API routes and middleware:
+
+- `api/subscribe.post.ts` — the newsletter form's backend. Validates the email, then forwards to
+  a Google Apps Script webhook (`GOOGLE_APPS_SCRIPT_URL`) both as query params and a JSON body so
+  either style of Apps Script works. Returns `ok: true` with a warning rather than failing when
+  the URL is unset, so the form still succeeds in local dev. The `setDefaultResultOrder('ipv4first')`
+  at the top is deliberate, not cruft — it works around IPv6 resolution trouble reaching Google.
+- `api/workspace/*` — login, logout and session. `session.get.ts` is deliberately reachable
+  without a session because the client middleware must ask before it knows whether to redirect;
+  it reports booleans and nothing else. Logout is POST so a link or image tag cannot trigger it.
+
+Both env vars (`GOOGLE_APPS_SCRIPT_URL`, `WORKSPACE_PASSWORD`) are read through `runtimeConfig`
+and are **server-only** — no `NUXT_PUBLIC_` prefix, nothing exposed to the client.
+
+## Testing
+
+`npm test` runs Vitest (`vitest.config.ts`, standalone — `environment: 'node'`, no Nuxt plugin,
+no jsdom) over `test/**/*.spec.ts`. **Only pure functions are covered, by design:** the workspace
+utilities and `server/utils/workspaceAuth.ts`. Nothing under test imports Vue, Nuxt or Nitro, and
+the config comment says so explicitly.
+
+That means no `.vue` file, no composable, no API route and no middleware is covered, and adding a
+test that needs a component mount or a Nuxt runtime would require changing the environment and
+pulling in the Nuxt test plugin. Extending coverage means extending the injection seams
+(`measureText`, `isSupported`) rather than mocking globals.
 
 ## Gotchas
 
@@ -112,17 +228,30 @@ in `package.json` is what keeps Tailwind 4. A bare `npm i @nuxtjs/tailwindcss` s
 and breaks the `@theme` / `@utility` CSS.
 
 **Node:** `engines` is `^22.19.0 || ^24.11.0 || >=26.0.0` (Nuxt excludes odd-numbered non-LTS
-releases) with `.nvmrc` at `24`. The machine this was set up on runs Node 25 — outside that range —
-which produces `npm warn EBADENGINE` on install. Builds work regardless.
+releases) with `.nvmrc` at `24`. This machine runs Node 25 — a global Homebrew install, no version
+manager — which is outside that range and produces `npm warn EBADENGINE` on install. Builds work
+regardless.
 
 **npm ≥11.19 gates install scripts.** Four packages here have unapproved install scripts
 (`better-sqlite3`, `esbuild` ×2, `fsevents`); everything still works because they fall back to
 prebuilds. A native dependency *without* prebuilds would install "successfully" and then fail at
 runtime with no build error — use `npm install-scripts approve <pkg>` if that happens.
 
-**`nuxt.config.ts` strips `.DS_Store` from the build.** Nuxt copies everything under `public/`
-into the output verbatim, and `.gitignore` cannot stop that (the file never reaches git). A
-`nitro:build:public-assets` hook removes them from `output.publicDir` so they are never published.
+**Open Graph images resolved from frontmatter are relative, and crawlers drop them.** Content
+stores `image: /content/foo.jpg`, and the slug pages pass that straight to `ogImage`, so posts
+*with* a featured image get no social preview at all while posts without one fall back correctly.
+The fallback is the absolute Cloudinary `grugbox-og.jpg`, which is why this hides. Fixing it means
+absolutising against `site.url` from `useSiteConfig()` before it reaches `useSeoMeta`.
+
+**`twitterCard` must be set per page.** `app/app.vue` declares `twitterCard: 'summary'` globally;
+a page's `useSeoMeta` registers deeper in the tree and wins, so any page wanting a large card has
+to say so itself. The four listing pages (`articles|reviews|interviews|playlists/index.vue`)
+currently do not, and inherit the small card.
+
+**`/workspace` is kept out of the build three separate ways** in `nuxt.config.ts` —
+`routeRules` `prerender: false`, `nitro.prerender.ignore`, and `sitemap.exclude` — and both
+workspace pages set `robots: 'noindex, nofollow'`. Removing only one of these will not un-exclude
+it.
 
 ## Deployment
 

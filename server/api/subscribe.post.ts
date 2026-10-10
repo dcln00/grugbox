@@ -17,7 +17,49 @@ export default defineEventHandler(async (event) => {
 		})
 	}
 
-	const config = useRuntimeConfig()
+	const token = typeof body?.token === 'string' ? body.token.trim() : ''
+
+	const config = useRuntimeConfig(event)
+	const turnstileSecret = (config.turnstile?.secretKey as string) || process.env.NUXT_TURNSTILE_SECRET_KEY || ''
+	if (turnstileSecret && token) {
+		if (token.length > 2048) {
+			throw createError({
+				statusCode: 400,
+				statusMessage: 'Invalid verification token.',
+			})
+		}
+
+		const expectedAction = 'newsletter_subscribe'
+		const expectedHostnames = new Set(
+			(process.env.TURNSTILE_HOSTNAMES ?? 'grugbox.world,www.grugbox.world,localhost,127.0.0.1')
+				.split(',')
+				.map((h) => h.trim())
+				.filter(Boolean)
+		)
+
+		const result: any = await verifyTurnstileToken(token, event)
+		if (!result?.success) {
+			throw createError({
+				statusCode: 403,
+				statusMessage: 'Turnstile verification failed. Please try again.',
+			})
+		}
+
+		if (result.action && result.action !== expectedAction) {
+			throw createError({
+				statusCode: 403,
+				statusMessage: 'Turnstile action mismatch.',
+			})
+		}
+
+		if (result.hostname && expectedHostnames.size > 0 && !expectedHostnames.has(result.hostname)) {
+			throw createError({
+				statusCode: 403,
+				statusMessage: 'Turnstile hostname rejected.',
+			})
+		}
+	}
+
 	const scriptUrl = (config.googleAppsScriptUrl as string) || process.env.GOOGLE_APPS_SCRIPT_URL || ''
 
 	if (!scriptUrl) {

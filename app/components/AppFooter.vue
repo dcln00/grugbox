@@ -11,9 +11,9 @@ interface SocialLink {
 }
 
 const SOCIAL_LINKS: SocialLink[] = [
-	{ name: 'Instagram', href: '#', icon: SvgSocialsInstagram },
-	{ name: 'X', href: '#', icon: SvgSocialsX },
-	{ name: 'TikTok', href: '#', icon: SvgSocialsTikTok },
+	{ name: 'Instagram', href: 'https://www.instagram.com/grugbox.wrld', icon: SvgSocialsInstagram },
+	{ name: 'X', href: 'https://x.com/grugboxworld', icon: SvgSocialsX },
+	{ name: 'TikTok', href: 'https://www.tiktok.com/@grugbox', icon: SvgSocialsTikTok },
 ]
 </script>
 
@@ -28,7 +28,7 @@ footer(class="bg-zinc-900 text-neutral-300")
 				p(class="max-w-xs text-sm leading-relaxed") Creative hub of music, culture, lifestyle + more.
 				ul(class="flex items-center gap-6")
 					li(v-for="social in SOCIAL_LINKS" :key="social.name")
-						a(:href="social.href" :aria-label="social.name" class="block text-neutral-400 duration-300 hover:text-white")
+						a(:href="social.href" :aria-label="social.name" target="_blank" rel="noopener noreferrer" class="block text-neutral-400 duration-300 hover:text-white")
 							component(:is="social.icon" class="size-5")
 
 			//- Mobile Accordion (strictly mobile)

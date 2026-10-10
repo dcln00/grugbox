@@ -9,8 +9,8 @@ useSeoMeta({
 	description: 'Albums, EPs and singles from Ghana and beyond, reviewed.',
 	ogDescription: 'Albums, EPs and singles from Ghana and beyond, reviewed.',
 	twitterDescription: 'Albums, EPs and singles from Ghana and beyond, reviewed.',
-	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
-	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1751375431/Grugbox/grugbox-og.png',
+	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
 })
 
 const { data: reviews } = await useAsyncData('reviews', () => {

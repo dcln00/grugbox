@@ -3,12 +3,12 @@ export const CANVAS_WIDTH = 1080
 export const CANVAS_HEIGHT = 1350
 
 /** Shared margin for the chip (top-left) and the logo (top-right). */
-export const PAGE_MARGIN = 28
+export const PAGE_MARGIN = 40
 
 export const CHIP_HEIGHT = 48
 export const CHIP_RADIUS = 6
-export const CHIP_FONT_SIZE = 28
-export const CHIP_PADDING_X = 22
+export const CHIP_FONT_SIZE = 26
+export const CHIP_PADDING_X = 10
 export const CHIP_MAX_LABEL_LENGTH = 24
 
 /**

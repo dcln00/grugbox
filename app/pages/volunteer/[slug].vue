@@ -48,7 +48,7 @@ const isSubmitting = ref(false)
 const isSubmitted = ref(false)
 const errorMessage = ref('')
 
-function handleSubmit() {
+async function handleSubmit() {
 	errorMessage.value = ''
 
 	if (!firstName.value.trim() || !lastName.value.trim()) {

@@ -129,7 +129,7 @@ section(id="hero" aria-label="Top trending" class="grid grid-cols-1 md:grid-cols
 //- PROFILES + TOP REVIEWS — the profile category beside a review rail ranked by score
 section(id="profiles" class="my-20")
 	div(class="container")
-		div(class="grid grid-cols-1 lg:grid-cols-3 gap-12")
+		div(class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-14")
 			div(class="lg:col-span-2 flex flex-col gap-16")
 				//- Editorial block — lead hero overlay, then two side-by-side cards
 				div(class="flex flex-col gap-8")
@@ -203,12 +203,14 @@ section(id="profiles" class="my-20")
 									h3(class="text-sm lg:text-base tracking-tight duration-300 group-hover:text-brand-accent line-clamp-1") {{ playlist.title }}
 								p(class="text-[10px] uppercase text-zinc-500") #[NuxtTime(:datetime="playlist.date" month="long" day="numeric" year="numeric")]
 
-			div(class="lg:col-span-1 lg:sticky lg:top-24 self-start flex flex-col gap-8")
+			aside(class="lg:col-span-1 lg:sticky lg:top-24 self-start flex flex-col gap-10")
 				//- Top reviews block — score ring on the lead, score column on the rows
-				div(class="bg-zinc-50 p-6 lg:p-8 flex flex-col gap-6")
+				div(class="bg-zinc-50 p-6 lg:p-8 flex flex-col gap-6 border border-zinc-100")
 					div(class="flex flex-col gap-2")
-						h2(class="text-xs font-bold uppercase tracking-widest") Top Reviews
-						div(class="h-px w-full bg-zinc-200")
+						h2(class="text-xs font-bold tracking-wide uppercase") Top Reviews
+						div(class="flex items-center")
+							div(class="h-px w-10 shrink-0 bg-black")
+							div(class="h-px flex-1 bg-zinc-200")
 					article(v-if="leadReview" class="group relative overflow-hidden bg-zinc-900")
 						NuxtLink(:to="leadReview.path" class="block")
 							NuxtImg(:src="leadReview.image" alt="featured image" class="w-full aspect-3/2 object-cover object-center select-none pointer-events-none")

@@ -41,11 +41,9 @@ onBeforeUnmount(() => {
   currentArticleTitle.value = null
 })
 
-const defaultOgImage = 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg'
-const postOgImage = computed(() => {
-  const img = post.value?.image
-  return img && !isVideo(img) ? img : defaultOgImage
-})
+const siteConfig = useSiteConfig()
+
+const postOgImage = computed(() => resolveOgImage(post.value?.image, siteConfig.url))
 
 useHead({
 	title: () => `${formatSlug.value} - Grugbox`,

@@ -3,15 +3,17 @@ useHead({
 	title: 'Newsletter - Grugbox',
 })
 
+const siteConfig = useSiteConfig()
+
 useSeoMeta({
 	title: 'Newsletter - Grugbox',
 	description: 'Subscribe to the Grugbox newsletter for the best album reviews, artist interviews, and African music culture in your inbox.',
 	ogTitle: 'The best of Grugbox in your inbox',
 	ogDescription: 'Subscribe to the Grugbox newsletter for the best album reviews, artist interviews, and African music culture in your inbox.',
-	ogImage: '/content/black-sherif-sun-sherif-cover.jpg',
+	ogImage: resolveOgImage('/content/black-sherif-sun-sherif-cover.jpg', siteConfig.url),
 	twitterTitle: 'The best of Grugbox in your inbox',
 	twitterDescription: 'Subscribe to the Grugbox newsletter for the best album reviews, artist interviews, and African music culture in your inbox.',
-	twitterImage: '/content/black-sherif-sun-sherif-cover.jpg',
+	twitterImage: resolveOgImage('/content/black-sherif-sun-sherif-cover.jpg', siteConfig.url),
 })
 
 const email = ref('')

@@ -9,8 +9,8 @@ useSeoMeta({
 	description: 'Music, culture and lifestyle stories from Ghana and beyond.',
 	ogDescription: 'Music, culture and lifestyle stories from Ghana and beyond.',
 	twitterDescription: 'Music, culture and lifestyle stories from Ghana and beyond.',
-	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
-	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	ogImage: OG_FALLBACK_IMAGE,
+	twitterImage: OG_FALLBACK_IMAGE,
 })
 
 const { data: articles } = await useAsyncData('articles', () => {

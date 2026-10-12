@@ -69,6 +69,27 @@ guessing whether a field survived validation.
 Featured images use `/content/...` paths, which resolve to `public/content/` (the CMS sets
 `media_folder: public/content` and `public_folder: /content`).
 
+**The filename is the slug.** A content file's route comes from its basename, not from a
+`slug:` field in frontmatter — `content/articles/alorg-rebel-who-wont-pretend.md` serves at
+`/articles/alorg-rebel-who-wont-pretend`. Nothing in `app/` or `server/` hardcodes article
+paths; the listing pages read `path` off the collection result, so renaming a file updates
+every internal link automatically. Renaming therefore breaks only **external** URLs, and
+`nuxt.config.ts` has no redirects configured, so an old slug 404s the moment it changes.
+
+Slug conventions by collection, which the CMS will **not** reproduce on create (its
+`slug: '{{slug}}'` derives the filename from the title, so it emits things like
+`profile-alorg-the-rebel-who-wont-pretend` for a profile titled "Profile: AlorG, the Rebel Who
+Won't Pretend" — rename the generated file after saving):
+
+- **`articles/`** — descriptive kebab-case built from artist plus subject, matching the rest of
+  the collection (`black-sherif-iron-boy-tour`, `jude-dontoh-featured-on-kanye-west-bully-deluxe-album`).
+  Profiles carry no `profile-` prefix; the category lives in frontmatter (`category: profile`),
+  not in the filename.
+- **`interviews/`** — artist name plus a type suffix (`amaarae-interview`, `guiltybeatz-interview`).
+- **`reviews/`** — `album-review-<artist>-<album>` or `ep-review-<artist>-<album>`, with one
+  holdout (`the-sound-of-after-midnight.md`).
+- **`playlists/`** — descriptive kebab-case, no prefix (`grugbox-essentials-alte-highlife`).
+
 ## App structure
 
 `srcDir` is `app/`, set explicitly in `nuxt.config.ts` (Nuxt's auto-detection infers it from the

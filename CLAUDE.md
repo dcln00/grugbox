@@ -221,16 +221,28 @@ empty rather than rejecting when no face matches. Fonts are load-bearing: the ca
 - `api/workspace/*` — login, logout and session. `session.get.ts` is deliberately reachable
   without a session because the client middleware must ask before it knows whether to redirect;
   it reports booleans and nothing else. Logout is POST so a link or image tag cannot trigger it.
+- `api/volunteer-apply.post.ts` — the volunteer form's backend. Validates with the zod schema in
+  `server/utils/volunteerApplication.ts`, verifies the Turnstile token, resolves the role title
+  from the slug server-side, and emails the application to `careers@grugbox.world` through the
+  Resend REST API (`RESEND_API_KEY`) — no SDK dependency, just `$fetch`. Sender is
+  `noreply@grugbox.world` with the applicant as `reply_to`, so replying in Zoho answers them.
+  Three behaviours worth not "fixing" by accident: it **requires** a token whenever a Turnstile
+  secret is configured (unlike `subscribe.post.ts`, which skips verification when the token is
+  absent), it refuses to skip the action/hostname assertions except for Cloudflare's documented
+  test secrets (local dev runs on them and they return placeholder metadata), and it **fails
+  loudly** with a 503 when `RESEND_API_KEY` is unset rather than reporting success — telling an
+  applicant their application was received when nothing was sent is the worse failure.
 
-Both env vars (`GOOGLE_APPS_SCRIPT_URL`, `WORKSPACE_PASSWORD`) are read through `runtimeConfig`
-and are **server-only** — no `NUXT_PUBLIC_` prefix, nothing exposed to the client.
+`GOOGLE_APPS_SCRIPT_URL`, `WORKSPACE_PASSWORD` and `RESEND_API_KEY` are read through
+`runtimeConfig` and are **server-only** — no `NUXT_PUBLIC_` prefix, nothing exposed to the client.
+The Resend key is sending-only and scoped to the `grugbox.world` domain.
 
 ## Testing
 
 `npm test` runs Vitest (`vitest.config.ts`, standalone — `environment: 'node'`, no Nuxt plugin,
 no jsdom) over `test/**/*.spec.ts`. **Only pure functions are covered, by design:** the workspace
-utilities and `server/utils/workspaceAuth.ts`. Nothing under test imports Vue, Nuxt or Nitro, and
-the config comment says so explicitly.
+utilities, `server/utils/workspaceAuth.ts` and `server/utils/volunteerApplication.ts`. Nothing
+under test imports Vue, Nuxt or Nitro, and the config comment says so explicitly.
 
 That means no `.vue` file, no composable, no API route and no middleware is covered, and adding a
 test that needs a component mount or a Nuxt runtime would require changing the environment and

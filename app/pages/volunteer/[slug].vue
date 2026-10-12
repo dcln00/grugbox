@@ -21,105 +21,31 @@ useSeoMeta({
 	twitterDescription: () => role.value?.shortDescription || '',
 })
 
-// Form State
-const firstName = ref('')
-const lastName = ref('')
-const email = ref('')
-const linkedinUrl = ref('')
-const portfolioUrl = ref('')
-const socialHandle = ref('')
-const areaOfInterest = ref('Music')
-const location = ref('')
-const storyPitch = ref('')
-const visualConcept = ref('')
-const followedWriters = ref('')
+// The form lives in a composable so this page stays a view.
 const turnstileRef = ref()
-const turnstileToken = ref('')
 
-const interestOptions = [
-	'Fashion',
-	'Film & TV',
-	'Music',
-	'Visual Art',
-	'Society & Culture',
-]
-
-const isSubmitting = ref(false)
-const isSubmitted = ref(false)
-const errorMessage = ref('')
-
-async function handleSubmit() {
-	errorMessage.value = ''
-
-	if (!firstName.value.trim() || !lastName.value.trim()) {
-		errorMessage.value = 'Please enter both first and last names.'
-		return
-	}
-
-	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-	if (!email.value.trim() || !emailRegex.test(email.value.trim())) {
-		errorMessage.value = 'Please enter a valid email address.'
-		return
-	}
-
-	if (!portfolioUrl.value.trim()) {
-		errorMessage.value = 'Please provide a link to your portfolio or published work.'
-		return
-	}
-
-	if (!areaOfInterest.value) {
-		errorMessage.value = 'Please choose your primary area of interest.'
-		return
-	}
-
-	if (!location.value.trim()) {
-		errorMessage.value = 'Please let us know where you are currently based.'
-		return
-	}
-
-	if (!storyPitch.value.trim()) {
-		errorMessage.value = 'Please share a story idea or topic you would love to cover.'
-		return
-	}
-
-	isSubmitting.value = true
-
-	try {
-		if (turnstileToken.value) {
-			const res: any = await $fetch('/_turnstile/validate', {
-				method: 'POST',
-				body: { token: turnstileToken.value },
-			})
-			if (res && res.success === false) {
-				throw new Error('Turnstile verification failed. Please try again.')
-			}
-		}
-		isSubmitted.value = true
-	} catch (err: any) {
-		turnstileRef.value?.reset()
-		errorMessage.value = err?.data?.statusMessage || err?.message || 'Verification failed. Please try again.'
-	} finally {
-		isSubmitting.value = false
-	}
-}
-
-function resetForm() {
-	firstName.value = ''
-	lastName.value = ''
-	email.value = ''
-	linkedinUrl.value = ''
-	portfolioUrl.value = ''
-	socialHandle.value = ''
-	areaOfInterest.value = 'Music'
-	location.value = ''
-	storyPitch.value = ''
-	visualConcept.value = ''
-	followedWriters.value = ''
-	turnstileToken.value = ''
-	turnstileRef.value?.reset()
-	isSubmitted.value = false
-	errorMessage.value = ''
-}
+const {
+	firstName,
+	lastName,
+	email,
+	linkedinUrl,
+	portfolioUrl,
+	socialHandle,
+	areaOfInterest,
+	location,
+	storyPitch,
+	visualConcept,
+	followedWriters,
+	turnstileToken,
+	interestOptions,
+	isSubmitting,
+	isSubmitted,
+	errorMessage,
+	submit,
+	reset,
+} = useVolunteerApplication(slug, {
+	onChallengeReset: () => turnstileRef.value?.reset(),
+})
 </script>
 
 <template lang="pug">
@@ -199,12 +125,12 @@ div#volunteer-role-page(v-if="role")
 								| You can also send additional work or portfolio PDFs directly to #[a(href="mailto:careers@grugbox.world" class="underline hover:text-black") careers@grugbox.world].
 							button(
 								type="button"
-								@click="resetForm"
+								@click="reset"
 								class="mt-2 text-xs font-bold uppercase tracking-widest text-zinc-600 hover:text-black underline underline-offset-4 cursor-pointer w-fit"
 							) Submit another response
 
 						//- Application Form
-						form(v-else @submit.prevent="handleSubmit" class="flex flex-col gap-5")
+						form(v-else @submit.prevent="submit" class="flex flex-col gap-5")
 							//- First Name & Last Name (2 columns)
 							div(class="grid grid-cols-1 sm:grid-cols-2 gap-4")
 								div(class="flex flex-col gap-1.5")

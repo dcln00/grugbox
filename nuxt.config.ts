@@ -47,6 +47,7 @@ export default defineNuxtConfig({
 	},
 	runtimeConfig: {
 		googleAppsScriptUrl: process.env.GOOGLE_APPS_SCRIPT_URL || '',
+		resendApiKey: process.env.RESEND_API_KEY || '',
 		workspacePassword: process.env.WORKSPACE_PASSWORD || '',
 		turnstile: {
 			secretKey: process.env.NUXT_TURNSTILE_SECRET_KEY || '',

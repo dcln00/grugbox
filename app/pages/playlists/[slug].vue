@@ -45,15 +45,17 @@ useHead({
 	title: () => `${formatSlug.value} - Grugbox`,
 })
 
+const siteConfig = useSiteConfig()
+
 useSeoMeta({
 	description: () => post.value?.description || `Read the latest playlist on Grugbox about ${formatSlug.value}.`,
 	ogDescription: () => post.value?.description || `Read the latest playlist on Grugbox about ${formatSlug.value}.`,
 	twitterDescription: () => post.value?.description || `Read the latest playlist on Grugbox about ${formatSlug.value}.`,
-	ogImage: post.value?.image || 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	ogImage: () => resolveOgImage(post.value?.image, siteConfig.url),
 	ogImageWidth: 1200,
 	ogImageHeight: 630,
 	twitterCard: 'summary_large_image',
-	twitterImage: post.value?.image || 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	twitterImage: () => resolveOgImage(post.value?.image, siteConfig.url),
 })
 </script>
 

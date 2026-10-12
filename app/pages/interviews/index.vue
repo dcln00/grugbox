@@ -9,8 +9,8 @@ useSeoMeta({
 	description: 'Exclusive interviews with artists, creators, and cultural icons from Ghana and beyond.',
 	ogDescription: 'Exclusive interviews with artists, creators, and cultural icons from Ghana and beyond.',
 	twitterDescription: 'Exclusive interviews with artists, creators, and cultural icons from Ghana and beyond.',
-	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
-	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	ogImage: OG_FALLBACK_IMAGE,
+	twitterImage: OG_FALLBACK_IMAGE,
 })
 
 const { data: interviews } = await useAsyncData('interviews', () => {

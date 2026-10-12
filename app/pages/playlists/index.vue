@@ -9,8 +9,8 @@ useSeoMeta({
 	description: 'Curated playlists featuring the best of Ghanaian music and beyond.',
 	ogDescription: 'Curated playlists featuring the best of Ghanaian music and beyond.',
 	twitterDescription: 'Curated playlists featuring the best of Ghanaian music and beyond.',
-	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
-	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	ogImage: OG_FALLBACK_IMAGE,
+	twitterImage: OG_FALLBACK_IMAGE,
 })
 
 const { data: playlists } = await useAsyncData('playlists', () => {

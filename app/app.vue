@@ -22,12 +22,12 @@ useSeoMeta({
 	description: `Creative hub of music, culture, lifestyle + more. @grugbox.wrld`,
 	ogDescription: `Creative hub of music, culture, lifestyle + more. @grugbox.wrld`,
 	ogType: 'website',
-	ogImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	ogImage: OG_FALLBACK_IMAGE,
 	ogSiteName: 'Grugbox | Music, Culture, Lifestyle + More.',
 	ogUrl: 'https://grugbox.world',
 	twitterCard: 'summary',
 	twitterTitle: 'Grugbox | Music, Culture, Lifestyle + More.',
-	twitterImage: 'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg',
+	twitterImage: OG_FALLBACK_IMAGE,
 	twitterDescription: 'Creative hub of music, culture, lifestyle + more. @grugbox.wrld',
 })
 </script>

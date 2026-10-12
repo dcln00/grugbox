@@ -20,7 +20,7 @@ The 24-year-old, who records for Mavin Records, performed at Tottenham Hotspur S
 
 American Express presented the performance, part of the NFL's push to build an audience outside the United States. Starr was backed by a full ensemble of dancers in black streetwear and royal-purple sashes, and wore a corseted lace bodice with knee-high leather boots. The set leaned on choreography throughout.
 
-<video controls playsinline class="w-full max-w-2xl mx-auto rounded-xl shadow-lg aspect-video object-cover my-6" src="/content/ayra-starr-nfl-halftime-show-broadcast-clip.mp4"></video>
+<video controls playsinline class="w-full aspect-video object-cover my-6" src="/content/ayra-starr-nfl-halftime-show-broadcast-clip.webm"></video>
 
 <p class="text-xs text-center text-zinc-500 -mt-3 mb-6">Broadcast footage of the halftime performance, presented by American Express</p>
 
@@ -28,7 +28,7 @@ American Express presented the performance, part of the NFL's push to build an a
 
 The setlist drew on her biggest records: "Rush", the diamond-certified single, along with "Hot Body" and "Heaven Baby", and tracks from *Starrgirl*, her most recent release.
 
-<video controls playsinline class="w-full max-w-2xl mx-auto rounded-xl shadow-lg aspect-video object-cover my-6" src="/content/ayra-starr-nfl-halftime-stadium-performance.mp4"></video>
+<video controls playsinline class="w-full aspect-video object-cover my-6" src="/content/ayra-starr-nfl-halftime-stadium-performance.webm"></video>
 
 <p class="text-xs text-center text-zinc-500 -mt-3 mb-6">Ayra Starr during the set at Tottenham Hotspur Stadium</p>
 

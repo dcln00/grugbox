@@ -84,11 +84,7 @@ article#article(v-if="post")
 					//- Floating Share Icons + Article Content
 					div(class="flex flex-col md:flex-row gap-6 lg:gap-10 items-start")
 						//- Floating vertical share icons (sticky on desktop)
-						aside(aria-label="Share playlist" class="flex md:flex-col border border-zinc-200 bg-white md:sticky md:top-28 shrink-0 divide-x md:divide-x-0 md:divide-y divide-zinc-200 z-0")
-							a(:href="`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`" target="_blank" rel="noopener noreferrer" aria-label="Share on Facebook" class="size-14 flex items-center justify-center text-zinc-500 hover:text-black hover:bg-zinc-50 duration-200")
-								svg-socials-facebook(class="size-4")
-							a(:href="`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(post.title)}`" target="_blank" rel="noopener noreferrer" aria-label="Share on X" class="size-14 flex items-center justify-center text-zinc-500 hover:text-black hover:bg-zinc-50 duration-200")
-								svg-socials-x(class="size-4")
+						share-aside(:url="shareUrl" :title="post.title" label="Share playlist")
 
 						//- Article Markdown Content
 						div(class="flex-1 min-w-0 flex flex-col gap-8")

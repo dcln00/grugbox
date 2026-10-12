@@ -27,54 +27,53 @@ export const VOLUNTEER_ROLES: VolunteerRole[] = [
 		slug: 'writer',
 		title: 'Writer',
 		badge: 'Editorial & Culture · Volunteer',
-		location: 'Remote (International)',
-		type: 'Contract',
+		location: 'Remote (Global)',
+		type: 'Volunteer',
 		shortDescription:
-			"We are seeking writers who have a strong pulse on music, art, and cultural movements in Ghana and the diaspora. You'll contribute artist profiles, feature pieces, scene reports, and reviews across our five core pillars: Sound, Fashion, Screen, Visual, and Society.",
+			"We are looking for writers and culture lovers passionate about music, art, and storytelling across Ghana and the diaspora. You'll contribute artist spotlights, reviews, and cultural features across our core pillars: Sound, Fashion, Screen, Visual, and Society.",
 		about:
-			"Editorial Contributors are the voice of Grugbox. We're looking for writers, interviewers, and reporters who are already embedded in the scenes they cover. We need people who know the culture from the inside out, move fast when a story breaks, and write with the authority that comes from being there. You'll be on the ground finding stories everyone else is missing while working with a global team to uncover Ghanaian stories and give them a high-end editorial treatment, helping build a new standard of global Ghanaian media.",
+			"Editorial contributors help shape the voice of Grugbox. We're looking for curious writers, interviewers, and cultural observers excited to spotlight Ghanaian creativity and the wider African diaspora. Whether you're an aspiring writer looking to build your portfolio or someone who simply loves the culture, you'll collaborate with a supportive editorial team to pitch ideas you care about, interview inspiring artists, and share your perspective with a global audience.",
 		responsibilities: [
-			'Pitch and produce features, interviews, cultural commentary, and news pieces across our editorial pillars and in our editorial voice.',
-			'Find emerging artists, designers, and musicians before they hit the mainstream.',
-			'Attend studio visits, gallery openings, and events on assignment to get the full story.',
-			'Pitch fresh ideas and help decide what the publication covers next.',
+			'Pitch and write features, artist interviews, album reviews, or cultural reflections on topics you care about.',
+			'Help spotlight emerging musicians, designers, visual artists, and community builders.',
+			'Collaborate with our editors to shape your drafts and develop your storytelling voice.',
+			'Bring fresh ideas to brainstorms and help decide what stories we cover next.',
 		],
 		requirements: [
-			'At least 2 years of experience in editorial writing, culture journalism, or digital storytelling.',
-			'A published portfolio or personal archive that highlights your distinct voice and storytelling style.',
-			'Deep engagement with your local creative community and a strong radar for emerging artists and movements.',
-			'Proven ability to craft thoughtful, long-form cultural criticism as well as agile, timely news features.',
-			'Self-discipline to manage an active editorial schedule and consistently meet deadlines on your own.',
-			'An authentic connection to contemporary Ghanaian culture, the wider African diaspora, and their global impact.',
+			'A genuine love for writing and storytelling—prior published clips are great, but enthusiasm and a unique perspective matter most.',
+			'A couple of writing samples (published articles, blog posts, essays, or personal drafts) that show your voice.',
+			'An interest in contemporary Ghanaian culture, music, arts, and diaspora scenes.',
+			'Curiosity, openness to feedback, and a friendly, collaborative attitude.',
+			'Reliable communication to keep in touch as you work on pieces at your own pace.',
 		],
 		compensation: {
 			intro:
-				'We are an independent, grassroots publication, and our current compensation framework reflects our stage of growth. We operate on a flat-rate commission basis for all published editorial work.',
+				'Grugbox is an independent, grassroots publication run by a community of creatives. All contributor roles are voluntary and unpaid—there is no financial compensation or contributor fee at this stage.',
 			items: [
 				{
-					label: 'Standard Editorial',
-					detail: '$50 USD per published article, feature, or review.',
+					label: 'Unpaid Volunteer',
+					detail: 'This is an unpaid volunteer position. We do not currently offer fees, stipends, or monetary compensation.',
 				},
 				{
-					label: 'Commissions',
-					detail: 'Payment is guaranteed exclusively for formally commissioned pitches and pre-assigned briefs.',
+					label: 'Byline & Creative Credit',
+					detail: 'You receive full bylines and author profile tags across our website, newsletters, and social platforms for every piece you write.',
 				},
 				{
-					label: 'Creative Credit',
-					detail: 'You will always receive clear bylines and author tags across our website, newsletters, and social platforms wherever your story is shared.',
+					label: 'Editorial Mentorship',
+					detail: 'Hands-on editing, guidance, and constructive feedback from our team to help refine your craft and build confidence.',
 				},
 				{
-					label: 'Project Funding',
-					detail: 'For ambitious, high-impact stories requiring travel or dedicated on-the-ground reporting, we consider supplemental production expenses on a case-by-case basis. Prior editorial sign-off is required; pitching a concept does not guarantee funding.',
+					label: 'Portfolio & Global Reach',
+					detail: 'A respected editorial platform to showcase your published work to an engaged worldwide audience.',
 				},
 				{
-					label: 'Payment Terms',
-					detail: 'All contributor fees and honorariums are disbursed following publication.',
+					label: 'Flexible Pace',
+					detail: 'Contribute when your schedule allows—we fully support balancing your contributions with your studies, day job, or personal life.',
 				},
 			],
 		},
 		diversity:
-			'Grugbox is committed to a fair, inclusive, and transparent contributor process. We enthusiastically welcome applications from all backgrounds, no matter your location or past industry access. We place immense value on the distinct perspectives born of varied lived experiences and strive to cultivate a welcoming environment where every creative voice is heard and championed.',
+			"We warmly welcome writers of all experience levels and backgrounds. You don't need formal journalism degrees or industry connections to write with us—if you love the culture and have something thoughtful to say, we want to hear from you.",
 	},
 	{
 		slug: 'photographer',
@@ -83,51 +82,50 @@ export const VOLUNTEER_ROLES: VolunteerRole[] = [
 		location: 'Accra / Global Diaspora',
 		type: 'Volunteer',
 		shortDescription:
-			"We are seeking photographers based in Ghana or diaspora creative hubs (London, New York, Toronto, Berlin) to shoot live concerts, festivals, artist studio sessions, and photo essays. You'll gain press access and showcase your visual work to our growing audience.",
+			"We are looking for photographers and visual storytellers in Ghana and diaspora hubs (London, New York, Toronto, Berlin, and beyond) to capture concerts, festivals, artist sessions, and photo essays. You'll gain press opportunities and share your visual voice with our community.",
 		about:
-			"Visual storytellers and photographers define Grugbox's aesthetic world. We're looking for photographers who can capture concerts, festivals, artist studio sessions, and original photo essays showcasing creative talent across West Africa and the global diaspora. You'll work closely with our editorial team to create arresting, culturally authentic visual journalism.",
+			"Visual storytellers help bring Grugbox to life. We're looking for photographers who love documenting the energy of live music, cultural gatherings, and creative communities. Whether you enjoy shooting concerts, taking artist portraits, or creating documentary photo essays, you'll have opportunities to showcase your style, build your portfolio, and gain press access to events.",
 		responsibilities: [
-			'Shoot live concerts, festivals, and cultural events on assignment across Accra and diaspora scenes.',
-			'Conduct artist studio visits, backstage sessions, and portrait shoots with creative talent.',
-			'Pitch and develop original photo essays, creative visual stories, and editorial features.',
-			'Deliver high-resolution, edited photography ready for digital and editorial publication.',
+			'Capture live concerts, festivals, exhibitions, and cultural gatherings in your area.',
+			'Shoot artist portraits, studio visits, or behind-the-scenes moments with emerging talent.',
+			'Pitch and produce original photo essays exploring cultural themes and local creative scenes.',
+			'Provide a curated selection of edited images for publication on the site and social channels.',
 		],
 		requirements: [
-			'At least 2 years of experience in documentary, music, portrait, or live event photography.',
-			'A strong visual portfolio or archive illustrating your technical skill, compositional eye, and creative voice.',
-			'Active immersion in local creative and cultural scenes across Accra or key diaspora creative hubs.',
-			'Ability to deliver high-impact photo essays, festival coverage, and artist portraits under tight turnarounds.',
-			'Reliable access to professional camera gear and standard photo editing software (Lightroom/Photoshop).',
-			'A thoughtful perspective on visual storytelling rooted in contemporary African and diaspora culture.',
+			'A keen eye and passion for visual storytelling—formal photography experience or degrees are never required.',
+			'A link to your photos (an Instagram page, portfolio site, VSCO, or Google Drive folder) showing your visual style.',
+			'An interest in music, arts, and cultural life in Ghana or diaspora communities.',
+			'Access to a camera that works for you (DSLR, mirrorless, film, or high-quality smartphone camera) and basic editing tools.',
+			'Good communication when taking on event coverage or assignments.',
 		],
 		compensation: {
 			intro:
-				'We are an independent creative publication with a budget tailored to our current stage. We operate on a flat-rate commission system for all commissioned photography and visual features.',
+				'Grugbox is an independent, grassroots publication run by a community of creatives. All contributor roles are voluntary and unpaid—there is no financial compensation or contributor fee at this stage.',
 			items: [
 				{
-					label: 'Standard Editorial',
-					detail: '$50 USD flat rate per published photo essay, festival gallery, or artist shoot.',
+					label: 'Unpaid Volunteer',
+					detail: 'This is an unpaid volunteer position. We do not currently offer fees, stipends, or monetary compensation.',
 				},
 				{
-					label: 'Commissions',
-					detail: 'Payment is guaranteed exclusively for pre-assigned editorial briefs and commissioned shoots.',
+					label: 'Full Visual Credit & Rights',
+					detail: 'You retain full copyright ownership of your work, and you receive prominent credits and social tags whenever your images are published.',
 				},
 				{
-					label: 'Creative Credit',
-					detail: 'You will receive full visual credits, retain copyright ownership, and be tagged across all Grugbox digital platforms.',
+					label: 'Press & Media Credentials',
+					detail: 'Opportunities to receive official Grugbox media credentials and press passes for events, concerts, and exhibitions.',
 				},
 				{
-					label: 'Project Funding',
-					detail: 'Special travel or production expenses for high-impact visual series are reviewed and approved on an individual basis before shooting begins. Pitching a concept does not guarantee expense coverage.',
+					label: 'Portfolio & Audience',
+					detail: 'Showcase your photography to a worldwide community dedicated to African and diaspora arts.',
 				},
 				{
-					label: 'Payment Terms',
-					detail: 'All fees are processed immediately following the publication of your visual work.',
+					label: 'Flexible Projects',
+					detail: 'Pick up assignments and photo series that fit your personal schedule and creative interests.',
 				},
 			],
 		},
 		diversity:
-			'Grugbox is committed to a fair, inclusive, and transparent contributor process. We enthusiastically welcome applications from all backgrounds, no matter your location or past industry access. We place immense value on the distinct perspectives born of varied lived experiences and strive to cultivate a welcoming environment where every creative voice is heard and championed.',
+			"We welcome visual creators of all backgrounds and technical styles. You don't need years of professional experience or expensive gear to get involved—if you have an eye for a good shot and love the culture, we'd love to connect.",
 	},
 ]
 

@@ -78,7 +78,7 @@ async function handleSubmit() {
 	}
 
 	if (!storyPitch.value.trim()) {
-		errorMessage.value = 'Please share the story headline and angle you would pitch.'
+		errorMessage.value = 'Please share a story idea or topic you would love to cover.'
 		return
 	}
 
@@ -165,9 +165,9 @@ div#volunteer-role-page(v-if="role")
 						ul(class="flex flex-col gap-3 list-disc pl-5 text-base text-zinc-600 leading-relaxed marker:text-zinc-400")
 							li(v-for="(item, i) in role.requirements" :key="i") {{ item }}
 
-					//- Compensation & Funding
+					//- Volunteer Terms & Benefits
 					div(class="flex flex-col gap-4")
-						h2(class="text-xl sm:text-2xl font-medium tracking-tight text-zinc-900 leading-snug") Compensation & Funding
+						h2(class="text-xl sm:text-2xl font-medium tracking-tight text-zinc-900 leading-snug") Volunteer Terms & Benefits
 						p(class="text-base text-zinc-600 leading-relaxed") {{ role.compensation.intro }}
 						ul(class="flex flex-col gap-3 list-disc pl-5 text-base text-zinc-600 leading-relaxed marker:text-zinc-400")
 							li(v-for="(item, i) in role.compensation.items" :key="i")
@@ -306,37 +306,37 @@ div#volunteer-role-page(v-if="role")
 									class="w-full border border-zinc-300 px-3.5 py-2.5 text-sm text-zinc-900 focus:border-black focus:outline-none transition-colors"
 								)
 
-							//- Story Pitch
+							//- Story Pitch / Idea
 							div(class="flex flex-col gap-1.5")
 								label(for="story-pitch" class="text-xs font-semibold text-zinc-900 leading-snug")
-									| If you were commissioned to write for Grugbox next week, what story would you break? Give us the Headline and a 2-sentence summary of the angle. (We are looking for a "Who, What, and Why now"—do not pitch general themes like "Ghanaian Fashion." or subjects unrelated to Ghana.) #[span(class="text-brand-accent") *]
+									| What is a story or topic you'd love to cover for Grugbox? #[span(class="text-brand-accent") *]
 								textarea#story-pitch(
 									v-model="storyPitch"
 									required
 									rows="3"
-									placeholder="Headline and 2-sentence summary..."
+									placeholder="Share a brief headline or topic idea you're excited about..."
 									class="w-full border border-zinc-300 px-3.5 py-2.5 text-sm text-zinc-900 focus:border-black focus:outline-none transition-colors resize-y"
 								)
 
-							//- Visual Essay Concept (Optional)
+							//- Visual Concept (Optional)
 							div(class="flex flex-col gap-1.5")
 								label(for="visual-concept" class="text-xs font-semibold text-zinc-900 leading-snug")
-									| ONLY if you are pitching a visual essay (photographs only with no written component) or submitting a completed one, please outline your concept here. Include your subject matter, visual direction, the story you want to tell, and why it matters. (Note that if you are pitching a visual essay, you must be able to photograph the subjects yourself.)
+									| Visual or photo concept (optional)
 								textarea#visual-concept(
 									v-model="visualConcept"
 									rows="3"
-									placeholder="Outline your visual concept..."
+									placeholder="If you do photography or visual art, share any project or shoot ideas you have in mind..."
 									class="w-full border border-zinc-300 px-3.5 py-2.5 text-sm text-zinc-900 focus:border-black focus:outline-none transition-colors resize-y"
 								)
 
-							//- Followed Writers & Publications (Optional)
+							//- Favorite Publications & Creators (Optional)
 							div(class="flex flex-col gap-1.5")
 								label(for="followed-writers" class="text-xs font-semibold text-zinc-900 leading-snug")
-									| List three writers or publications you're currently following.
+									| Publications, writers, or creators you enjoy (optional)
 								input#followed-writers(
 									v-model="followedWriters"
 									type="text"
-									placeholder="e.g. Writer 1, Publication 2, Writer 3"
+									placeholder="e.g. Writers, photographers, magazines, or accounts you follow"
 									class="w-full border border-zinc-300 px-3.5 py-2.5 text-sm text-zinc-900 focus:border-black focus:outline-none transition-colors"
 								)
 

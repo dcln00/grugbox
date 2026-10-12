@@ -25,7 +25,7 @@ Gyasi walks the château's lawns and halls as the estate gives way to him. The c
 
 The film's centerpiece is a golden Ghanaian pushcart, the kind that carries goods through Accra's streets and markets, sitting on the manicured grounds of the Charente estate.
 
-<video controls playsinline poster="/content/martell-reel-poster.jpg" class="w-full max-w-md mx-auto aspect-video object-cover" src="/content/martell_reel_DeKENqiIMpt.mp4"></video>
+<video controls playsinline poster="/content/martell-reel-poster.jpg" class="w-full aspect-video object-cover my-6" src="/content/martell_reel_DeKENqiIMpt.mp4"></video>
 
 <p class="text-xs text-center text-zinc-500 -mt-3 mb-6">Watch the original post on <a href="https://www.instagram.com/reel/DeKENqiIMpt/?utm_source=ig_web_copy_link&srtk=MzRlODBiNWFlZA==" target="_blank" rel="noopener noreferrer">Instagram</a></p>
 

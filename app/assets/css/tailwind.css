@@ -44,6 +44,14 @@ img, video {
 
 .prose video {
 	pointer-events: auto;
+	display: block;
+	width: 100% !important;
+	max-width: 100% !important;
+}
+
+.prose p:has(video) {
+	text-align: center;
+	width: 100%;
 }
 
 .prose p:has(img) {

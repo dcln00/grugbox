@@ -1,5 +1,0 @@
-User-Agent: *
-Disallow: /__nuxt_content/
-Disallow: /workspace
-
-Sitemap: https://grugbox.world/sitemap.xml

@@ -5,11 +5,14 @@ useHead({
 	title: 'Reviews - Grugbox',
 })
 
+const DESCRIPTION = 'Albums, EPs and singles from Ghana and beyond, reviewed.'
+
 useSeoMeta({
-	description: 'Albums, EPs and singles from Ghana and beyond, reviewed.',
-	ogDescription: 'Albums, EPs and singles from Ghana and beyond, reviewed.',
-	twitterDescription: 'Albums, EPs and singles from Ghana and beyond, reviewed.',
+	description: DESCRIPTION,
+	ogDescription: DESCRIPTION,
+	twitterDescription: DESCRIPTION,
 	ogImage: OG_FALLBACK_IMAGE,
+	twitterCard: 'summary_large_image',
 	twitterImage: OG_FALLBACK_IMAGE,
 })
 

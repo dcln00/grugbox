@@ -11,6 +11,12 @@ describe('resolveOgImage', () => {
 		expect(result).toBe('https://grugbox.world/content/almond.jpg')
 	})
 
+	test('keeps a nested content path intact', () => {
+		const result = resolveOgImage('/content/art/big.png', SITE_URL)
+
+		expect(result).toBe('https://grugbox.world/content/art/big.png')
+	})
+
 	test('leaves an already absolute url untouched', () => {
 		const result = resolveOgImage('https://cdn.example.com/cover.jpg', SITE_URL)
 

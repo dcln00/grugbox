@@ -30,6 +30,14 @@ collections:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - label: 'Author'
+        name: 'author'
+        widget: 'select'
+        default: 'Grugbox'
+        hint: 'Rendered as the byline. The author list is repeated in all four collections — add a new name to each.'
+        options:
+          - Grugbox
+          - Nii Aryeh
       - { label: 'Featured Image', name: 'image', widget: 'image', required: false }
       - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like trending, lifestyle, etc..',}
       - label: 'Category'
@@ -63,6 +71,14 @@ collections:
       - { label: 'Album / Project Title', name: 'albumTitle', widget: 'string', required: false, hint: 'Title of the album, EP, or project for the scoreboard' }
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - label: 'Author'
+        name: 'author'
+        widget: 'select'
+        default: 'Grugbox'
+        hint: 'Rendered as the byline. The author list is repeated in all four collections — add a new name to each.'
+        options:
+          - Grugbox
+          - Nii Aryeh
       - { label: 'Featured Image', name: 'image', widget: 'image', required: true, hint: 'Required — the review page and its Open Graph tags both render it.' }
       - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like album, ep, single, etc..',}
       - { label: 'Score', name: 'score', widget: 'number', required: false, min: 1, max: 10, hint: 'Score out of 10. Leave blank for reviews that are not scored.' }
@@ -89,6 +105,14 @@ collections:
     fields:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - label: 'Author'
+        name: 'author'
+        widget: 'select'
+        default: 'Grugbox'
+        hint: 'Rendered as the byline. The author list is repeated in all four collections — add a new name to each.'
+        options:
+          - Grugbox
+          - Nii Aryeh
       - { label: 'Featured Image', name: 'image', widget: 'image', required: true, hint: 'Required — the interview page and its Open Graph tags both render it.' }
       - { label: 'Tags', name: 'tags', widget: 'list', required: false, hint: 'Add tags like trending, lifestyle, etc..',}
       - { label: 'Body', name: 'body', widget: 'markdown' }
@@ -111,5 +135,13 @@ collections:
       - { label: 'Title', name: 'title', widget: 'string' }
       - { label: 'Description', name: 'description', widget: 'string' }
       - { label: 'Publish Date', name: 'date', widget: 'datetime' }
+      - label: 'Author'
+        name: 'author'
+        widget: 'select'
+        default: 'Grugbox'
+        hint: 'Rendered as the byline. The author list is repeated in all four collections — add a new name to each.'
+        options:
+          - Grugbox
+          - Nii Aryeh
       - { label: 'Featured Image', name: 'image', widget: 'image', required: false }
       - { label: 'Body', name: 'body', widget: 'markdown' }

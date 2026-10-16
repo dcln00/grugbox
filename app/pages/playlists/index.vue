@@ -5,11 +5,14 @@ useHead({
 	title: 'Playlists - Grugbox',
 })
 
+const DESCRIPTION = 'Curated playlists featuring the best of Ghanaian music and beyond.'
+
 useSeoMeta({
-	description: 'Curated playlists featuring the best of Ghanaian music and beyond.',
-	ogDescription: 'Curated playlists featuring the best of Ghanaian music and beyond.',
-	twitterDescription: 'Curated playlists featuring the best of Ghanaian music and beyond.',
+	description: DESCRIPTION,
+	ogDescription: DESCRIPTION,
+	twitterDescription: DESCRIPTION,
 	ogImage: OG_FALLBACK_IMAGE,
+	twitterCard: 'summary_large_image',
 	twitterImage: OG_FALLBACK_IMAGE,
 })
 

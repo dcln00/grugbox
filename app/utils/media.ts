@@ -12,6 +12,11 @@ export const isVideo = (url?: string | null): boolean => {
 /**
  * Social crawlers reject relative og:image URLs, and every `image:` in content
  * frontmatter is stored as `/content/...`. Fall back rather than emit one.
+ *
+ * Featured images are served exactly as the editors uploaded them, so their
+ * aspect ratios vary (544x680 portraits through 2048x1152 stills) and link
+ * previews inherit that shape. That is deliberate — see the Open Graph note in
+ * CLAUDE.md before "fixing" it by normalising them.
  */
 export const OG_FALLBACK_IMAGE =
 	'https://res.cloudinary.com/dyr6sb7gn/image/upload/v1791564146/Grugbox/grugbox-og.jpg'

@@ -131,8 +131,6 @@ useSeoMeta({
 	ogDescription: () => post.value?.description || `Read the latest review on Grugbox about ${formatSlug.value}.`,
 	twitterDescription: () => post.value?.description || `Read the latest review on Grugbox about ${formatSlug.value}.`,
 	ogImage: () => resolveOgImage(post.value?.image, siteConfig.url),
-	ogImageWidth: 1200,
-	ogImageHeight: 630,
 	twitterCard: 'summary_large_image',
 	twitterImage: () => resolveOgImage(post.value?.image, siteConfig.url),
 })
@@ -147,7 +145,7 @@ article#article(v-if="post")
 				span(v-if="post.category || post.tags?.[0]" class="text-[11px] font-medium uppercase tracking-wide text-neutral-600 underline underline-offset-4") {{ post.category || primaryTag(post.tags) }}
 				h1(class="text-3xl md:text-5xl font-medium tracking-tight text-zinc-900 leading-tight") {{ post.title }}
 				div(class="flex flex-wrap items-center gap-4")
-					p(class="text-[10px] uppercase tracking-widest text-zinc-500") By Grugbox · #[NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric")]
+					p(class="text-[10px] uppercase tracking-widest text-zinc-500") By {{ post.author }} · #[NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric")]
 				
 			div(class="h-px w-full bg-zinc-200 mt-8")
 

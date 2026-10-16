@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { data: posts } = await useAsyncData('posts', () => {
   return queryCollection('articles')
-	.select('title', 'description', 'path', 'image', 'video', 'date', 'tags', 'category')
+	.select('title', 'description', 'path', 'image', 'video', 'date', 'tags', 'category', 'author')
 	.order('date', 'DESC')
 	.all()
 })
@@ -15,14 +15,14 @@ const { data: playlists } = await useAsyncData('playlists', () => {
 
 const { data: reviews } = await useAsyncData('home-reviews', () => {
   return queryCollection('reviews')
-	.select('title', 'path', 'image', 'date', 'score')
+	.select('title', 'path', 'image', 'date', 'score', 'author')
 	.order('date', 'DESC')
 	.all()
 })
 
 const { data: interviews } = await useAsyncData('home-interviews', () => {
   return queryCollection('interviews')
-	.select('title', 'description', 'path', 'image', 'date', 'tags')
+	.select('title', 'description', 'path', 'image', 'date', 'tags', 'author')
 	.order('date', 'DESC')
 	.all()
 })
@@ -144,7 +144,7 @@ section(id="profiles" class="my-20")
 							NuxtImg(v-else :src="leadEditorial.image" alt="featured image" class="w-full h-full object-cover object-center duration-700 select-none pointer-events-none")
 							div(class="absolute inset-0 bg-black/40 flex flex-col items-center justify-center p-6 text-center gap-3 duration-300 group-hover:bg-black/50")
 								h3(class="text-xl md:text-2xl lg:text-3xl text-white tracking-tight duration-300 group-hover:underline max-w-xl text-center") {{ leadEditorial.title }}
-								p(class="text-[10px] uppercase tracking-widest text-zinc-300") By Grugbox · #[NuxtTime(:datetime="leadEditorial.date" month="long" day="numeric" year="numeric")]
+								p(class="text-[10px] uppercase tracking-widest text-zinc-300") By {{ leadEditorial.author }} · #[NuxtTime(:datetime="leadEditorial.date" month="long" day="numeric" year="numeric")]
 					div(class="grid grid-cols-1 md:grid-cols-2 gap-8")
 						article(v-for="editorial in gridEditorials" :key="editorial.path" class="group flex flex-col gap-3")
 							div(class="photo aspect-video bg-gray-200 overflow-hidden")
@@ -173,7 +173,7 @@ section(id="profiles" class="my-20")
 							div(class="flex flex-col gap-3")
 								NuxtLink(:to="leadProfile.path")
 									h3(class="text-xl lg:text-xl tracking-tight duration-300 group-hover:text-brand-accent") {{ leadProfile.title }}
-								p(class="text-[10px] uppercase tracking-widest text-zinc-500") By Grugbox · #[NuxtTime(:datetime="leadProfile.date" month="long" day="numeric" year="numeric")]
+								p(class="text-[10px] uppercase tracking-widest text-zinc-500") By {{ leadProfile.author }} · #[NuxtTime(:datetime="leadProfile.date" month="long" day="numeric" year="numeric")]
 								p(class="text-sm leading-snug text-zinc-600 line-clamp-2") {{ leadProfile.description }}
 						div(class="flex flex-col gap-6")
 							article(v-for="profile in compactProfiles" :key="profile.path" class="group flex gap-4")
@@ -217,7 +217,7 @@ section(id="profiles" class="my-20")
 							div(v-if="leadReview.score" class="absolute top-4 right-4 flex size-12 items-center justify-center rounded-full border-2 border-green-400 bg-black/40 text-white backdrop-blur-sm") {{ leadReview.score }}
 							div(class="absolute inset-x-0 bottom-0 flex flex-col gap-1 bg-linear-to-t from-black/90 to-transparent p-4")
 								h3(class="leading-snug tracking-tight text-white duration-300 group-hover:underline") {{ leadReview.title }}
-								p(class="text-[9px] uppercase text-white/70") By Grugbox · #[NuxtTime(:datetime="leadReview.date" month="long" day="numeric" year="numeric")]
+								p(class="text-[9px] uppercase text-white/70") By {{ leadReview.author }} · #[NuxtTime(:datetime="leadReview.date" month="long" day="numeric" year="numeric")]
 					div(class="flex flex-col gap-3")
 						article(v-for="review in rankedReviews" :key="review.path" class="group relative overflow-hidden bg-zinc-100")
 							div(class="absolute inset-y-0 left-0 bg-green-100" :style="{ width: scoreWidth(review.score) }")
@@ -253,7 +253,7 @@ section(id="interviews" aria-label="Interviews" class="my-20 py-16 lg:py-20 bg-z
 					NuxtLink(:to="leadInterview.path" class="pointer-events-auto")
 						h3(class="text-2xl lg:text-4xl text-white tracking-tight duration-300 group-hover:underline") {{ leadInterview.title }}
 					p(v-if="leadInterview.description" class="text-sm leading-snug text-neutral-200 line-clamp-2 max-w-2xl") {{ leadInterview.description }}
-					p(class="text-[10px] uppercase tracking-widest text-neutral-300") By Grugbox · #[NuxtTime(:datetime="leadInterview.date" month="long" day="numeric" year="numeric")]
+					p(class="text-[10px] uppercase tracking-widest text-neutral-300") By {{ leadInterview.author }} · #[NuxtTime(:datetime="leadInterview.date" month="long" day="numeric" year="numeric")]
 					NuxtLink(:to="leadInterview.path" class="pointer-events-auto mt-2 inline-block border border-white/80 px-6 py-2.5 text-[10px] font-bold uppercase tracking-widest text-white duration-300 hover:bg-white hover:text-black") Read More
 
 			//- Secondary interview card with image on top and details below

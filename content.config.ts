@@ -28,6 +28,9 @@ export default defineContentConfig({
 				image: z.string(),
 				video: z.string().optional(),
 				date: z.date(),
+				// Absent from older files and optional in the CMS, so the default
+				// is what keeps every query returning a usable byline.
+				author: z.string().default('Grugbox'),
 				tags: z.array(z.string()),
 				category: z.enum(ARTICLE_CATEGORIES),
 			})
@@ -47,6 +50,9 @@ export default defineContentConfig({
 				description: z.string(),
 				image: z.string(),
 				date: z.date(),
+				// Absent from older files and optional in the CMS, so the default
+				// is what keeps every query returning a usable byline.
+				author: z.string().default('Grugbox'),
 				tags: z.array(z.string()),
 				albumTitle: z.string().optional(),
 				score: z.number().min(0).max(10).optional(),
@@ -71,6 +77,9 @@ export default defineContentConfig({
 				description: z.string().optional(),
 				image: z.string(),
 				date: z.date(),
+				// Absent from older files and optional in the CMS, so the default
+				// is what keeps every query returning a usable byline.
+				author: z.string().default('Grugbox'),
 				tags: z.array(z.string()),
 			})
 		}),
@@ -89,6 +98,9 @@ export default defineContentConfig({
 				description: z.string().optional(),
 				image: z.string(),
 				date: z.date(),
+				// Absent from older files and optional in the CMS, so the default
+				// is what keeps every query returning a usable byline.
+				author: z.string().default('Grugbox'),
 				tags: z.array(z.string()).optional(),
 			})
 		}),

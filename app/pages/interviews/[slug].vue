@@ -75,7 +75,7 @@ article#article(v-if="post")
 			h1(class="text-3xl sm:text-5xl lg:text-6xl tracking-tight text-white leading-tight sm:leading-tight") {{ post.title }}
 			//- Author byline with circular avatar matching reference
 			div(class="flex items-center gap-3.5 mt-2 sm:mt-4")
-				span(class="text-[10px] uppercase tracking-widest text-neutral-300") By Grugbox
+				span(class="text-[10px] uppercase tracking-widest text-neutral-300") By {{ post.author }}
 				NuxtTime(:datetime="post.date" month="long" day="numeric" year="numeric" class="text-[10px] uppercase tracking-widest text-neutral-300")
 
 	//- MAIN TWO-COLUMN LAYOUT — article body on left, sidebar on right

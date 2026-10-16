@@ -1,7 +1,11 @@
 import { MIME_PNG } from '~/utils/workspace/constants'
 
 export function usePngExport() {
-	/** The canvas is already 1080x1350, so there is no rescaling — what you see is what downloads. */
+	/**
+	 * The canvas backing store is already the export resolution in both formats
+	 * (1080×1350 and 1080×1920), so there is no rescaling — what you see is what
+	 * downloads.
+	 */
 	const toBlob = (canvas: HTMLCanvasElement): Promise<Blob> =>
 		new Promise((resolve, reject) => {
 			canvas.toBlob(blob => {

@@ -1,12 +1,5 @@
-import {
-	CAPTION_LINE_BUDGET,
-	CAPTION_LINE_HEIGHT,
-	CAPTION_MAX_FONT_SIZE,
-	CAPTION_MAX_LINES,
-	CAPTION_MIN_FONT_SIZE,
-} from './constants'
 import { clamp } from './geometry'
-import type { CaptionLayout, MeasureText } from './types'
+import type { CaptionLayout, CaptionMetrics, MeasureText } from './types'
 
 /**
  * Greedy word wrap.
@@ -62,28 +55,18 @@ export const wrapParagraph = (
 	return lines
 }
 
-export interface FitCaptionOptions {
-	maxWidth: number
-	maxFontSize?: number
-	minFontSize?: number
-	lineHeight?: number
-	maxLines?: number
-	lineBudget?: number
-}
-
+/**
+ * The metrics are passed in rather than defaulted, because they differ per
+ * canvas format — a Reel has more vertical room than a feed post, so it gets a
+ * bigger line budget. Defaulting here would let a caller silently lay a Reel's
+ * caption out to the feed's measurements.
+ */
 export const fitCaption = (
 	text: string,
-	options: FitCaptionOptions,
+	metrics: CaptionMetrics,
 	measure: MeasureText,
 ): CaptionLayout => {
-	const {
-		maxWidth,
-		maxFontSize = CAPTION_MAX_FONT_SIZE,
-		minFontSize = CAPTION_MIN_FONT_SIZE,
-		lineHeight = CAPTION_LINE_HEIGHT,
-		maxLines = CAPTION_MAX_LINES,
-		lineBudget = CAPTION_LINE_BUDGET,
-	} = options
+	const { maxWidth, maxFontSize, minFontSize, lineHeight, maxLines, lineBudget } = metrics
 
 	const empty: CaptionLayout = {
 		fontSize: maxFontSize,
@@ -124,14 +107,25 @@ export const fitCaption = (
 		}
 	}
 
-	// Line count is the constraint; font size is the output. Shrinking the font
-	// also shrinks the line box, so fitting the line budget fits the height too —
-	// no second constraint check needed.
+	/**
+	 * Both constraints are checked, because line count alone is not enough.
+	 *
+	 * A caption of many short manual lines satisfies the line budget while standing
+	 * far taller than the canvas — 20 one-line paragraphs at 62px is 1438px against
+	 * the feed's 1055px of room — which drew its first lines off the top of the
+	 * frame, over the chip, and reported neither `truncated` nor `atMinimumFont`.
+	 *
+	 * `lineBudget` is derived at the minimum font, which is the one size where
+	 * `lines <= lineBudget` already implies the height fits; at every larger size
+	 * the height has to be checked separately.
+	 */
+	const maxBlockHeight = metrics.baselineBottom - metrics.safeTop
+
 	let smallest: CaptionLayout | null = null
 
 	for (let fontSize = maxFontSize; fontSize >= minFontSize; fontSize -= 1) {
 		const layout = layoutAt(fontSize)
-		if (layout.lines.length <= lineLimit) return layout
+		if (layout.lines.length <= lineLimit && layout.blockHeight <= maxBlockHeight) return layout
 		smallest = layout
 	}
 

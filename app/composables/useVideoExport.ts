@@ -1,4 +1,4 @@
-import { OUTPUT_FPS } from '~/utils/workspace/constants'
+import { MIN_SEGMENT_SECONDS, OUTPUT_FPS } from '~/utils/workspace/constants'
 import { pickRecorderFormat } from '~/utils/workspace/mime'
 import type { RecorderFormat, TrimRange } from '~/utils/workspace/types'
 
@@ -19,7 +19,6 @@ let monitorGain: GainNode | null = null
 const PROGRESS_INTERVAL_MS = 100
 /** Backstop in case the video stalls and `currentTime` never reaches the out-point. */
 const OVERSHOOT_ALLOWANCE_SECONDS = 5
-const MIN_SEGMENT_SECONDS = 0.5
 
 const seeked = (video: HTMLVideoElement): Promise<void> =>
 	new Promise(resolve => {

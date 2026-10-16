@@ -22,5 +22,3 @@ export const kindForFile = (file: File): MediaKind | null => {
 
 	return null
 }
-
-export const acceptAttribute = (): string => 'image/*,video/*'

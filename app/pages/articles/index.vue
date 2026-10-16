@@ -5,11 +5,14 @@ useHead({
 	title: 'Articles - Grugbox',
 })
 
+const DESCRIPTION = 'Music, culture and lifestyle stories from Ghana and beyond.'
+
 useSeoMeta({
-	description: 'Music, culture and lifestyle stories from Ghana and beyond.',
-	ogDescription: 'Music, culture and lifestyle stories from Ghana and beyond.',
-	twitterDescription: 'Music, culture and lifestyle stories from Ghana and beyond.',
+	description: DESCRIPTION,
+	ogDescription: DESCRIPTION,
+	twitterDescription: DESCRIPTION,
 	ogImage: OG_FALLBACK_IMAGE,
+	twitterCard: 'summary_large_image',
 	twitterImage: OG_FALLBACK_IMAGE,
 })
 

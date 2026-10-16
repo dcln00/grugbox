@@ -5,11 +5,14 @@ useHead({
 	title: 'Interviews - Grugbox',
 })
 
+const DESCRIPTION = 'Exclusive interviews with artists, creators, and cultural icons from Ghana and beyond.'
+
 useSeoMeta({
-	description: 'Exclusive interviews with artists, creators, and cultural icons from Ghana and beyond.',
-	ogDescription: 'Exclusive interviews with artists, creators, and cultural icons from Ghana and beyond.',
-	twitterDescription: 'Exclusive interviews with artists, creators, and cultural icons from Ghana and beyond.',
+	description: DESCRIPTION,
+	ogDescription: DESCRIPTION,
+	twitterDescription: DESCRIPTION,
 	ogImage: OG_FALLBACK_IMAGE,
+	twitterCard: 'summary_large_image',
 	twitterImage: OG_FALLBACK_IMAGE,
 })
 

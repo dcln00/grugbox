@@ -52,8 +52,6 @@ useSeoMeta({
 	ogDescription: () => post.value?.description || `Read the latest interview on Grugbox about ${formatSlug.value}.`,
 	twitterDescription: () => post.value?.description || `Read the latest interview on Grugbox about ${formatSlug.value}.`,
 	ogImage: () => resolveOgImage(post.value?.image, siteConfig.url),
-	ogImageWidth: 1200,
-	ogImageHeight: 630,
 	twitterCard: 'summary_large_image',
 	twitterImage: () => resolveOgImage(post.value?.image, siteConfig.url),
 })

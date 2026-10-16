@@ -1,9 +1,6 @@
 import { MARK_SHAPES, MARK_THEMES } from '~/utils/workspace/mark'
 import type { MarkTheme } from '~/utils/workspace/mark'
-import {
-	CANVAS_HEIGHT,
-	CANVAS_WIDTH,
-} from '~/utils/workspace/constants'
+import type { CanvasFormat } from '~/utils/workspace/canvasFormat'
 import {
 	drawBackground,
 	drawCanvasBase,
@@ -44,30 +41,34 @@ export interface Scene {
 	category: string
 	/** Which colourway of the mark to paint. */
 	markTheme: MarkTheme
+	/** The canvas being drawn into — frame size and caption anchor. */
+	format: CanvasFormat
 }
 
 export function useCanvasRenderer() {
 	const contextFor = (canvas: HTMLCanvasElement): CanvasRenderingContext2D | null =>
 		canvas.getContext('2d')
 
-	/** Draws one complete frame. Order matters: scrim before text, always. */
+	/**
+	 * Draws one complete frame.
+	 *
+	 * Order matters: `drawCanvasBase` resets the transform that `drawBackground`
+	 * relies on, and the scrim must land before any text. Do not reorder.
+	 */
 	const drawScene = (ctx: CanvasRenderingContext2D, scene: Scene): void => {
-		drawCanvasBase(ctx)
+		const { format } = scene
+
+		drawCanvasBase(ctx, format)
 
 		if (scene.source) {
-			drawBackground(ctx, scene.source, scene.sourceWidth, scene.sourceHeight)
+			drawBackground(ctx, scene.source, scene.sourceWidth, scene.sourceHeight, format)
 		}
 
-		drawScrim(ctx)
+		drawScrim(ctx, format)
 		drawChip(ctx, scene.category)
-		drawLogo(ctx, getLogoMark(scene.markTheme))
-		drawCaption(ctx, scene.caption)
+		drawLogo(ctx, getLogoMark(scene.markTheme), format)
+		drawCaption(ctx, scene.caption, format.caption)
 	}
 
-	return {
-		canvasWidth: CANVAS_WIDTH,
-		canvasHeight: CANVAS_HEIGHT,
-		contextFor,
-		drawScene,
-	}
+	return { contextFor, drawScene }
 }

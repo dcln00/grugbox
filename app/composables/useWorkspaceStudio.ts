@@ -6,17 +6,35 @@ import { useCanvasRenderer } from '~/composables/useCanvasRenderer'
 import { useWorkspaceFonts } from '~/composables/useWorkspaceFonts'
 import { useRecentCategories } from '~/composables/useRecentCategories'
 import { normalizeCategory } from '~/utils/workspace/categories'
+import { CANVAS_FORMATS, FEED_FORMAT } from '~/utils/workspace/canvasFormat'
+import { effectiveClip } from '~/utils/workspace/clip'
 import { resolveMarkTheme } from '~/utils/workspace/mark'
+import type { CanvasFormat, FormatId } from '~/utils/workspace/canvasFormat'
 import type { MarkTheme } from '~/utils/workspace/mark'
+import type { TrimRange } from '~/utils/workspace/types'
 
 const MARK_THEME_KEY = 'grugbox_workspace_mark_theme'
 
+/**
+ * How long to wait for a video's first frame before giving up on `loadeddata`.
+ *
+ * A file the probe element accepted can still fail to produce a frame in the
+ * shared element, and an unresolved promise would leave the preview stuck with
+ * the loop never started. Timing out lets the loop run; the loading panel stays
+ * up until a frame genuinely arrives.
+ */
+const FRAME_LOAD_TIMEOUT_MS = 10_000
+
+/** Resolves on `loadeddata`, or after a timeout, so its caller can never hang. */
 const loadedData = (video: HTMLVideoElement): Promise<void> =>
 	new Promise(resolve => {
 		const done = (): void => {
 			video.removeEventListener('loadeddata', done)
+			window.clearTimeout(timer)
 			resolve()
 		}
+		// Assigned before the listener is attached, so `done` can never run early.
+		const timer = window.setTimeout(done, FRAME_LOAD_TIMEOUT_MS)
 		video.addEventListener('loadeddata', done)
 	})
 
@@ -35,7 +53,7 @@ const loadedData = (video: HTMLVideoElement): Promise<void> =>
 export function useWorkspaceStudio() {
 	const deck = useSlideDeck()
 	const { ensureFont, didFail: fontFailed } = useWorkspaceFonts()
-	const { contextFor, drawScene, canvasWidth, canvasHeight } = useCanvasRenderer()
+	const { contextFor, drawScene } = useCanvasRenderer()
 	const { layoutFor } = useCaptionFit()
 	const { recents, suggestions, remember } = useRecentCategories()
 
@@ -45,6 +63,19 @@ export function useWorkspaceStudio() {
 	const caption = ref('')
 	const category = ref('')
 	const status = ref('')
+
+	/**
+	 * The canvas being composed.
+	 *
+	 * Session state rather than persisted, unlike the mark colourway: it
+	 * describes the post in hand, and a stale value would silently restrict the
+	 * file picker on the next visit.
+	 *
+	 * A `shallowRef`, not a `ref`: the descriptors are shared module constants, so
+	 * proxying one deeply would let a stray write through `format.value` mutate
+	 * the format itself. Nothing mutates a format — they are swapped wholesale.
+	 */
+	const format = shallowRef<CanvasFormat>(FEED_FORMAT)
 
 	/**
 	 * The SHARED default colourway of the mark. Persisted because it is a
@@ -64,6 +95,14 @@ export function useWorkspaceStudio() {
 
 	/** Reported back from the last draw so the UI can warn about an overlong caption. */
 	const captionInfo = ref({ fontSize: 0, lines: 0, truncated: false, atMinimumFont: false })
+
+	/**
+	 * True while the active video slide has no decoded frame to show yet.
+	 *
+	 * Drives a loading panel over the preview, which would otherwise be a black
+	 * rectangle with the caption floating on it.
+	 */
+	const isPreparingFrame = ref(false)
 
 	let pendingFrame = 0
 	let loopHandle = 0
@@ -86,6 +125,67 @@ export function useWorkspaceStudio() {
 		const slide = activeSlide.value
 		if (!slide) return false
 		return slide.kind === 'image' ? !!slide.image : !!videoEl.value
+	})
+
+	/**
+	 * Formats the deck cannot currently be rendered in, mapped to the reason.
+	 *
+	 * A photo has no way to render on the 9:16 canvas, so the switch is refused
+	 * while any are attached rather than silently dropping the team's work.
+	 */
+	const blockedFormats = computed<Partial<Record<FormatId, string>>>(() => {
+		const photos = deck.slides.value.filter(slide => slide.kind === 'image').length
+		if (photos === 0) return {}
+
+		const noun = photos === 1 ? 'photo' : 'photos'
+		const pronoun = photos === 1 ? 'it' : 'them'
+
+		return {
+			reel: `${photos} ${noun} attached, and Reels are video only — remove ${pronoun} to use this canvas.`,
+		}
+	})
+
+	const setFormat = (id: FormatId): void => {
+		if (id === format.value.id) return
+
+		/**
+		 * Attaching is asynchronous — each file decodes before it lands in the
+		 * deck — so a switch mid-attach would apply the NEW format to files already
+		 * accepted under the old one's policy, and a photo could end up on a Reel.
+		 * The picker is disabled while loading for the same reason.
+		 */
+		if (deck.isLoading.value) return
+
+		const blocked = blockedFormats.value[id]
+		if (blocked) {
+			// Defence in depth — the picker disables the button, but a format change
+			// must not quietly drop slides by any other route either.
+			deck.error.value = blocked
+			return
+		}
+
+		format.value = CANVAS_FORMATS[id]
+		deck.error.value = ''
+	}
+
+	/** Writable view of `format` for the picker's `v-model`. */
+	const formatId = computed<FormatId>({
+		get: () => format.value.id,
+		set: (value: FormatId) => {
+			setFormat(value)
+		},
+	})
+
+	/**
+	 * The range the PREVIEW loops.
+	 *
+	 * The export resolves the same range per slide at its call site instead: a
+	 * carousel walks every slide, so it must not read the selection's state.
+	 */
+	const activeClip = computed<TrimRange | null>(() => {
+		const slide = activeSlide.value
+		if (slide?.kind !== 'video') return null
+		return effectiveClip(slide, format.value.maxClipSeconds)
 	})
 
 	const draw = (): void => {
@@ -119,7 +219,22 @@ export function useWorkspaceStudio() {
 			}
 		}
 
-		const layout = layoutFor(ctx, activeCaption.value)
+		/**
+		 * A slide with nothing drawable is not painted at all.
+		 *
+		 * `drawScene` fills the frame black before anything else, so painting a video
+		 * with no decoded frame — while a clip loads, and for a moment on every seek
+		 * as a trimmed clip loops back to its start — produced the black screen with
+		 * the caption drawn over it. Returning leaves the last good frame in place.
+		 * An empty deck still paints, so the chip and caption stay previewable with
+		 * no media attached.
+		 */
+		if (slide && !source) return
+
+		// A frame is genuinely on the canvas, so the loading panel can go.
+		if (source && isPreparingFrame.value) isPreparingFrame.value = false
+
+		const layout = layoutFor(ctx, activeCaption.value, format.value)
 		const didChange =
 			captionInfo.value.fontSize !== layout.fontSize ||
 			captionInfo.value.lines !== layout.lines.length ||
@@ -142,6 +257,7 @@ export function useWorkspaceStudio() {
 			caption: layout,
 			category: category.value,
 			markTheme: activeMarkTheme.value,
+			format: format.value,
 		})
 	}
 
@@ -168,14 +284,12 @@ export function useWorkspaceStudio() {
 		loopHandle = requestAnimationFrame(tick)
 	}
 
-	/** Keeps playback inside the trim window so the preview shows the exported section. */
+	/** Keeps playback inside the clip window so the preview shows the exported section. */
 	const onTimeUpdate = (): void => {
 		const video = videoEl.value
-		const slide = activeSlide.value
-		if (!video || slide?.kind !== 'video') return
-		if (slide.trim.end > 0 && video.currentTime >= slide.trim.end) {
-			video.currentTime = slide.trim.start
-		}
+		const clip = activeClip.value
+		if (!video || !clip) return
+		if (video.currentTime >= clip.end) video.currentTime = clip.start
 	}
 
 	const syncVideo = async (): Promise<void> => {
@@ -186,17 +300,21 @@ export function useWorkspaceStudio() {
 
 		if (slide?.kind !== 'video') {
 			video.pause()
+			isPreparingFrame.value = false
 			stopLoop()
 			invalidate()
 			return
 		}
 
 		if (video.getAttribute('src') !== slide.objectUrl) {
+			// Raised before the await so the panel covers the whole load, and cleared
+			// by `draw` once a real frame has reached the canvas.
+			isPreparingFrame.value = true
 			video.src = slide.objectUrl
 			await loadedData(video)
 		}
 
-		video.currentTime = slide.trim.start
+		video.currentTime = activeClip.value?.start ?? 0
 		startLoop()
 
 		try {
@@ -238,8 +356,40 @@ export function useWorkspaceStudio() {
 		{ deep: true },
 	)
 
+	/**
+	 * A format switch redraws directly rather than through `invalidate`.
+	 *
+	 * The canvas's width/height attributes are only patched on the next tick, and
+	 * assigning either clears the backing store — so the draw has to wait for that
+	 * flush and then paint straight away, or the preview flashes black for a
+	 * frame. A `flush: 'sync'` watcher would be worse still: it would render the
+	 * new frame size into the old backing store.
+	 */
+	watch(format, async () => {
+		await nextTick()
+		draw()
+	})
+
 	watch(activeSlide, async () => {
 		await syncVideo()
+	})
+
+	/**
+	 * Re-seeks when the clip window moves under an already-playing element.
+	 *
+	 * `onTimeUpdate` only wraps at the out-point, so an in-point that moves forward
+	 * — dragging the slider, toggling "full video", or a format switch re-fitting
+	 * the selection — would leave the preview playing material that is never
+	 * recorded. Handled here rather than per timeupdate so a seek still settling
+	 * cannot trigger another on every frame.
+	 */
+	watch(activeClip, clip => {
+		const video = videoEl.value
+		if (!video || !clip) return
+
+		if (video.currentTime < clip.start || video.currentTime >= clip.end) {
+			video.currentTime = clip.start
+		}
 	})
 
 	watch(
@@ -252,16 +402,25 @@ export function useWorkspaceStudio() {
 		remember(category.value)
 	}
 
+	/** Attaches files under the active canvas's rules — a Reel takes video only. */
+	const addFiles = async (files: File[]): Promise<void> => {
+		await deck.addFiles(files, { accepts: format.value.accepts })
+	}
+
 	return {
 		...deck,
 		canvasEl,
 		videoEl,
-		canvasWidth,
-		canvasHeight,
 		caption,
 		category,
 		status,
 		captionInfo,
+		format,
+		formatId,
+		blockedFormats,
+		activeClip,
+		isPreparingFrame,
+		setFormat,
 		defaultMarkTheme,
 		activeMarkTheme,
 		fontFailed,
@@ -275,5 +434,6 @@ export function useWorkspaceStudio() {
 		stopLoop,
 		onTimeUpdate,
 		commitCategory,
+		addFiles,
 	}
 }

@@ -1,8 +1,5 @@
 import {
-	CAPTION_BASELINE_BOTTOM,
 	CAPTION_FONT_WEIGHT,
-	CANVAS_HEIGHT,
-	CANVAS_WIDTH,
 	CHIP_FONT_SIZE,
 	CHIP_FONT_WEIGHT,
 	CHIP_HEIGHT,
@@ -15,13 +12,24 @@ import {
 } from './constants'
 import { coverRect } from './geometry'
 import { MARK_VIEWBOX } from './mark'
-import type { CaptionLayout } from './types'
+import type { CaptionLayout, CaptionMetrics } from './types'
 
 /**
  * Canvas drawing primitives. Each takes the context as its first argument and
  * holds no state, so they can be exercised from the console and reused by every
  * export path — the preview and the exports all render through these.
+ *
+ * Frame-dependent primitives take the frame last. They declare only the fields
+ * they actually read rather than the whole `CanvasFormat`, so a paint function
+ * cannot start depending on `maxClipSeconds` or a line of UI copy; callers pass
+ * the format and structural typing does the rest.
  */
+
+/** The frame being drawn into. A `CanvasFormat` satisfies this. */
+export interface Frame {
+	width: number
+	height: number
+}
 
 const CHIP_FILL = 'rgba(255, 255, 255, 0.28)'
 const WHITE = '#ffffff'
@@ -55,13 +63,18 @@ export const roundedRectPath = (
 	ctx.closePath()
 }
 
-/** Fills the frame black, so a slide with no media attached is never transparent. */
-export const drawCanvasBase = (ctx: CanvasRenderingContext2D): void => {
+/**
+ * Fills the frame black, so a slide with no media attached is never transparent.
+ *
+ * Also the only place the transform is reset, which matters because assigning a
+ * canvas's width or height — a format switch — clears the whole 2D state.
+ */
+export const drawCanvasBase = (ctx: CanvasRenderingContext2D, frame: Frame): void => {
 	ctx.save()
 	ctx.setTransform(1, 0, 0, 1, 0, 0)
-	ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+	ctx.clearRect(0, 0, frame.width, frame.height)
 	ctx.fillStyle = '#000000'
-	ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
+	ctx.fillRect(0, 0, frame.width, frame.height)
 	ctx.restore()
 }
 
@@ -70,14 +83,21 @@ export const drawCanvasBase = (ctx: CanvasRenderingContext2D): void => {
  *
  * The caller must confirm the source is decoded first: drawing an undecoded
  * video is a no-op at best and throws InvalidStateError in Firefox at worst.
+ *
+ * Scaled to the frame's real size, not the preview's CSS size — the canvas
+ * backing store is the export resolution in both formats.
+ *
+ * Neither saves nor sets a transform, so it relies on `drawCanvasBase` having
+ * run first to leave the context untransformed.
  */
 export const drawBackground = (
 	ctx: CanvasRenderingContext2D,
 	source: CanvasImageSource,
 	sourceWidth: number,
 	sourceHeight: number,
+	frame: Frame,
 ): void => {
-	const rect = coverRect(sourceWidth, sourceHeight, CANVAS_WIDTH, CANVAS_HEIGHT)
+	const rect = coverRect(sourceWidth, sourceHeight, frame.width, frame.height)
 	// Negative x/y are legal here — that is the crop.
 	ctx.drawImage(source, rect.x, rect.y, rect.width, rect.height)
 }
@@ -86,13 +106,10 @@ export const drawBackground = (
  * Three stops, not two. A plain two-stop ramp reads as a hard band across a
  * bright photo; the midpoint stop softens the transition into the caption.
  */
-export const drawScrim = (ctx: CanvasRenderingContext2D): void => {
-	const gradient = ctx.createLinearGradient(
-		0,
-		CANVAS_HEIGHT * SCRIM_START_RATIO,
-		0,
-		CANVAS_HEIGHT,
-	)
+export const drawScrim = (ctx: CanvasRenderingContext2D, frame: Frame): void => {
+	const start = frame.height * SCRIM_START_RATIO
+
+	const gradient = ctx.createLinearGradient(0, start, 0, frame.height)
 
 	gradient.addColorStop(0, 'rgba(0, 0, 0, 0)')
 	gradient.addColorStop(0.45, 'rgba(0, 0, 0, 0.45)')
@@ -100,7 +117,7 @@ export const drawScrim = (ctx: CanvasRenderingContext2D): void => {
 
 	ctx.save()
 	ctx.fillStyle = gradient
-	ctx.fillRect(0, CANVAS_HEIGHT * SCRIM_START_RATIO, CANVAS_WIDTH, CANVAS_HEIGHT)
+	ctx.fillRect(0, start, frame.width, frame.height - start)
 	ctx.restore()
 }
 
@@ -144,7 +161,11 @@ export interface LogoShape {
  * The mark is two-tone and its shapes overlap, so each layer is filled in turn
  * rather than silhouetting the whole thing in one colour.
  */
-export const drawLogo = (ctx: CanvasRenderingContext2D, shapes: readonly LogoShape[]): void => {
+export const drawLogo = (
+	ctx: CanvasRenderingContext2D,
+	shapes: readonly LogoShape[],
+	frame: Frame,
+): void => {
 	const scale = LOGO_HEIGHT / MARK_VIEWBOX.height
 	const width = MARK_VIEWBOX.width * scale
 
@@ -152,7 +173,7 @@ export const drawLogo = (ctx: CanvasRenderingContext2D, shapes: readonly LogoSha
 	// Top-aligned with the chip rather than centred on the chip band: the mark is
 	// now taller than the chip, and centring would push its top edge above the
 	// chip's and off the visual grid.
-	ctx.translate(CANVAS_WIDTH - PAGE_MARGIN - width, PAGE_MARGIN)
+	ctx.translate(frame.width - PAGE_MARGIN - width, PAGE_MARGIN)
 	ctx.scale(scale, scale)
 
 	for (const shape of shapes) {
@@ -163,13 +184,22 @@ export const drawLogo = (ctx: CanvasRenderingContext2D, shapes: readonly LogoSha
 	ctx.restore()
 }
 
-/** White caption, left-aligned, bottom-anchored so the gap below never changes. */
-export const drawCaption = (ctx: CanvasRenderingContext2D, layout: CaptionLayout): void => {
+/**
+ * White caption, left-aligned, bottom-anchored so the gap below never changes.
+ *
+ * Takes the frame's metrics rather than a `Frame`, because the anchor it needs
+ * is the caption's baseline, which differs per format.
+ */
+export const drawCaption = (
+	ctx: CanvasRenderingContext2D,
+	layout: CaptionLayout,
+	metrics: CaptionMetrics,
+): void => {
 	const { fontSize, lines, lineHeight } = layout
 	if (lines.length === 0) return
 
 	const step = fontSize * lineHeight
-	const firstBaseline = CAPTION_BASELINE_BOTTOM - (lines.length - 1) * step
+	const firstBaseline = metrics.baselineBottom - (lines.length - 1) * step
 
 	ctx.save()
 	ctx.font = `${CAPTION_FONT_WEIGHT} ${fontSize}px ${FONT_FAMILY}`

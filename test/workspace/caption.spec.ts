@@ -1,25 +1,32 @@
 import { describe, expect, test } from 'vitest'
 
 import { fitCaption, wrapParagraph } from '../../app/utils/workspace/caption'
-import {
-	CAPTION_BASELINE_BOTTOM,
-	CAPTION_LINE_BUDGET,
-	CAPTION_LINE_HEIGHT,
-	CAPTION_MAX_FONT_SIZE,
-	CAPTION_MIN_FONT_SIZE,
-	CAPTION_SAFE_TOP,
-} from '../../app/utils/workspace/constants'
+import { FEED_FORMAT, REEL_FORMAT } from '../../app/utils/workspace/canvasFormat'
+import type { CaptionLayout, CaptionMetrics } from '../../app/utils/workspace/types'
 
 const MAX_WIDTH = 1024
+
+/**
+ * The real metrics from the format descriptors, with the measure narrowed for
+ * the stub below. Sourcing them from the descriptors rather than hand-copying
+ * the numbers is deliberate: copy them and these tests would only ever validate
+ * the copy, while the shipping Reel layout went unchecked.
+ */
+const FEED_METRICS: CaptionMetrics = { ...FEED_FORMAT.caption, maxWidth: MAX_WIDTH }
+const REEL_METRICS: CaptionMetrics = { ...REEL_FORMAT.caption, maxWidth: MAX_WIDTH }
 
 /** Deterministic stand-in for `ctx.measureText`: 0.6em per character. */
 const measure = (text: string, fontSize: number): number => text.length * fontSize * 0.6
 
-const fit = (text: string, extra: Partial<{ maxWidth: number }> = {}) =>
-	fitCaption(text, { maxWidth: MAX_WIDTH, ...extra }, measure)
+const fit = (text: string, metrics: CaptionMetrics = FEED_METRICS) =>
+	fitCaption(text, metrics, measure)
 
 /** A word of `length` characters — used to control wrapping precisely. */
 const word = (length: number): string => 'a'.repeat(length)
+
+/** Where the block's top edge lands, for checking it clears the chip and logo. */
+const blockTop = (layout: CaptionLayout, metrics: CaptionMetrics): number =>
+	metrics.baselineBottom - layout.blockHeight
 
 describe('wrapParagraph', () => {
 	test('returns nothing for empty or whitespace-only input', () => {
@@ -65,7 +72,7 @@ describe('fitCaption', () => {
 	test('keeps a short caption at the maximum font size', () => {
 		const layout = fit('Jude Dontoh')
 
-		expect(layout.fontSize).toBe(CAPTION_MAX_FONT_SIZE)
+		expect(layout.fontSize).toBe(FEED_METRICS.maxFontSize)
 		expect(layout.lines).toEqual(['Jude Dontoh'])
 		expect(layout.truncated).toBe(false)
 	})
@@ -74,7 +81,7 @@ describe('fitCaption', () => {
 		// Four 26-character words: one per line at 62px, so nothing shrinks.
 		const layout = fit([word(26), word(26), word(26), word(26)].join(' '))
 
-		expect(layout.fontSize).toBe(CAPTION_MAX_FONT_SIZE)
+		expect(layout.fontSize).toBe(FEED_METRICS.maxFontSize)
 		expect(layout.lines.length).toBe(4)
 	})
 
@@ -82,8 +89,8 @@ describe('fitCaption', () => {
 		const layout = fit(Array.from({ length: 8 }, () => word(26)).join(' '))
 
 		expect(layout.lines.length).toBeLessThanOrEqual(4)
-		expect(layout.fontSize).toBeLessThan(CAPTION_MAX_FONT_SIZE)
-		expect(layout.fontSize).toBeGreaterThanOrEqual(CAPTION_MIN_FONT_SIZE)
+		expect(layout.fontSize).toBeLessThan(FEED_METRICS.maxFontSize)
+		expect(layout.fontSize).toBeGreaterThanOrEqual(FEED_METRICS.minFontSize)
 		expect(layout.truncated).toBe(false)
 	})
 
@@ -112,13 +119,13 @@ describe('fitCaption', () => {
 	})
 
 	test('flags truncation and caps lines when even the minimum font overflows', () => {
-		// ~2000 characters is more than the space ceiling can hold at 28px.
+		// ~2000 characters is more than the feed ceiling can hold at 28px.
 		const layout = fit(word(2000))
 
 		expect(layout.truncated).toBe(true)
 		expect(layout.atMinimumFont).toBe(true)
-		expect(layout.lines.length).toBe(CAPTION_LINE_BUDGET)
-		expect(layout.fontSize).toBe(CAPTION_MIN_FONT_SIZE)
+		expect(layout.lines.length).toBe(FEED_METRICS.lineBudget)
+		expect(layout.fontSize).toBe(FEED_METRICS.minFontSize)
 	})
 
 	test('keeps every manual break rather than dropping lines that fit', () => {
@@ -129,7 +136,7 @@ describe('fitCaption', () => {
 
 		expect(layout.lines).toHaveLength(10)
 		expect(layout.truncated).toBe(false)
-		expect(layout.fontSize).toBe(CAPTION_MAX_FONT_SIZE)
+		expect(layout.fontSize).toBe(FEED_METRICS.maxFontSize)
 	})
 
 	test('reports atMinimumFont without claiming truncation when nothing was dropped', () => {
@@ -137,8 +144,24 @@ describe('fitCaption', () => {
 
 		expect(layout.atMinimumFont).toBe(true)
 		expect(layout.truncated).toBe(false)
-		expect(layout.fontSize).toBe(CAPTION_MIN_FONT_SIZE)
+		expect(layout.fontSize).toBe(FEED_METRICS.minFontSize)
 		expect(layout.lines.length).toBeGreaterThan(4)
+	})
+
+	test('shrinks the font for a stack of short lines rather than overflowing the frame', () => {
+		// Regression: only the line COUNT used to be tested against the budget, so 20
+		// short manual lines fitted at 62px and stood 1438px tall in the feed's
+		// 1055px of room — the first lines drew off the top of the canvas, over the
+		// chip, reporting neither `truncated` nor `atMinimumFont`.
+		const twentyLines = Array.from({ length: 20 }, (_, index) => `line ${index}`).join('\n')
+		const layout = fit(twentyLines)
+
+		expect(layout.lines).toHaveLength(20)
+		expect(layout.fontSize).toBeLessThan(FEED_METRICS.maxFontSize)
+		expect(layout.truncated).toBe(false)
+		expect(layout.blockHeight).toBeLessThanOrEqual(
+			FEED_METRICS.baselineBottom - FEED_METRICS.safeTop,
+		)
 	})
 
 	test('keeps the block clear of the chip and logo band in every case', () => {
@@ -146,51 +169,66 @@ describe('fitCaption', () => {
 
 		for (const caption of captions) {
 			const layout = fit(caption)
-			const blockTop = CAPTION_BASELINE_BOTTOM - layout.blockHeight
 
-			expect(blockTop).toBeGreaterThanOrEqual(CAPTION_SAFE_TOP)
+			expect(blockTop(layout, FEED_METRICS)).toBeGreaterThanOrEqual(FEED_METRICS.safeTop)
 		}
 	})
 
 	test('computes block height from the final font size and line count', () => {
 		const layout = fit('Jude Dontoh')
 
-		expect(layout.lineHeight).toBe(CAPTION_LINE_HEIGHT)
+		expect(layout.lineHeight).toBe(FEED_METRICS.lineHeight)
 		expect(layout.blockHeight).toBeCloseTo(
-			layout.lines.length * layout.fontSize * CAPTION_LINE_HEIGHT,
+			layout.lines.length * layout.fontSize * layout.lineHeight,
 			6,
 		)
 	})
 
-	test('holds its invariants across a spread of captions', () => {
+	test('gives the taller reel frame a bigger line budget', () => {
+		// Same text, two frames: a Reel has the vertical room to keep lines that
+		// the feed canvas has to drop.
+		const tenLines = 'one\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\nten'
+
+		expect(fit(tenLines, REEL_METRICS).lines).toHaveLength(10)
+		expect(REEL_METRICS.lineBudget).toBeGreaterThan(FEED_METRICS.lineBudget)
+	})
+
+	test('holds its invariants across a spread of captions in both formats', () => {
 		const captions = [
 			'One',
 			'A much longer headline that has to wrap onto several lines to fit',
 			'Kanye West & Lauryn Hill’s Record “I CAN’T WAIT”',
 			'line one\nline two',
 			'a\nb\nc\nd\ne\nf\ng\nh\ni\nj',
+			// The case that only the line-count check let through: many short lines
+			// satisfy the budget while standing taller than the frame.
+			Array.from({ length: 20 }, (_, index) => `line ${index}`).join('\n'),
 			word(50),
 			word(3000),
 			'mixture of short and ' + word(120) + ' tokens',
 			'   ',
 		]
 
-		for (const caption of captions) {
-			const layout = fit(caption)
+		for (const metrics of [FEED_METRICS, REEL_METRICS]) {
+			for (const caption of captions) {
+				const layout = fit(caption, metrics)
 
-			expect(layout.fontSize).toBeGreaterThanOrEqual(CAPTION_MIN_FONT_SIZE)
-			expect(layout.fontSize).toBeLessThanOrEqual(CAPTION_MAX_FONT_SIZE)
-			expect(layout.lines.length).toBeLessThanOrEqual(CAPTION_LINE_BUDGET)
+				expect(layout.fontSize).toBeGreaterThanOrEqual(metrics.minFontSize)
+				expect(layout.fontSize).toBeLessThanOrEqual(metrics.maxFontSize)
+				expect(layout.lines.length).toBeLessThanOrEqual(metrics.lineBudget)
 
-			// Every rendered line must fit the available width, otherwise it would
-			// run off the canvas edge.
-			for (const line of layout.lines) {
-				expect(measure(line, layout.fontSize)).toBeLessThanOrEqual(MAX_WIDTH)
+				// Every rendered line must fit the available width, otherwise it would
+				// run off the canvas edge.
+				for (const line of layout.lines) {
+					expect(measure(line, layout.fontSize)).toBeLessThanOrEqual(MAX_WIDTH)
+				}
+
+				// The block must never grow upward past its own frame's ceiling, where
+				// it would collide with the chip and logo. Asserted against each
+				// format's geometry rather than the feed's literal 1200, which said
+				// nothing about the taller canvas.
+				expect(blockTop(layout, metrics)).toBeGreaterThanOrEqual(metrics.safeTop)
 			}
-
-			// The block must never grow upward past the top of the canvas, where it
-			// would collide with the chip and logo.
-			expect(layout.blockHeight).toBeLessThan(1200)
 		}
 	})
 })

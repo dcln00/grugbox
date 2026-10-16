@@ -1,7 +1,7 @@
-import { MAX_CLIP_SECONDS, MAX_SLIDES } from '~/utils/workspace/constants'
+import { MAX_SLIDES } from '~/utils/workspace/constants'
 import { kindForFile } from '~/utils/workspace/fileKind'
 import { useMediaLoader } from '~/composables/useMediaLoader'
-import type { MediaKind, TrimRange } from '~/utils/workspace/types'
+import type { ClipMode, MediaKind } from '~/utils/workspace/types'
 import type { MarkTheme } from '~/utils/workspace/mark'
 
 export interface WorkspaceSlide {
@@ -15,11 +15,23 @@ export interface WorkspaceSlide {
 	height: number
 	/** Seconds. 0 for images. */
 	duration: number
-	trim: TrimRange
+	/** The predefined trimmed cut, or the whole clip. Resolved by `effectiveClip`. */
+	clipMode: ClipMode
 	/** Empty means "use the shared caption". */
 	captionOverride: string
 	/** `null` means "use the shared mark colourway". */
 	markThemeOverride: MarkTheme | null
+}
+
+/**
+ * What the active canvas will accept.
+ *
+ * The deck needs only this: how long a clip is allowed to be is decided by
+ * `effectiveClip` at preview and export time from the format itself, so nothing
+ * about the clip policy has to be stored per slide.
+ */
+export interface AttachPolicy {
+	accepts: readonly MediaKind[]
 }
 
 export function useSlideDeck() {
@@ -51,7 +63,7 @@ export function useSlideDeck() {
 		if (slide.image) slide.image.src = ''
 	}
 
-	const addFiles = async (files: File[]): Promise<void> => {
+	const addFiles = async (files: File[], policy: AttachPolicy): Promise<void> => {
 		if (files.length === 0) return
 
 		error.value = ''
@@ -64,11 +76,24 @@ export function useSlideDeck() {
 			return
 		}
 
+		// Collected and reported together. Writing `error` inside the loop meant a
+		// later message silently replaced an earlier one, so a rejected file could
+		// vanish without the team ever seeing why.
+		const problems: string[] = []
+
 		for (const file of files.slice(0, room)) {
 			const kind = kindForFile(file)
 
 			if (!kind) {
-				error.value = `“${file.name}” is not an image or a video.`
+				problems.push(`“${file.name}” is not an image or a video.`)
+				continue
+			}
+
+			// The Reel canvas takes video only. Refusing up front beats attaching a
+			// slide the active format has no way to render.
+			if (!policy.accepts.includes(kind)) {
+				const noun = kind === 'image' ? 'photo' : 'video'
+				problems.push(`“${file.name}” is a ${noun}, which this canvas does not take.`)
 				continue
 			}
 
@@ -84,7 +109,7 @@ export function useSlideDeck() {
 						width: loaded.width,
 						height: loaded.height,
 						duration: 0,
-						trim: { start: 0, end: 0 },
+						clipMode: 'trim',
 						captionOverride: '',
 						markThemeOverride: null,
 					})
@@ -99,21 +124,23 @@ export function useSlideDeck() {
 						width: loaded.width,
 						height: loaded.height,
 						duration: loaded.duration,
-						// Default to the opening of the clip, capped at the platform limit.
-						trim: { start: 0, end: Math.min(loaded.duration, MAX_CLIP_SECONDS) },
+						// The shorter of the two predefined cuts, because it is the one a
+						// trimmed export has to fit inside.
+						clipMode: 'trim',
 						captionOverride: '',
 						markThemeOverride: null,
 					})
 				}
 			} catch (caught: unknown) {
-				error.value = caught instanceof Error ? caught.message : `Could not read “${file.name}”.`
+				problems.push(caught instanceof Error ? caught.message : `Could not read “${file.name}”.`)
 			}
 		}
 
 		if (files.length > room) {
-			error.value = `Only ${room} more slide${room === 1 ? '' : 's'} would fit — ${MAX_SLIDES} is the maximum.`
+			problems.push(`Only ${room} more slide${room === 1 ? '' : 's'} would fit — ${MAX_SLIDES} is the maximum.`)
 		}
 
+		error.value = problems.join(' ')
 		isLoading.value = false
 	}
 
@@ -144,10 +171,10 @@ export function useSlideDeck() {
 		activeIndex.value = index
 	}
 
-	const setTrim = (index: number, trim: TrimRange): void => {
+	const setClipMode = (index: number, mode: ClipMode): void => {
 		const slide = slides.value[index]
 		if (!slide) return
-		slide.trim = trim
+		slide.clipMode = mode
 	}
 
 	const setCaptionOverride = (index: number, value: string): void => {
@@ -183,7 +210,7 @@ export function useSlideDeck() {
 		removeSlide,
 		moveSlide,
 		selectSlide,
-		setTrim,
+		setClipMode,
 		setCaptionOverride,
 		setMarkThemeOverride,
 		reset,

@@ -164,9 +164,9 @@ express. That is the one sanctioned reason for a style block; everything else is
 ## The workspace (`/workspace`)
 
 A password-gated internal tool under `app/pages/workspace/`: the team attaches photos and videos,
-and the app composites each into a 1080×1350 Instagram portrait with a category chip, the Grugbox
-mark and a bottom caption, then exports PNG or MP4/WebM. Attachments are **in-memory only** —
-a refresh loses them.
+and the app composites each into an Instagram feed portrait or a vertical Reel with a category
+chip, the Grugbox mark and a bottom caption, then exports PNG or MP4/WebM. Attachments are
+**in-memory only** — a refresh loses them.
 
 **Auth.** The real gate is **`server/middleware/workspace-auth.ts`**, which runs before render, so
 an unauthenticated visitor never receives workspace markup: document requests get a 302 to
@@ -181,19 +181,64 @@ password passed in rather than read from `runtimeConfig` so it can be unit-teste
 delay is deliberately **not** rate limiting — Vercel isolates invocations, so an in-memory counter
 would be theatre; the long random password is the defence.
 
-**Canvas and the pure core.** The frame is fixed at 1080×1350 (`app/utils/workspace/constants.ts`)
-and PNG export does no rescaling; the preview `<canvas>` is sized by CSS only. `coverRect` in
+**Two canvas formats.** `app/utils/workspace/canvasFormat.ts` is the single description of both
+frames and everything that differs between them: size, which media they accept, the platform's
+clip cap and the caption metrics. `FEED_FORMAT` is 1080×1350 (4:5, photos and videos, 60s) and
+`REEL_FORMAT` is 1080×1920 (9:16, **video only**, 180s). Both frames are 1080 wide on purpose, so
+they share one type scale — only the height, the caption's bottom anchor and the Reel's narrower
+measure differ. Adding a third format means adding one descriptor, not editing `draw.ts`.
+
+Nothing else hardcodes a frame size: the draw primitives take a format (typed down to just the
+fields they read — `Frame` for the ones that only need width/height, `CaptionMetrics` for the
+caption), and the caption fitter takes that format's metrics rather than defaulting to one
+format's numbers. The Reel's caption is anchored **250px above the bottom edge** so Instagram's
+own Reel UI (username, audio, the button rail) does not cover it, and its measure stops short of
+the right-hand action rail — the feed, which has neither, keeps its ~155px bottom margin and
+full-width measure.
+
+**Media policy and the clip window.** A photo cannot render on the 9:16 canvas, so switching to a
+Reel is **refused while photo slides are attached** (`blockedFormats` in the studio holds the
+reason; the picker disables the button and prints it) rather than silently dropping the team's
+work.
+
+Clip length is a **predefined choice, not a trim UI.** Each video slide carries a `clipMode` of
+`'trim'` (the default) or `'full'`, and the team sets no in-point or out-point — there are no
+sliders anywhere. `'trim'` is the opening `TRIMMED_CLIP_SECONDS` (30s, deliberately the same on
+both canvases); `'full'` is the whole clip, capped at the format's limit. `effectiveClip` in
+`clip.ts` resolves which range is real, and **both the preview loop and the export read it** —
+that is what keeps the looping preview showing exactly the section that downloads. Nothing about
+the range is stored per slide, so a canvas change cannot leave a stale selection behind and there
+is nothing to re-fit.
+
+**Canvas and the pure core.** PNG export does no rescaling — the canvas backing store *is* the
+export resolution in both formats; the preview `<canvas>` is sized by CSS only. `coverRect` in
 `geometry.ts` returns a *destination* rect, not a source crop — `drawImage` accepts negative
 x/y — so callers draw straight in with no clipping, and zero/negative source dims return a
 full-frame rect to stop an undecoded video producing `NaN`. The caption block is bottom-anchored
-and grows upward, its line budget *derived* from the space above it; the font shrinks 62→28,
+and grows upward, its line budget *derived* from each frame's own space; the font shrinks 62→28,
 manual line breaks are inviolable, and an over-long caption reports `atMinimumFont` separately
-from genuinely dropped lines (`truncated`).
+from genuinely dropped lines (`truncated`). The fitter checks the block's **height** as well as its
+line count — a stack of short manual lines can satisfy the budget while standing taller than the
+frame — so the font shrinks until the block fits the space above the baseline.
+
+**Nothing without a drawable frame is painted.** A slide whose video has no decoded frame is
+skipped rather than drawn: `drawScene` fills the frame black first, so painting it produced the
+black rectangle with the caption floating on it — visible while a clip loaded, and for a moment on
+every seek, which a trimmed clip makes as it loops back to its start. Skipping leaves the last good
+frame in place, and a loading panel in `index.vue` covers the gap until the first frame lands
+(`isPreparingFrame`). An empty deck still paints, so the chip and caption stay previewable with no
+media attached.
+
+A format switch resizes the canvas, which clears the 2D state and the backing store, so it is
+redrawn after `nextTick` rather than through the coalescing rAF (`flush: 'sync'` would draw the new
+size into the old store) — and the picker is disabled mid-export, because resizing a canvas that
+`captureStream` is sampling would wreck the recording.
 
 `app/utils/workspace/` splits cleanly: `geometry`, `caption`, `mark`, `mime`, `format`,
-`categories` are **pure** — every browser dependency is injected (`fitCaption` takes a
-`measureText` function, `pickRecorderFormat` takes an `isSupported` predicate), which is exactly
-what makes them testable. `draw.ts` and `download.ts` need a real canvas and DOM.
+`categories`, `canvasFormat`, `clip` and `fileKind` are **pure** — every browser dependency is
+injected (`fitCaption` takes a `measureText` function, `pickRecorderFormat` takes an `isSupported`
+predicate), which is exactly what makes them testable. `draw.ts` and `download.ts` need a real
+canvas and DOM.
 
 **Export.** Video export is real-time `MediaRecorder` over `canvas.captureStream(30)` — no
 WebCodecs, no Worker, no OffscreenCanvas. Consequences worth knowing before touching it: exports

@@ -3,10 +3,11 @@ import { useWorkspaceStudio } from '~/composables/useWorkspaceStudio'
 import { usePngExport } from '~/composables/usePngExport'
 import { setExportMonitor, useVideoExport } from '~/composables/useVideoExport'
 import type { WorkspaceSlide } from '~/composables/useSlideDeck'
+import { effectiveClip } from '~/utils/workspace/clip'
 import { downloadBlob, nextPaint } from '~/utils/workspace/download'
 import { buildFileName } from '~/utils/workspace/format'
 import { extensionForMime, isMp4 } from '~/utils/workspace/mime'
-import { CANVAS_HEIGHT, CANVAS_WIDTH } from '~/utils/workspace/constants'
+import type { ClipMode } from '~/utils/workspace/types'
 import type { MarkTheme } from '~/utils/workspace/mark'
 
 definePageMeta({ middleware: 'workspace-auth' })
@@ -50,6 +51,12 @@ const usesOverride = computed(() => !!activeSlide.value?.captionOverride.trim())
 const markOverride = computed<MarkTheme | null>({
 	get: () => activeSlide.value?.markThemeOverride ?? null,
 	set: (value: MarkTheme | null) => studio.setMarkThemeOverride(activeIndex.value, value),
+})
+
+/** Per-slide: export the selected range, or the whole clip. */
+const clipMode = computed<ClipMode>({
+	get: () => activeSlide.value?.clipMode ?? 'trim',
+	set: (value: ClipMode) => studio.setClipMode(activeIndex.value, value),
 })
 
 const captionFor = (slide: WorkspaceSlide): string =>
@@ -102,7 +109,11 @@ const exportSlide = async (slide: WorkspaceSlide, index: number): Promise<boolea
 	const video = studio.videoEl.value
 	if (!video) return false
 
-	const blob = await videoExport.record(canvas, video, slide.trim)
+	// Resolved from THIS slide rather than the current selection: a carousel
+	// export walks the whole deck, and both "full video" and the format's clip
+	// cap have to apply per slide.
+	const clip = effectiveClip(slide, studio.format.value.maxClipSeconds)
+	const blob = await videoExport.record(canvas, video, clip)
 
 	if (!blob) {
 		exportError.value = videoExport.status.value || 'The video export produced no file.'
@@ -189,18 +200,28 @@ div(class="min-h-screen bg-zinc-950 text-white lg:flex lg:h-screen lg:flex-col l
 		section(class="flex flex-col gap-4 lg:min-h-0")
 			//- `w-auto` plus the aspect ratio derives width from height; `max-w-full`
 			//- re-derives the height when width is the binding constraint (narrow
-			//- phones), so the 4:5 ratio holds either way. `object-contain` is the
-			//- safety net for the one case where it does not — a very tall viewport,
-			//- where the column width clamps first and the height does not follow. It
-			//- letterboxes rather than stretching the preview; identical ratios make it
-			//- a no-op everywhere else.
+			//- phones), so the format's ratio holds either way. `object-contain` is
+			//- the safety net for the one case where it does not — a very tall
+			//- viewport, where the column width clamps first and the height does not
+			//- follow. It letterboxes rather than stretching the preview; identical
+			//- ratios make it a no-op everywhere else.
 			div(class="relative flex min-h-0 justify-center overflow-hidden bg-black lg:flex-1")
 				canvas(
 					ref="canvasEl"
-					:width="CANVAS_WIDTH"
-					:height="CANVAS_HEIGHT"
-					class="block h-auto max-h-[calc(100vh-11rem)] w-auto max-w-full aspect-4/5 object-contain lg:max-h-full"
+					:width="studio.format.value.width"
+					:height="studio.format.value.height"
+					class="block h-auto max-h-[calc(100vh-11rem)] w-auto max-w-full object-contain lg:max-h-full"
+					:class="studio.format.value.previewAspectClass"
 				)
+
+				//- Covers the frame only while the active clip has no decoded frame to
+				//- show. The canvas holds its last good frame meanwhile, so without this
+				//- the preview is a black rectangle with the caption floating on it.
+				div(
+					v-if="studio.isPreparingFrame.value"
+					class="absolute inset-0 flex items-center justify-center bg-zinc-900"
+				)
+					span(class="animate-pulse text-[10px] font-bold uppercase tracking-wide text-zinc-400") Loading video…
 
 			//- Off-screen playback source. Kept rendered rather than display:none so
 			//- the decoder keeps producing frames for the canvas.
@@ -228,6 +249,15 @@ div(class="min-h-screen bg-zinc-950 text-white lg:flex lg:h-screen lg:flex-col l
 
 		//- CONTROLS
 		aside(class="flex flex-col gap-8 lg:min-h-0 lg:overflow-y-auto")
+			//- Disabled mid-export, since resizing the canvas would wreck a recording
+			//- that is already sampling it through captureStream, and while files are
+			//- still decoding, so the format cannot change under a half-attached deck.
+			workspace-format-picker(
+				v-model="studio.formatId.value"
+				:blocked="studio.blockedFormats.value"
+				:disabled="exporting || studio.isLoading.value"
+			)
+
 			workspace-mark-picker(v-model="studio.defaultMarkTheme.value")
 
 			workspace-category-field(
@@ -252,6 +282,7 @@ div(class="min-h-screen bg-zinc-950 text-white lg:flex lg:h-screen lg:flex-col l
 				:slides="studio.slides.value"
 				:active-index="studio.activeIndex.value"
 				:is-full="studio.isFull.value"
+				:format="studio.format.value"
 				@select="studio.selectSlide"
 				@remove="studio.removeSlide"
 				@move="studio.moveSlide"
@@ -288,12 +319,12 @@ div(class="min-h-screen bg-zinc-950 text-white lg:flex lg:h-screen lg:flex-col l
 					:default-theme="studio.defaultMarkTheme.value"
 				)
 
-			//- VIDEO TRIM
-			workspace-video-trimmer(
+			//- CLIP LENGTH
+			workspace-clip-length(
 				v-if="isVideoSlide && activeSlide"
+				v-model:mode="clipMode"
 				:duration="activeSlide.duration"
-				:trim="activeSlide.trim"
-				@update="studio.setTrim(studio.activeIndex.value, $event)"
+				:format="studio.format.value"
 			)
 
 			//- EXPORT

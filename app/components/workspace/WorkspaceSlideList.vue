@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import type { WorkspaceSlide } from '~/composables/useSlideDeck'
 import { MAX_SLIDES } from '~/utils/workspace/constants'
+import type { CanvasFormat } from '~/utils/workspace/canvasFormat'
 
 defineProps<{
 	slides: WorkspaceSlide[]
 	activeIndex: number
 	isFull: boolean
+	/** The active canvas — decides what may be attached and what to say about it. */
+	format: CanvasFormat
 }>()
 
 const emit = defineEmits<{
@@ -44,14 +47,13 @@ div(class="flex flex-col gap-3")
 	input(
 		ref="fileInput"
 		type="file"
-		accept="image/*,video/*"
+		:accept="format.acceptAttribute"
 		multiple
 		class="hidden"
 		@change="onFiles"
 	)
 
-	p(v-if="!slides.length" class="text-xs leading-relaxed text-zinc-500")
-		| Attach a photo or a video. Photos export as PNG, videos as MP4.
+	p(v-if="!slides.length" class="text-xs leading-relaxed text-zinc-500") {{ format.emptyDeckHint }}
 
 	ul(class="flex flex-col gap-2")
 		li(
@@ -68,6 +70,7 @@ div(class="flex flex-col gap-3")
 				button(type="button" class="truncate text-left text-xs text-zinc-200" @click="emit('select', index)") {{ slide.fileName }}
 				span(class="text-[10px] uppercase tracking-wide text-zinc-500")
 					| {{ slide.kind === 'image' ? 'PNG' : 'MP4' }}
+					span(v-if="slide.clipMode === 'full'")  · full video
 					span(v-if="slide.captionOverride.trim()")  · custom caption
 
 			div(class="flex shrink-0 items-center gap-1")

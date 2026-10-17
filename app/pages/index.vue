@@ -228,10 +228,7 @@ section(id="profiles" class="my-20")
 								span(v-if="review.score" class="shrink-0 text-lg font-medium") {{ review.score }}
 
 				//- AD SLOT BLOCK — centred 336x280 large rectangle
-				div(class="flex justify-center")
-					//- h-70 = 280px, max-w-84 = 336px
-					div(class="flex h-70 w-full max-w-84 items-center justify-center bg-zinc-300")
-						span(class="text-[10px] uppercase tracking-widest text-zinc-500") Advertisement
+				AdBox(image="/ads/byar-ad3.jpg" url="https://wa.me/message/DRVWF7ABBNUTL1" label="Advertisement")
 
 //- FEATURED INTERVIEWS — 2-column featured layout with light mint wash
 section(id="interviews" aria-label="Interviews" class="my-20 py-16 lg:py-20 bg-zinc-50")

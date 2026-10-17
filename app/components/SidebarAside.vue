@@ -4,10 +4,16 @@ const props = withDefaults(
 		limit?: number
 		count?: number
 		title?: string
+		showAd?: boolean
+		adImage?: string
+		adUrl?: string
 	}>(),
 	{
 		limit: 4,
 		title: 'Recent Posts',
+		showAd: true,
+		adImage: '/ads/byar-ad2.jpg',
+		adUrl: '',
 	}
 )
 
@@ -49,4 +55,7 @@ aside(class="lg:col-span-4 flex flex-col gap-10 lg:sticky lg:top-24 self-start")
 					NuxtLink(:to="item.path")
 						h3(class="text-sm leading-snug tracking-tight line-clamp-2 duration-300 group-hover:text-brand-accent") {{ item.title }}
 					NuxtTime(:datetime="item.date" month="long" day="numeric" year="numeric" class="text-[9px] uppercase tracking-widest text-zinc-400 mt-0.5")
+
+	//- 336 x 280 Ad Banner
+	AdBox(v-if="showAd" :image="adImage" :url="adUrl")
 </template>

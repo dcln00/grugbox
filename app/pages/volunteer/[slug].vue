@@ -106,7 +106,7 @@ div#volunteer-role-page(v-if="role")
 						p(class="text-base text-zinc-600 leading-relaxed") {{ role.diversity }}
 
 				//- RIGHT COLUMN: Application Card
-				aside(class="lg:col-span-5 lg:sticky lg:top-24 self-start")
+				aside(class="lg:col-span-5 flex flex-col gap-8 lg:sticky lg:top-24 self-start")
 					div(class="border border-zinc-200 p-6 sm:p-8 bg-white shadow-xs flex flex-col gap-6")
 						//- Form Header
 						div(class="flex flex-col gap-1 border-b border-zinc-100 pb-4")
@@ -282,4 +282,7 @@ div#volunteer-role-page(v-if="role")
 							)
 								span(v-if="!isSubmitting") Apply
 								span(v-else class="flex items-center justify-center gap-2") Submitting...
+
+					//- 336 x 280 Ad Banner
+					AdBox(image="/ads/byar-ad2.jpg" url="https://wa.me/message/DRVWF7ABBNUTL1")
 </template>

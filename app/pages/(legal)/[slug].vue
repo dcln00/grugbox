@@ -87,4 +87,7 @@ article#article(v-if="page")
 							href="mailto:info@grugbox.world"
 							class="mt-2 w-full bg-black text-white hover:bg-brand-accent py-3 text-[11px] font-bold uppercase tracking-widest text-center transition-colors duration-200"
 						) Email info@grugbox.world
+
+					//- 336 x 280 Ad Banner
+					AdBox(image="/ads/byar-ad2.jpg" url="https://wa.me/message/DRVWF7ABBNUTL1")
 </template>

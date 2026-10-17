@@ -72,6 +72,6 @@ div#volunteer-page
 								class="text-sm sm:text-base text-zinc-900 underline underline-offset-4 hover:text-brand-accent duration-200 block w-fit font-medium"
 							) careers@grugbox.world
 
-				//- Right Column: Recent Posts Aside
-				RecentPostsAside(:limit="4")
+				//- Right Column: Sidebar Aside
+				SidebarAside(:limit="4" ad-url="https://wa.me/message/DRVWF7ABBNUTL1")
 </template>

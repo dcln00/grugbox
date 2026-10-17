@@ -119,8 +119,5 @@ article#article(v-if="post")
 									NuxtTime(:datetime="item.date" month="long" day="numeric" year="numeric" class="text-[9px] uppercase tracking-widest text-zinc-400 mt-0.5")
 
 					//- 336 x 280 Ad Banner
-					div(class="flex justify-center")
-						//- h-70 = 280px, max-w-84 = 336px
-						div(class="flex flex-col items-center justify-center gap-1 h-70 w-full max-w-84 bg-zinc-200 text-zinc-500 border border-zinc-300/50")
-							span(class="text-[10px] uppercase tracking-widest font-medium") 336 x 280 AD
+					AdBox(image="/ads/byar-ad.jpg" url="https://wa.me/message/DRVWF7ABBNUTL1")
 </template>

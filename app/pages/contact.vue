@@ -94,6 +94,6 @@ div#contact-page
 									class="text-xs uppercase font-bold tracking-wider text-brand-accent hover:text-black underline underline-offset-4 duration-200"
 								) {{ item.linkText }}
 
-				//- Right Column: Recent Posts Aside
-				RecentPostsAside(:limit="4")
+				//- Right Column: Sidebar Aside
+				SidebarAside(:limit="4" ad-url="https://wa.me/message/DRVWF7ABBNUTL1")
 </template>

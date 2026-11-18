@@ -27,7 +27,7 @@ When soldiers overthrew Nkrumah in a military coup in February 1966, the new reg
 
 Hesse chose to smuggle the archives out instead. Over several weeks, he packed more than 1,300 film reels, representing roughly 200 hours of footage, into containers and hid them in underground basements and private storage spaces around Accra. His decision preserved what remains the most comprehensive visual record of Ghana's independence period.
 
-![A title card from The Eyes of Ghana showing Barack and Michelle Obama as executive producers](/content/the-eyes-of-ghana-producers-title-card.jpg)
+<video autoplay loop muted playsinline class="w-full aspect-video object-cover my-6" src="/content/the-eyes-of-ghana-producers-title-card.webm"></video>
 
 <p class="text-xs text-center text-zinc-500 -mt-3 mb-6">A title card from the film credits Barack and Michelle Obama as executive producers</p>
 
